@@ -35,7 +35,7 @@ public class AccountRestController  {
     private final UserService userService;
     private final AuthenticationManager authenticationManager;
 
-    private final JwtUtil jwtUtil;
+    JwtUtil jwtUtil;
 
 
     @PostMapping("/register")

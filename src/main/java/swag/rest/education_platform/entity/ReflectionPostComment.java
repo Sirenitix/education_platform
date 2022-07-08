@@ -21,5 +21,5 @@ public class ReflectionPostComment {
 
     @ManyToOne
     @JoinColumn(name = "parent_id")
-    private ReflexionPost post;
+    private ReflectionPost post;
 }
