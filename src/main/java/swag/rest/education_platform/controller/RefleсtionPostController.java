@@ -7,15 +7,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import swag.rest.education_platform.dto.ReflextionPostCreateDto;
 import swag.rest.education_platform.entity.ReflectionPost;
-import swag.rest.education_platform.service.post.ReflextionPostService;
+import swag.rest.education_platform.service.post.RefleсtionPostService;
 
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000")
-@RequestMapping("/reflextion")
-public class ReflextionPostController {
+@RequestMapping("/refleсtion")
+public class RefleсtionPostController {
 
-    private final ReflextionPostService service;
+    private final RefleсtionPostService service;
     @PostMapping("create-post")
     public ResponseEntity<String> createPost(@RequestBody ReflextionPostCreateDto dto) {
         service.createPost(dto);
