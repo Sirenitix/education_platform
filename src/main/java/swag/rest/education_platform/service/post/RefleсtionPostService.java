@@ -13,7 +13,7 @@ import swag.rest.education_platform.entity.ReflectionPost;
 @RequiredArgsConstructor
 @Getter
 @Setter
-public class ReflextionPostService {
+public class RefleсtionPostService {
 
     private final ReflextionPostRepository repository;
     @Transactional
