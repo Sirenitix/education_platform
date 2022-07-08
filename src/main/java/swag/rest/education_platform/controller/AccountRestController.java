@@ -35,8 +35,6 @@ public class AccountRestController  {
     private final UserService userService;
     private final AuthenticationManager authenticationManager;
 
-    JwtUtil jwtUtil;
-
 
     @PostMapping("/register")
     public ResponseEntity<Users> save(@RequestBody Users user) {
@@ -61,7 +59,7 @@ public class AccountRestController  {
         user.setRole("ROLE_USER");
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword(),user.getAuthorities()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtUtil.createAccessToken(user.getUsername(), request.getRequestURL().toString(), user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()));
+        String jwt = JwtUtil.createAccessToken(user.getUsername(), request.getRequestURL().toString(), user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()));
         ResponseCookie cookie = ResponseCookie.from("token", jwt) // key & value
                 .httpOnly(true)
                 .secure(true)
