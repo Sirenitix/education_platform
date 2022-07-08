@@ -7,11 +7,14 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.*;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 @Data
 @Entity
@@ -49,6 +52,7 @@ public class Users implements UserDetails {
     private List<ReflectionPostComment> reflectionPostComments;
 
     //--------------------------------
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

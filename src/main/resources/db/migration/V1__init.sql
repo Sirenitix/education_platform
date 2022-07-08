@@ -7,7 +7,7 @@ create table users
     enabled           BOOLEAN,
     first_name        VARCHAR(255) NOT NULL,
     last_name         VARCHAR(255) NOT NULL,
-    teacher_group     BIGINT(255),
+    teacher_group     BIGINT,
     science_post_id   BIGINT,
     reflexion_post_id BIGINT,
     PRIMARY KEY (id)

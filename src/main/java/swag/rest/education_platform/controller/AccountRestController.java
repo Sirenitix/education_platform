@@ -25,7 +25,8 @@ import java.time.Duration;
 import java.util.stream.Collectors;
 
 
-@RestController("/")
+
+@RestController
 public class AccountRestController  {
 
     @Autowired

@@ -9,10 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>swag.rest</groupId>
-    <artifactId>bank_app_delivery</artifactId>
+    <artifactId>education_platform</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>bank_app_delivery</name>
-    <description>bank_app_delivery</description>
+    <name>education_platform</name>
     <properties>
         <java.version>8</java.version>
     </properties>
@@ -77,6 +76,12 @@
         </dependency>
 
         <dependency>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-springsecurity5</artifactId>
+            <version>3.0.4.RELEASE</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>28.2-android</version>
@@ -98,6 +103,27 @@
             <groupId>com.nimbusds</groupId>
             <artifactId>nimbus-jose-jwt</artifactId>
             <version>9.23</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.projectreactor</groupId>
+            <artifactId>reactor-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.javafaker</groupId>
+            <artifactId>javafaker</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
         </dependency>
 
     </dependencies>
