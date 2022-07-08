@@ -1,13 +1,13 @@
-package swag.rest.bank_app_delivery.service.internal;
+package swag.rest.education_platform.service.internal;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import swag.rest.bank_app_delivery.dao.UserRepository;
-import swag.rest.bank_app_delivery.entity.Users;
-import swag.rest.bank_app_delivery.service.UserService;
+import swag.rest.education_platform.dao.UserRepository;
+import swag.rest.education_platform.entity.Users;
+import swag.rest.education_platform.service.UserService;
 
 import java.util.Optional;
 

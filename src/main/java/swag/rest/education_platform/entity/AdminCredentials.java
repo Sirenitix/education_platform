@@ -1,10 +1,7 @@
-package swag.rest.bank_app_delivery.entity;
+package swag.rest.education_platform.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
 @Data
 @AllArgsConstructor

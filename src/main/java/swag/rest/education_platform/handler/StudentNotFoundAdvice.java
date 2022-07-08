@@ -1,4 +1,4 @@
-package swag.rest.bank_app_delivery.handler;
+package swag.rest.education_platform.handler;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;

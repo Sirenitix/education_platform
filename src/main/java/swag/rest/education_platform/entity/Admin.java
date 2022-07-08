@@ -1,4 +1,4 @@
-package swag.rest.bank_app_delivery.entity;
+package swag.rest.education_platform.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

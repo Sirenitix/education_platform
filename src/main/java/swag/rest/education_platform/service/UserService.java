@@ -1,7 +1,7 @@
-package swag.rest.bank_app_delivery.service;
+package swag.rest.education_platform.service;
 
 import org.springframework.stereotype.Service;
-import swag.rest.bank_app_delivery.entity.Users;
+import swag.rest.education_platform.entity.Users;
 
 import java.util.Optional;
 
