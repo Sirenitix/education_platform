@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/reflextion")
-public class ReflextionPoastController {
+public class ReflextionPostController {
 
 
     @PutMapping("create-post")
