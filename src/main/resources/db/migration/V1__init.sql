@@ -16,6 +16,7 @@ create table users
 create table science_post
 (
     id              BIGSERIAL    not null primary key,
+    title           VARCHAR(255),
     content         VARCHAR(255) not null,
     user_creator_id BIGINT       not null,
     likes           BIGINT,
@@ -25,6 +26,7 @@ create table science_post
 create table reflexion_post
 (
     id              BIGSERIAL    not null primary key,
+    title           VARCHAR(255),
     content         VARCHAR(255) not null,
     user_creator_id BIGINT       not null,
     likes           BIGINT,

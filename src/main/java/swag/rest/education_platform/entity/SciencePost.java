@@ -14,7 +14,7 @@ public class SciencePost {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String content;
-
+    private String title;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private Users user;
