@@ -22,7 +22,7 @@ public class ReflectionPost {
 
     private Long likes;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     private List<ReflectionPostComment> comment;
 
 }
