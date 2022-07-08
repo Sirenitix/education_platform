@@ -9,9 +9,9 @@ import java.util.List;
 @Entity
 @Table(name = "reflexion_post")
 @Getter@Setter
-public class ReflexionPost {
+public class ReflectionPost {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String content;
     private String title;

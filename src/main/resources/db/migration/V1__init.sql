@@ -28,7 +28,7 @@ create table reflexion_post
     id              BIGSERIAL    not null primary key,
     title           VARCHAR(255) not null ,
     content         TEXT not null,
-    user_creator_id BIGINT       not null,
+    user_creator_id BIGINT       ,
     likes           BIGINT,
     foreign key (user_creator_id) references users (id)
 );

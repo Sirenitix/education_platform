@@ -1,9 +1,7 @@
 package swag.rest.education_platform.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -48,7 +46,7 @@ public class Users implements UserDetails {
     private List<SciencePost> sciencePosts;
 
     @OneToMany(mappedBy = "user")
-    private List<ReflexionPost> reflexionPosts;
+    private List<ReflectionPost> reflectionPosts;
 
     @OneToMany(mappedBy = "user")
     private List<SciencePostComment> sciencePostComments;

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000")
-@RequestMapping("/reflextion")
+@RequestMapping("/science")
 public class SciencePostController {
 
     @PutMapping("create-post")

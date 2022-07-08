@@ -52,7 +52,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout().logoutUrl("/logout").deleteCookies("token")
                 .and()
-
+                .authorizeRequests().antMatchers("/reflextion/**").anonymous()
+                .and()
                 .authorizeRequests().antMatchers(HttpMethod.POST,  "/register").permitAll()
                 .and()
                 .authorizeRequests().antMatchers(HttpMethod.POST,  "/authenticate").permitAll()
