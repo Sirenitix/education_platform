@@ -19,7 +19,6 @@ create table science_post
     content         VARCHAR(255) not null,
     user_creator_id BIGINT       not null,
     likes           BIGINT,
-    comment_id      BIGINT,
     foreign key (user_creator_id) references users (id)
 );
 
@@ -29,7 +28,6 @@ create table reflexion_post
     content         VARCHAR(255) not null,
     user_creator_id BIGINT       not null,
     likes           BIGINT,
-    comment_id      BIGINT,
     foreign key (user_creator_id) references users (id)
 );
 

@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -35,6 +36,23 @@ public class Users implements UserDetails {
 
     @NotNull
     private String role;
+
+    //relations with other entities
+
+    @OneToMany(mappedBy = "user")
+    private List<SciencePost> sciencePosts;
+
+    @OneToMany(mappedBy = "user")
+    private List<ReflexionPost> reflexionPosts;
+
+    @OneToMany(mappedBy = "user")
+    private List<SciencePostComment> sciencePostComments;
+
+    @OneToMany(mappedBy = "user")
+    private List<ReflectionPostComment> reflectionPostComments;
+
+    //--------------------------------
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
