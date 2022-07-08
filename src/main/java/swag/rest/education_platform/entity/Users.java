@@ -3,6 +3,7 @@ package swag.rest.education_platform.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,7 +17,6 @@ import java.util.List;
 
 @Data
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
 public class Users implements UserDetails {
     @Id
@@ -35,7 +35,14 @@ public class Users implements UserDetails {
     @NotNull
     private String role;
 
-    //relations with other entities
+    public Users(int id, String username, String password, boolean enabled, String role) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.enabled = enabled;
+        this.role = role;
+    }
+//relations with other entities
 
     @OneToMany(mappedBy = "user")
     private List<SciencePost> sciencePosts;
