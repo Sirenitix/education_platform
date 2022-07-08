@@ -8,7 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import swag.rest.education_platform.dao.ReflextionPostRepository;
+import swag.rest.education_platform.dao.ReflectionPostRepository;
 import swag.rest.education_platform.dto.ReflextionPostCreateDto;
 import swag.rest.education_platform.entity.ReflectionPost;
 import swag.rest.education_platform.exception.PostNotFoundException;
@@ -21,7 +21,8 @@ import java.util.List;
 @Setter
 public class RefleсtionPostService {
 
-    private final ReflextionPostRepository repository;
+    private final ReflectionPostRepository repository;
+
     @Transactional
     public void createPost(ReflextionPostCreateDto dto) {
         ReflectionPost post = new ReflectionPost();
@@ -29,6 +30,7 @@ public class RefleсtionPostService {
         post.setContent(dto.getContent());
         repository.save(post);
     }
+
     public ReflectionPost getPostByIdWithComment(Long id) {
         return repository.getPostByIdWithComment(id).orElseThrow(() -> new PostNotFoundException());
     }
@@ -41,5 +43,9 @@ public class RefleсtionPostService {
 
     public void deletePost(Long id) {
         repository.deleteById(id);
+    }
+
+    public ReflectionPost findById(Long id) {
+        return repository.findById(id).orElseThrow(() -> new PostNotFoundException());
     }
 }

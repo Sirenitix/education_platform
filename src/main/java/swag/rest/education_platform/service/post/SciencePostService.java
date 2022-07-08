@@ -44,4 +44,7 @@ public class SciencePostService {
     public void deletePost(Long id) {
         repository.deleteById(id);
     }
+    public SciencePost findById(Long id) {
+        return repository.findById(id).orElseThrow(() -> new PostNotFoundException());
+    }
 }
