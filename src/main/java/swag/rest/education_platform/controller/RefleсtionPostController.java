@@ -21,13 +21,13 @@ public class RefleсtionPostController {
 
     private final RefleсtionPostService service;
 
-    @PostMapping("create-post")
+    @PostMapping("/create-post")
     public ResponseEntity<String> createPost(@RequestBody ReflextionPostCreateDto dto) {
         service.createPost(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body("Post has been saved");
     }
 
-    @GetMapping("post/{id}")
+    @GetMapping("/post/{id}")
     public ResponseEntity<ReflectionPost> getPostById(@PathVariable Long id) {
         ReflectionPost post = service.getPostByIdWithComment(id);
         return ResponseEntity.status(HttpStatus.OK).body(post);

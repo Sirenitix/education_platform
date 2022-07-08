@@ -19,12 +19,12 @@ import java.util.stream.Collectors;
 @RequestMapping("/science")
 public class SciencePostController {
         private final SciencePostService service;
-    @PostMapping("create-post")
+    @PostMapping("/create-post")
     public ResponseEntity<String> createPost(@RequestBody SciencePostRequestDto dto) {
         service.createPost(dto);
         return ResponseEntity.status(HttpStatus.OK).body("Post has been saved");
     }
-    @GetMapping("post/{id}")
+    @GetMapping("/post/{id}")
     public ResponseEntity<SciencePost> getPostById(@PathVariable Long id) {
         SciencePost post = service.getPostByIdWithComment(id);
         return ResponseEntity.status(HttpStatus.OK).body(post);
@@ -37,7 +37,7 @@ public class SciencePostController {
         List<SciencePost> post = service.getPosts(page).stream().collect(Collectors.toList());
         return ResponseEntity.status(HttpStatus.OK).body(post);
     }
-    @DeleteMapping("delete-post/{id}")
+    @DeleteMapping("/delete-post/{id}")
     public ResponseEntity<String> deletePost(@PathVariable Long id) {
         service.deletePost(id);
         return ResponseEntity.status(HttpStatus.OK).body("Post has been deleted");

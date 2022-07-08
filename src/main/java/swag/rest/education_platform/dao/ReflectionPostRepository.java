@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface ReflectionPostRepository extends JpaRepository<ReflectionPost,Long> {
 
 
-    @Query("select p from ReflectionPost p join fetch p.comment where p.id =: id")
+    @Query("select p from ReflectionPost p left join fetch p.comment where p.id = :id")
     Optional<ReflectionPost> getPostByIdWithComment(Long id);
     @Override
     Page<ReflectionPost> findAll(Pageable page);

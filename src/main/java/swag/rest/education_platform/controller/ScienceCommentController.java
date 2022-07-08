@@ -11,7 +11,7 @@ import java.security.Principal;
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000")
-@RequestMapping("/reflection-comment")
+@RequestMapping("/science-comment")
 public class ScienceCommentController {
     private final SciencePostCommentService service;
     @PostMapping()

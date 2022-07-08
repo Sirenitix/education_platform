@@ -46,7 +46,7 @@ create table science_post_comment
 create table reflexion_post_comment
 (
     id              BIGSERIAL    not null primary key,
-    user_creator_id BIGINT       not null,
+    user_creator_id BIGINT       ,
     content         VARCHAR(255) not null,
     parent_id       BIGINT       not null,
     foreign key (parent_id) references reflexion_post (id)

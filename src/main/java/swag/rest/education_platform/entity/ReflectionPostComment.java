@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Getter@Setter
 public class ReflectionPostComment {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne

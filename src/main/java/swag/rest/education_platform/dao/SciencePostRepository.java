@@ -10,7 +10,7 @@ import swag.rest.education_platform.entity.SciencePost;
 import java.util.Optional;
 
 public interface SciencePostRepository extends JpaRepository<SciencePost,Long> {
-    @Query("select p from SciencePost p join fetch p.comment where p.id =: id")
+    @Query("select p from SciencePost p left join fetch p.comment where p.id = :id")
     Optional<SciencePost> getPostByIdWithComment(Long id);
     @Override
     Page<SciencePost> findAll(Pageable page);
