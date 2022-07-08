@@ -1,27 +1,26 @@
-package swag.rest.bank_app_delivery.entity;
+package swag.rest.education_platform.entity;
 
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
-@Table(name = "reflexion_post")
+@Table(name = "science_post_comment")
 @Getter@Setter
-public class ReflexionPost {
+public class SciencePostComment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String content;
 
     @ManyToOne
     @JoinColumn(name = "user_creator_id")
     private Users user;
 
-    private Long likes;
+    private String content;
 
-    @OneToMany(mappedBy = "post")
-    private List<ReflectionPostComment> comment;
+    @ManyToOne
+    @JoinColumn(name = "parent_id")
+    private SciencePost post;
 
 }

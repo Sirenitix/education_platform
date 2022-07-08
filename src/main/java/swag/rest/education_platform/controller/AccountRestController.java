@@ -1,10 +1,9 @@
-package swag.rest.bank_app_delivery.controller;
+package swag.rest.education_platform.controller;
 
 
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,21 +13,15 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import swag.rest.bank_app_delivery.entity.*;
-import swag.rest.bank_app_delivery.jwt.JwtUtil;
-import swag.rest.bank_app_delivery.service.UserService;
+import swag.rest.education_platform.entity.*;
+import swag.rest.education_platform.jwt.JwtUtil;
+import swag.rest.education_platform.service.UserService;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.net.URI;
-import java.security.Principal;
-import java.security.cert.PKIXParameters;
 import java.time.Duration;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 

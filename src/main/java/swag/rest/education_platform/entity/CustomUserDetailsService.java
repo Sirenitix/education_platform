@@ -1,4 +1,4 @@
-package swag.rest.bank_app_delivery.entity;
+package swag.rest.education_platform.entity;
 
 
 import lombok.extern.slf4j.Slf4j;
@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import swag.rest.bank_app_delivery.dao.UserRepository;
+import swag.rest.education_platform.dao.UserRepository;
 
 import java.util.Optional;
 
