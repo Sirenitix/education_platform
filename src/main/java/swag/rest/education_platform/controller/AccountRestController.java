@@ -2,6 +2,7 @@ package swag.rest.education_platform.controller;
 
 
 import io.swagger.v3.oas.annotations.Operation;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
@@ -27,18 +28,17 @@ import java.util.stream.Collectors;
 
 
 @RestController
+@RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000")
 public class AccountRestController  {
 
-    @Autowired
-    UserService userService;
-    @Autowired
-    AuthenticationManager authenticationManager;
+    private final UserService userService;
+    private final AuthenticationManager authenticationManager;
 
-    JwtUtil jwtUtil;
+    private final JwtUtil jwtUtil;
 
 
     @PostMapping("/register")
-    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<Users> save(@RequestBody Users user) {
         Users userEntity = userService.save(user);
         URI uri = URI.create(ServletUriComponentsBuilder
@@ -51,14 +51,12 @@ public class AccountRestController  {
 
     @Operation(description = "Login")
     @PostMapping("/login")
-    @CrossOrigin(origins = "http://localhost:3000")
     public void fakeLogin(@RequestBody Users user) {
         throw new IllegalStateException("This method shouldn't be called. It's implemented by Spring Security filters.");
     }
 
 
     @PostMapping("/authenticate")
-    @CrossOrigin(origins = "http://localhost:3000")
     public String authenticateUser(@Valid @RequestBody Users user, HttpServletRequest request, HttpServletResponse response) {
         user.setRole("ROLE_USER");
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword(),user.getAuthorities()));
@@ -76,7 +74,6 @@ public class AccountRestController  {
 
 
     @Operation(description = "Logout")
-    @CrossOrigin("http://localhost:3000")
     @PostMapping("/logout")
     public void fakeLogout() {
         throw new IllegalStateException("This method shouldn't be called. It's implemented by Spring Security filters.");
@@ -84,7 +81,6 @@ public class AccountRestController  {
 
     @Operation(description = "Rated student list")
     @GetMapping("/admin")
-    @CrossOrigin(origins = "http://localhost:3000")
     public AdminCredentials aboutAdmin() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         AdminCredentials adminCredentials = new AdminCredentials(
