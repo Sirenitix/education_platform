@@ -19,7 +19,7 @@ import java.util.List;
 public class Users implements UserDetails {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @NotNull
     private String username;
@@ -31,7 +31,7 @@ public class Users implements UserDetails {
 
     private String role;
 
-    public Users(int id, String username, String password, boolean enabled, String role) {
+    public Users(Long id, String username, String password, boolean enabled, String role) {
         this.id = id;
         this.username = username;
         this.password = password;

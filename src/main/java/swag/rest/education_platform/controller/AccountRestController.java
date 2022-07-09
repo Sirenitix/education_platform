@@ -35,17 +35,13 @@ import java.util.stream.Collectors;
 @CrossOrigin(origins = "http://localhost:3000")
 public class AccountRestController  {
 
-    private final UserService userService;
     private final AccountService service;
 
 
     @PostMapping("/register")
-    public ResponseEntity<Users> save(@RequestBody Users user) {
-        Users userEntity = userService.save(user);
-        URI uri = URI.create(ServletUriComponentsBuilder
-                .fromCurrentRequest().path("/{username}")
-                .buildAndExpand(userEntity.getUsername()).toUriString());
-        return ResponseEntity.created(uri).build();
+    public ResponseEntity<String> save(@RequestBody UserDto user) {
+        service.register(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body("User has been created");
     }
 
 
@@ -58,7 +54,7 @@ public class AccountRestController  {
 
 
     @PostMapping("/authenticate")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody UserDto user, HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody UserDto user, HttpServletRequest request) {
         String jwt =  service.authenticate(user,request);
         return ResponseEntity.status(HttpStatus.OK).body(jwt);
     }

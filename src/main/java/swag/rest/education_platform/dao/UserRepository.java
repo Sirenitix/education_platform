@@ -7,9 +7,9 @@ import swag.rest.education_platform.entity.Users;
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<Users, Integer> {
+public interface UserRepository extends JpaRepository<Users, Long> {
     Optional<Users> findByUsername(String username);
     Optional<Users> findById(Integer id);
-
+    Boolean existsByUsername(String username);
     void deleteById(Long id);
 }
