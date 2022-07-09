@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/reflection")
-public class RefleсtionPostController {
+public class ReflectionPostController {
 
     private final RefleсtionPostService service;
 
