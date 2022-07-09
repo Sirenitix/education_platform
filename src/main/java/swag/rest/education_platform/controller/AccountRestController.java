@@ -26,6 +26,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.net.URI;
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 
@@ -54,9 +56,11 @@ public class AccountRestController  {
 
 
     @PostMapping("/authenticate")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody UserDto user, HttpServletRequest request) {
+    public Map<String,String> authenticateUser(@Valid @RequestBody UserDto user, HttpServletRequest request) {
         String jwt =  service.authenticate(user,request);
-        return ResponseEntity.status(HttpStatus.OK).body(jwt);
+        Map<String, String> token = new HashMap<>();
+        token.put("token", jwt);
+        return token;
     }
 
 
