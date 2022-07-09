@@ -15,6 +15,7 @@ import swag.rest.education_platform.entity.ReflectionPost;
 import swag.rest.education_platform.entity.SciencePost;
 import swag.rest.education_platform.exception.PostNotFoundException;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -28,6 +29,7 @@ public class SciencePostService {
         SciencePost post = new SciencePost();
         post.setTitle(dto.getTitle());
         post.setContent(dto.getContent());
+        post.setPostDate(LocalDate.now());
         repository.save(post);
     }
 
