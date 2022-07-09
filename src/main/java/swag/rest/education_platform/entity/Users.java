@@ -1,11 +1,11 @@
 package swag.rest.education_platform.entity;
 
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -27,10 +27,8 @@ public class Users implements UserDetails {
     @NotNull
     private String password;
 
-    @NotNull
     private boolean enabled;
 
-    @NotNull
     private String role;
 
     public Users(int id, String username, String password, boolean enabled, String role) {

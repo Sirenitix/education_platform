@@ -34,7 +34,7 @@ public class SciencePostService {
     }
 
     public SciencePost getPostByIdWithComment(Long id) {
-        return repository.getPostByIdWithComment(id).orElseThrow(() -> new PostNotFoundException());
+        return repository.getPostByIdWithComment(id).orElseThrow(PostNotFoundException::new);
     }
 
     public List<SciencePost> getPosts(int page) {
