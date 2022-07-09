@@ -37,7 +37,7 @@ public class ReflectionPostController {
     public ResponseEntity<?> getPosts(@RequestParam(defaultValue = "0") int page) {
         //todo Content is also send, need to remove it from response
 
-        List<ReflectionPost> post = service.getPosts(page).stream().collect(Collectors.toList());
+        List<ReflectionPost> post = new ArrayList<>(service.getPosts(page));
         return ResponseEntity.status(HttpStatus.OK).body(post);
     }
 
