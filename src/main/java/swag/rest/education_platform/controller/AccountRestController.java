@@ -68,12 +68,12 @@ public class AccountRestController  {
 
     @Operation(description = "Rated student list")
     @GetMapping("/admin")
-    public AdminCredentials aboutAdmin() {
+    public String aboutAdmin() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         AdminCredentials adminCredentials = new AdminCredentials(
                 auth.getPrincipal().toString(),
                 auth.getAuthorities().toString().equals("[ROLE_ADMIN]"));
-            return adminCredentials;
+            return auth.getAuthorities().toString();
     }
 
 

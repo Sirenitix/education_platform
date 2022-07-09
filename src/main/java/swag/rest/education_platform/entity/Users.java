@@ -38,6 +38,7 @@ public class Users implements UserDetails {
         this.enabled = enabled;
         this.role = role;
     }
+
 //relations with other entities
 
     @OneToMany(mappedBy = "user")

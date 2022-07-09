@@ -3,6 +3,7 @@ package swag.rest.education_platform.jwt;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -37,8 +38,8 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
         } else {
                 try {
-                    if (request.getHeader("token") != null) {
-                                token = request.getHeader("token");
+                    if (request.getHeader(HttpHeaders.SET_COOKIE) != null) {
+                                token = request.getHeader(HttpHeaders.SET_COOKIE);
                                 UsernamePasswordAuthenticationToken authenticationToken = JwtUtil.parseToken(token);
                                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                                 System.out.println(SecurityContextHolder.getContext().getAuthentication());

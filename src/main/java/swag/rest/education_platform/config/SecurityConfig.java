@@ -63,6 +63,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests().antMatchers("/resources/**").permitAll()
                 .and()
+                .authorizeRequests().antMatchers("/admin").permitAll()
+                .and()
                 .authorizeRequests().anyRequest().authenticated()
                 .and()
                 .addFilter(new CustomAuthenticationFilter(super.authenticationManagerBean()))

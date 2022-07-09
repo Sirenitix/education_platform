@@ -11,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import swag.rest.education_platform.dao.UserRepository;
 import swag.rest.education_platform.dto.UserDto;
+import swag.rest.education_platform.entity.CustomUserDetailsService;
 import swag.rest.education_platform.entity.Users;
 import swag.rest.education_platform.exception.UserExistException;
 import swag.rest.education_platform.jwt.JwtUtil;
@@ -27,10 +28,10 @@ public class AccountService {
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     public String authenticate(UserDto userDto, HttpServletRequest request) {
-        Users user = userRepository.findByUsername(userDto.getUsername()).orElseThrow(() -> new UsernameNotFoundException("User not found"));
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword(), user.getAuthorities()));
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userDto.getUsername(), userDto.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = JwtUtil.createAccessToken(user.getUsername(), request.getRequestURL().toString(), user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()));
+        Users user = userRepository.findByUsername(userDto.getUsername()).get();
+        String jwt = JwtUtil.createAccessToken(userDto.getUsername(), request.getRequestURL().toString(), user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()));
         return jwt;
     }
 
@@ -40,6 +41,7 @@ public class AccountService {
         Users user = new Users();
         user.setUsername(userDto.getUsername());
         user.setPassword(encoder.encode(userDto.getPassword()));
+        user.setEnabled(true);
         user.setRole("ROLE_USER");
         userRepository.save(user);
 
