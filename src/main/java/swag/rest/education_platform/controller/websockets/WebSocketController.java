@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import swag.rest.education_platform.entity.Message;
-import swag.rest.education_platform.service.WSService;
+import swag.rest.education_platform.service.ws.WSService;
 
 @RestController
 public class WebSocketController {

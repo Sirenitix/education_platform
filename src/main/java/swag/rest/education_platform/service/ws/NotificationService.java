@@ -1,4 +1,4 @@
-package swag.rest.education_platform.service;
+package swag.rest.education_platform.service.ws;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;

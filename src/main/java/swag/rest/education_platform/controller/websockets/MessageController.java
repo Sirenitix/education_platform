@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.util.HtmlUtils;
 import swag.rest.education_platform.dto.ResponseMessage;
 import swag.rest.education_platform.entity.Message;
-import swag.rest.education_platform.service.NotificationService;
+import swag.rest.education_platform.service.ws.NotificationService;
 
 import java.security.Principal;
 

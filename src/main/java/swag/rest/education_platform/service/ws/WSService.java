@@ -1,10 +1,11 @@
-package swag.rest.education_platform.service;
+package swag.rest.education_platform.service.ws;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import swag.rest.education_platform.dto.ResponseMessage;
+import swag.rest.education_platform.service.ws.NotificationService;
 
 @Service
 public class WSService {
