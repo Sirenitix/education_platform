@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,8 +15,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import swag.rest.education_platform.dto.UserDto;
 import swag.rest.education_platform.entity.*;
 import swag.rest.education_platform.jwt.JwtUtil;
+import swag.rest.education_platform.service.AccountService;
 import swag.rest.education_platform.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,7 +36,7 @@ import java.util.stream.Collectors;
 public class AccountRestController  {
 
     private final UserService userService;
-    private final AuthenticationManager authenticationManager;
+    private final AccountService service;
 
 
     @PostMapping("/register")
@@ -55,19 +58,9 @@ public class AccountRestController  {
 
 
     @PostMapping("/authenticate")
-    public String authenticateUser(@Valid @RequestBody Users user, HttpServletRequest request, HttpServletResponse response) {
-        user.setRole("ROLE_USER");
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword(),user.getAuthorities()));
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = JwtUtil.createAccessToken(user.getUsername(), request.getRequestURL().toString(), user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()));
-        ResponseCookie cookie = ResponseCookie.from("token", jwt) // key & value
-                .httpOnly(true)
-                .secure(true)
-                .maxAge(Duration.ofHours(100))
-                .sameSite("None")  // sameSite
-                .build();
-        response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
-        return jwt;
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody UserDto user, HttpServletRequest request, HttpServletResponse response) {
+        String jwt =  service.authenticate(user,request);
+        return ResponseEntity.status(HttpStatus.OK).body(jwt);
     }
 
 
