@@ -9,6 +9,7 @@ import swag.rest.education_platform.dto.ReflextionPostCreateDto;
 import swag.rest.education_platform.entity.ReflectionPost;
 import swag.rest.education_platform.service.post.RefleсtionPostService;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,6 +32,13 @@ public class ReflectionPostController {
     public ResponseEntity<ReflectionPost> getPostById(@PathVariable Long id) {
         ReflectionPost post = service.getPostByIdWithComment(id);
         return ResponseEntity.status(HttpStatus.OK).body(post);
+    }
+
+    @PostMapping("/update/{post_id}")
+    public ResponseEntity<String> updatePostById(@PathVariable Long post_id,
+                                                 @RequestBody ReflextionPostCreateDto dto, Principal principal) {
+        service.updatePost(dto, post_id, principal.getName());
+        return ResponseEntity.status(HttpStatus.OK).body("Updated post");
     }
 
     @GetMapping("/posts")
