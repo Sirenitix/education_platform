@@ -39,8 +39,8 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
         } else {
                 try {
                     String authToken = request.getHeader("Authorization");
-                    if (authToken != null && authToken.startsWith("Bearer")) {
-                                token = authToken.substring(7);
+                    if (authToken != null) {
+                                token = authToken;
                                 UsernamePasswordAuthenticationToken authenticationToken = JwtUtil.parseToken(token);
                                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                                 System.out.println(SecurityContextHolder.getContext().getAuthentication());

@@ -76,7 +76,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
                 .maxAge(Duration.ofHours(100))
                 .sameSite("None")
                 .build();
-        response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+        response.setHeader(HttpHeaders.AUTHORIZATION, cookie.toString());
         response.addHeader("access_token", accessToken);
         response.addHeader("refresh_token", refreshToken);
     }

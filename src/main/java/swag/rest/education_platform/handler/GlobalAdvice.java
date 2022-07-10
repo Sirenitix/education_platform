@@ -29,11 +29,6 @@ public class GlobalAdvice extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
     }
 
-    @ResponseBody
-    @ExceptionHandler(PostException.class)
-    public ResponseEntity<String> postNotFoundException(PostNotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
-    }
 
     @ResponseBody
     @ExceptionHandler(UsernameNotFoundException.class)

@@ -23,7 +23,6 @@ import java.util.stream.Collectors;
 
 public abstract class JwtUtil {
 
-    private static final int expireHourToken = 24;
     private static final int expireHourRefreshToken = 72;
 
     private static final String SECRET = "FBA898697394CDBC534E7ED86A97AA59F627FE6B309E0A21EEC6C9B130E0369C";

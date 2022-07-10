@@ -15,7 +15,7 @@ import java.util.List;
 
 @Configuration
 public class SwaggerConfig {
-    public static final String AUTHORIZATION_HEADER = HttpHeaders.SET_COOKIE;
+    public static final String AUTHORIZATION_HEADER = HttpHeaders.AUTHORIZATION;
 
     private ApiInfo apiInfo() {
         return new ApiInfo("MyApp Rest APIs",
