@@ -18,6 +18,7 @@ import swag.rest.education_platform.exception.PostNotFoundException;
 import swag.rest.education_platform.service.UserService;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -55,6 +56,9 @@ public class RefleсtionPostService {
     public List<ReflectionPost> getPosts(int page) {
         Pageable paging = PageRequest.of(page, 10);
         Page<ReflectionPost> pagePost = repository.findAll(paging);
+        for (ReflectionPost post : pagePost.getContent()) {
+            post.setContent(post.getContent().substring(0,100)+"...");
+        }
         return pagePost.getContent();
     }
 

@@ -11,6 +11,7 @@ import swag.rest.education_platform.entity.SciencePost;
 import swag.rest.education_platform.service.post.SciencePostService;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,10 +41,7 @@ public class SciencePostController {
 
     @GetMapping("/posts")
     public ResponseEntity<?> getPosts(@RequestParam(defaultValue = "0") int page) {
-        //todo Content is also send, need to remove it from response
-
-        List<SciencePost> post = service.getPosts(page).stream().collect(Collectors.toList());
-        return ResponseEntity.status(HttpStatus.OK).body(post);
+        return ResponseEntity.status(HttpStatus.OK).body(service.getPosts(page));
     }
     @DeleteMapping("/delete-post/{id}")
     public ResponseEntity<String> deletePost(@PathVariable Long id) {

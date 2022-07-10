@@ -43,6 +43,9 @@ public class SciencePostService {
     public List<SciencePost> getPosts(int page) {
         Pageable paging = PageRequest.of(page, 10);
         Page<SciencePost> pagePost = repository.findAll(paging);
+        for (SciencePost post : pagePost.getContent()) {
+            post.setContent(post.getContent().substring(0,100)+"...");
+        }
         return pagePost.getContent();
     }
 
