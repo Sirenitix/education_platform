@@ -62,5 +62,4 @@ create table reflexion_post_comment
     content         VARCHAR(255) not null,
     parent_id       BIGINT       not null,
     foreign key (parent_id) references reflexion_post (id)
-
 );

@@ -14,6 +14,7 @@ public class SciencePost {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Lob
     private String content;
     private String title;
     private LocalDate postDate;

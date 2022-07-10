@@ -51,9 +51,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout().logoutUrl("/logout").deleteCookies("token")
                 .and()
-                .authorizeRequests().antMatchers("/reflection/**").anonymous()
+                .authorizeRequests().antMatchers("/reflection/**").permitAll()
                 .and()
-                .authorizeRequests().antMatchers("/reflection-comment/**").anonymous()
+                .authorizeRequests().antMatchers("/reflection-comment/**").permitAll()
                 .and()
                 .headers()
                 // allow same origin to frame our site to support iframe SockJS

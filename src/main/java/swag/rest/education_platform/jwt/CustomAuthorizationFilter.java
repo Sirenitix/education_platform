@@ -38,8 +38,9 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
         } else {
                 try {
-                    if (request.getHeader(HttpHeaders.SET_COOKIE) != null) {
-                                token = request.getHeader(HttpHeaders.SET_COOKIE);
+                    String authToken = request.getHeader("Authorization");
+                    if (authToken != null && authToken.startsWith("Bearer")) {
+                                token = authToken.substring(7);
                                 UsernamePasswordAuthenticationToken authenticationToken = JwtUtil.parseToken(token);
                                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                                 System.out.println(SecurityContextHolder.getContext().getAuthentication());
@@ -63,3 +64,4 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
         }
     }
 
+    
