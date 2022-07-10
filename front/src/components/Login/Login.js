@@ -3,6 +3,7 @@ import "./Login.css";
 // import { useState } from "react";
 import { Flex, Box, Text } from "@chakra-ui/react";
 import { Service } from "../../service/Service";
+import SideBar from "../SideBar";
 
 const Login = () => {
   const service = new Service();
@@ -30,6 +31,7 @@ const Login = () => {
 
   return (
     <>
+      {/* <SideBar></SideBar> */}
       <Flex color="black">
         <Box
           flex="1.3"

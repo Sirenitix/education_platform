@@ -4,6 +4,7 @@ import Login from "./Login";
 import Profile from "./Profile";
 
 import { Routes, Route } from "react-router-dom";
+import UserCard from "./UserCard";
 
 function App() {
   return (
