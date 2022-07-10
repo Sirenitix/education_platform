@@ -53,8 +53,8 @@ public class Users implements UserDetails {
     @OneToMany(mappedBy = "user")
     private List<ReflectionPostComment> reflectionPostComments;
 
-    @OneToMany(mappedBy = "user")
-    private List<UserFullDetails> fullDetails;
+    @OneToOne(mappedBy = "user")
+    private UserFullDetails fullDetails;
 
     //--------------------------------
 

@@ -11,17 +11,17 @@ import swag.rest.education_platform.exception.UserExistException;
 
 @ControllerAdvice
 public class GlobalAdvice extends ResponseEntityExceptionHandler {
-    @ResponseBody
-    @ExceptionHandler
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    StackTraceElement[] studentNotFound(Exception ex) {
-        return ex.getStackTrace();
-    }
-    @ResponseBody
-    @ExceptionHandler(UserExistException.class)
-    public ResponseEntity<String> userExistException(UserExistException ex) {
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
-    }
+//    @ResponseBody
+//    @ExceptionHandler
+//    @ResponseStatus(HttpStatus.NOT_FOUND)
+//    StackTraceElement[] studentNotFound(Exception ex) {
+//        return ex.getStackTrace();
+//    }
+//    @ResponseBody
+//    @ExceptionHandler(UserExistException.class)
+//    public ResponseEntity<String> userExistException(UserExistException ex) {
+//        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+//    }
 
     @ResponseBody
     @ExceptionHandler(PostException.class)

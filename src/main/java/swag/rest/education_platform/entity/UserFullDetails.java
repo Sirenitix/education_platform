@@ -19,8 +19,10 @@ public class UserFullDetails {
     private String school;
     private String city;
     private String achievements;
+    @OneToOne(mappedBy = "userFullDetails")
+    private Avatar avatar;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "user_id")
     private Users user;
 }
