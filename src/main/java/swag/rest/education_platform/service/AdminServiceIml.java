@@ -21,9 +21,11 @@ public class AdminServiceIml implements AdminService {
     private final UserService userService;
 
     private final RefleсtionPostService refleсtionPostService;
+
     private final SciencePostService sciencePostService;
 
     private final ReflectionPostCommentService reflectionPostCommentService;
+
     private final SciencePostCommentService sciencePostCommentService;
 
     @Override
