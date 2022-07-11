@@ -49,8 +49,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .cors()
                 .and()
-                .logout().logoutUrl("/logout").deleteCookies("token")
-                .and()
                 .authorizeRequests().antMatchers("/reflection/**").permitAll()
                 .and()
                 .authorizeRequests().antMatchers("/reflection-comment/**").permitAll()
