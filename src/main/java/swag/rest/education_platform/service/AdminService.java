@@ -1,18 +1,12 @@
 package swag.rest.education_platform.service;
 
+public interface AdminService {
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+    void deleteUser(Long id);
+    void deleteUserByUsername(String username);
+    void deleteSciencePostById(Long postId);
+    void deleteReflectionPostById(Long refPosrId);
+    void deleteScienceCommentById(Long scienceCommentId);
+    void deleteReflectionCommentById(Long reflectionCommentId);
 
-@Service
-@RequiredArgsConstructor
-public class AdminService {
-
-    private final UserService userService;
-
-    public void deleteUser(Long id) {
-        //todo check why find request INT instead of LONG
-        userService.deleteById(id);
-    }
 }
