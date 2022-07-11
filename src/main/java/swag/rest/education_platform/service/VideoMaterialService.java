@@ -43,6 +43,5 @@ public class VideoMaterialService {
         video.setUrl(dto.getUrl());
         video.setUser(user);
         repository.save(video);
-
     }
 }
