@@ -6,6 +6,7 @@ import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import swag.rest.education_platform.dto.VideoUploadDto;
 import swag.rest.education_platform.entity.VideoMaterial;
 import swag.rest.education_platform.service.VideoMaterialService;
 
@@ -29,5 +30,12 @@ public class VideoMaterialController {
     public ResponseEntity<String> deleteVideoById(@PathVariable Long id, Principal principal) {
         service.deleteVideoById(id, principal.getName());
         return ResponseEntity.status(HttpStatus.OK).body("Deleted video with id: " + id);
+    }
+
+    @PutMapping("/upload")
+    public ResponseEntity<String> uploadVideo(@RequestBody VideoUploadDto dto,Principal principal) {
+        service.uploadVideo(dto,principal.getName());
+        return ResponseEntity.status(HttpStatus.CREATED).body("Video " + dto.getTitle() + " has been uploaded");
+
     }
 }
