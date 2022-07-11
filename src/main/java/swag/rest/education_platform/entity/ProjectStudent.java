@@ -21,6 +21,6 @@ public class ProjectStudent {
             inverseJoinColumns = @JoinColumn(name = "users_id"))
     private List<Users> users;
 
-    @OneToMany(mappedBy = "project_id")
+    @OneToMany(mappedBy = "project")
     private List<ProjectMessage> messages;
 }
