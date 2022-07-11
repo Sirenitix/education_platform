@@ -8,6 +8,9 @@ const Header = () => {
         minWidth="max-content"
         alignItems="center"
         gap="2"
+        paddingTop={"1rem"}
+        // borderBottom={"1px solid #F5F5F5"}
+        // boxShadow={"0px 3px 10px 2px rgba(0, 0, 0, 0.12)"}
         // margin={"3rem 0"}
       >
         <Box p="2" display={"flex"} gap={4}>

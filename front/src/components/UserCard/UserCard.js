@@ -1,16 +1,7 @@
 import { Avatar } from "@chakra-ui/react";
 import "./UserCard.css";
-import {
-  Table,
-  Thead,
-  Tbody,
-  Tfoot,
-  Tr,
-  Th,
-  Td,
-  TableCaption,
-  TableContainer,
-} from "@chakra-ui/react";
+import { Table, Tbody, Tr, Td, TableContainer } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 const UserCard = () => {
   return (
     <div className="uCard">
@@ -49,6 +40,14 @@ const UserCard = () => {
           </Tbody>
         </Table>
       </TableContainer>
+      <Button
+        fontWeight={"500"}
+        backgroundColor={"#FFCA7A"}
+        width={"138px"}
+        marginTop={"2rem"}
+      >
+        Редактировать
+      </Button>
     </div>
   );
 };

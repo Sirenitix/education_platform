@@ -1,12 +1,15 @@
 import "./SideBar.css";
-
+import { Link, useNavigate } from "react-router-dom";
+import Feed from "../Feed";
 const SideBar = () => {
+  const navigate = useNavigate();
+
   return (
     <>
       <div
         style={{
           height: "100vh",
-          backgroundColor: "#7F7EAE",
+          backgroundColor: "#001951",
           color: "white",
           borderTopRightRadius: "16px",
           borderBottomRightRadius: "16px",
@@ -35,11 +38,14 @@ const SideBar = () => {
           </svg>
         </div>
 
-        <div style={{ marginTop: "30px" }}>Мой профиль</div>
-        <div>Лента</div>
+        <div style={{ marginTop: "30px" }} onClick={() => navigate("/profile")}>
+          Мой профиль
+        </div>
+        <div onClick={() => navigate("/feed")}>Лента</div>
         <div>Статьи</div>
         <div>Сообщения</div>
-        <div>Мой профиль</div>
+        <div>Менторство</div>
+        <div>Обучение</div>
       </div>
     </>
   );

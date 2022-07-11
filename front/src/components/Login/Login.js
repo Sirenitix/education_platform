@@ -32,10 +32,10 @@ const Login = () => {
   return (
     <>
       {/* <SideBar></SideBar> */}
-      <Flex color="black">
+      <Flex color="black" padding={"8rem"}>
         <Box
           flex="1.3"
-          height={"100vh"}
+          height={"80vh"}
           textAlign={"left"}
           display={"flex"}
           flexDirection={"column"}
@@ -51,7 +51,7 @@ const Login = () => {
         </Box>
         <Box
           flex="0.8"
-          height={"100vh"}
+          height={"80vh"}
           display={"flex"}
           flexDirection={"column"}
           justifyContent={"center"}
