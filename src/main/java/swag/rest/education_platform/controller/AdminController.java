@@ -21,26 +21,26 @@ public class AdminController {
 
     @DeleteMapping("/deleteUserByUsername")
     public void deleteUserByUsername(String username) {
-
+        adminService.deleteUserByUsername(username);
     }
 
     @DeleteMapping("/deleteSciencePostById")
     public void deleteSciencePostById(Long postId) {
-
+        adminService.deleteSciencePostById(postId);
     }
 
     @DeleteMapping("/deleteReflectionPostById")
-    public void deleteReflectionPostById(Long id) {
-
+    public void deleteReflectionPostById(Long posrId) {
+        adminService.deleteReflectionPostById(posrId);
     }
 
     @DeleteMapping("/deleteScienceCommentById")
-    public void deleteScienceCommentById(Long id) {
-
+    public void deleteScienceCommentById(Long commnentId, Long postId) {
+        adminService.deleteScienceCommentById(commnentId, postId);
     }
 
     @DeleteMapping("/deleteReflectionCommentById")
-    public void deleteReflectionCommentById(Long id){
-
+    public void deleteReflectionCommentById(Long commentId, Long postId){
+        adminService.deleteReflectionCommentById(commentId, postId);
     }
 }
