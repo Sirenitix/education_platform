@@ -56,6 +56,9 @@ public class Users implements UserDetails {
     @OneToOne(mappedBy = "user")
     private UserFullDetails fullDetails;
 
+    @OneToMany(mappedBy = "user")
+    private List<VideoMaterial> videos;
+
     //--------------------------------
 
 
