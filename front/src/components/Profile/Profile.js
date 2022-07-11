@@ -3,6 +3,8 @@ import Header from "../Header";
 import SideBar from "../SideBar";
 import UserCard from "../UserCard";
 import AddPost from "../AddPost";
+import { Service } from "../../service/Service";
+import { useState, useEffect, useCallback } from "react";
 import {
   Tabs,
   TabList,
@@ -16,6 +18,28 @@ import {
 import Posts from "../Posts";
 
 const Profile = () => {
+  const [data, setData] = useState([]);
+
+  const getUserPosts = useCallback(async () => {
+    const arr = await fetch(`http://164.92.192.48:8081/reflection/posts`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((arr) => arr.json())
+      .catch((err) => {
+        console.error(err);
+      });
+    setData(arr);
+  }, []);
+
+  useEffect(() => {
+    getUserPosts();
+  }, []);
+
+  // console.log("data", data);
   return (
     <div className="profileLayout">
       <div className="navigation">
@@ -51,10 +75,7 @@ const Profile = () => {
                     {" "}
                     Мои рефлексии:
                   </Text>
-                  <Posts></Posts>
-                  <Posts></Posts>
-                  <Posts></Posts>
-                  <Posts></Posts>
+                  <Posts postsArr={data} />
                 </TabPanel>
                 <TabPanel>
                   <AddPost></AddPost>

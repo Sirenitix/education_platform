@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 import "./Login.css";
 // import { useState } from "react";
-import { Flex, Box, Text } from "@chakra-ui/react";
+import { Flex, Box, Text, Image } from "@chakra-ui/react";
 import { Service } from "../../service/Service";
 import SideBar from "../SideBar";
 
@@ -32,30 +32,44 @@ const Login = () => {
   return (
     <>
       {/* <SideBar></SideBar> */}
-      <Flex color="black" padding={"8rem"}>
+      <Flex color="black">
         <Box
           flex="1.3"
-          height={"80vh"}
+          height={"100vh"}
           textAlign={"left"}
           display={"flex"}
           flexDirection={"column"}
-          justifyContent={"center"}
+          backgroundColor={"#BCD7DA"}
+          // justifyContent={"center"}
           alignItems={"left"}
         >
-          <Text fontSize="6xl" color={"#12492F"} fontWeight={"bold"}>
+          <Text
+            fontSize="9xl"
+            color={"#ffffff"}
+            fontWeight={"bold"}
+            padding={"2rem 0 0 3rem"}
+          >
             SHARE
           </Text>
-          <Text fontSize="3xl" color={"black"} fontWeight={"bold"}>
+          <Text
+            fontSize="4xl"
+            color={"#ffffff"}
+            fontWeight={"bold"}
+            padding={"2rem 0 0 3rem"}
+          >
             School Hub for Action Research<br></br> in Education
           </Text>
+          <img src="../public/networking.svg"></img>
         </Box>
         <Box
           flex="0.8"
-          height={"80vh"}
+          height={"100vh"}
           display={"flex"}
           flexDirection={"column"}
           justifyContent={"center"}
           alignItems={"left"}
+          borderTopLeftRadius={"3rem"}
+          borderTopRightRadius={"3rem"}
         >
           <>
             <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -78,7 +92,7 @@ const Login = () => {
                         type="email"
                         autoComplete="email"
                         required
-                        className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                        className="loginInput appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                         placeholder="Email address"
                         value={formik.values.username}
                         onChange={formik.handleChange}
@@ -94,7 +108,7 @@ const Login = () => {
                         type="password"
                         autoComplete="current-password"
                         required
-                        className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                        className="loginInput appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                         placeholder="Password"
                         value={formik.values.password}
                         onChange={formik.handleChange}
@@ -107,9 +121,9 @@ const Login = () => {
                   <div style={{ display: "flex", justifyContent: "center" }}>
                     <button
                       type="submit"
-                      className="group relative w-full flex justify-center py-4 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                      className=" loginBtn group relative w-full flex justify-center py-4 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                       style={{
-                        backgroundColor: "#F7A325",
+                        backgroundColor: "#BCD7DA",
                         width: "154px",
                         height: "50px",
                         display: "flex",

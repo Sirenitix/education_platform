@@ -14,8 +14,30 @@ import {
   Text,
 } from "@chakra-ui/react";
 import Posts from "../Posts";
+import { useState, useEffect, useCallback } from "react";
 
 const Feed = () => {
+  const [data, setData] = useState([]);
+
+  const getUserPosts = useCallback(async () => {
+    const arr = await fetch(`http://164.92.192.48:8081/reflection/posts`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((arr) => arr.json())
+      .catch((err) => {
+        console.error(err);
+      });
+    setData(arr);
+  }, []);
+
+  useEffect(() => {
+    getUserPosts();
+  }, []);
+
   return (
     <div className="profileLayout">
       <div className="navigation">
@@ -35,12 +57,7 @@ const Feed = () => {
             >
               Рефлексии других учителей:
             </Text>
-            <Posts />
-            <Posts />
-            <Posts />
-            <Posts />
-            <Posts />
-            <Posts />
+            <Posts postsArr={data} />
           </div>
         </div>
       </div>

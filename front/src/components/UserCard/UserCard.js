@@ -9,7 +9,7 @@ const UserCard = () => {
       <Avatar
         size="2xl"
         src="../../public/avatar.png"
-        marginTop={"-80px"}
+        marginTop={"80px"}
       />{" "}
       <div className="userName">Нурсулу Оспан</div>
       <div className="title">Личные данные</div>
