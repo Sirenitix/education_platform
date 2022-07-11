@@ -11,16 +11,15 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import swag.rest.education_platform.dto.UserDto;
-import swag.rest.education_platform.entity.AdminCredentials;
-import swag.rest.education_platform.entity.Avatar;
-import swag.rest.education_platform.entity.UserFullDetails;
-import swag.rest.education_platform.entity.Users;
+import swag.rest.education_platform.entity.*;
 import swag.rest.education_platform.service.AccountService;
+import swag.rest.education_platform.service.ProjectStudentService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -31,7 +30,7 @@ import java.util.Map;
 public class AccountRestController  {
 
     private final AccountService service;
-
+    private final ProjectStudentService projectStudentService;
 
     @PostMapping("/register")
     public ResponseEntity<String> save(@RequestBody UserDto user) {
@@ -86,6 +85,16 @@ public class AccountRestController  {
             return auth.getAuthorities().toString();
     }
 
+    @GetMapping("/projects")
+    public ResponseEntity<?> getProjects (Principal principal) {
+        List<ProjectStudent> projects = projectStudentService.getProjectByUsername(principal.getName());
+        return ResponseEntity.status(HttpStatus.OK).body(projects);
+    }
 
+    @PostMapping("/createProject")
+    public ResponseEntity<?> createProject (Principal principal, String project_name, List<String> users) {
+        projectStudentService.createProject(principal.getName(),project_name,users);
+        return ResponseEntity.status(HttpStatus.OK).body("Project has been created");
 
-}
+    }
+    }
