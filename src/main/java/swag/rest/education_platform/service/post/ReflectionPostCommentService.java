@@ -33,4 +33,8 @@ public class ReflectionPostCommentService {
     public void deleteComment(Long id) {
         repository.deleteById(id);
     }
+
+    public Boolean exist(Long id) {
+        return repository.existsById(id);
+    }
 }

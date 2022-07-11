@@ -6,7 +6,7 @@ public interface AdminService {
     void deleteUserByUsername(String username);
     void deleteSciencePostById(Long postId);
     void deleteReflectionPostById(Long refPosrId);
-    void deleteScienceCommentById(Long scienceCommentId, Long postId);
-    void deleteReflectionCommentById(Long reflectionCommentId, Long postId);
+    void deleteScienceCommentById(Long scienceCommentId);
+    void deleteReflectionCommentById(Long reflectionCommentId);
 
 }

@@ -4,8 +4,15 @@ package swag.rest.education_platform.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import swag.rest.education_platform.dao.SciencePostCommentRepository;
+import swag.rest.education_platform.entity.ReflectionPost;
+import swag.rest.education_platform.entity.SciencePost;
 import swag.rest.education_platform.entity.Users;
 import swag.rest.education_platform.exception.PostNotFoundException;
+import swag.rest.education_platform.service.post.ReflectionPostCommentService;
+import swag.rest.education_platform.service.post.RefleсtionPostService;
+import swag.rest.education_platform.service.post.SciencePostCommentService;
+import swag.rest.education_platform.service.post.SciencePostService;
 
 @Service
 @RequiredArgsConstructor
@@ -13,9 +20,11 @@ public class AdminServiceIml implements AdminService {
 
     private final UserService userService;
 
-    private  final PostService postService;
+    private final RefleсtionPostService refleсtionPostService;
+    private final SciencePostService sciencePostService;
 
-    private final CommentService commentService;
+    private final ReflectionPostCommentService reflectionPostCommentService;
+    private final SciencePostCommentService sciencePostCommentService;
 
     @Override
     public void deleteUser(Long id) {
@@ -31,25 +40,30 @@ public class AdminServiceIml implements AdminService {
 
     @Override
     public void deleteSciencePostById(Long postId) {
-        Post post = postService.findById(postId).orElseThrow(PostNotFoundException::new);
-        postService.deleteById(post.getId());
+        SciencePost post = sciencePostService.findById(postId);
+        sciencePostService.deletePost(post.getId());
     }
 
     @Override
-    public void deleteReflectionPostById(Long refPosrId) {
-        Post post = postService.findById(postId).orElseThrow(PostNotFoundException::new);
-        postService.deleteById(post.getId());
+    public void deleteReflectionPostById(Long postId) {
+        ReflectionPost post = refleсtionPostService.findById(postId);
+        sciencePostService.deletePost(post.getId());
     }
 
     @Override
-    public void deleteScienceCommentById(Long scienceCommentId, Long postId) {
-        Post post = postService.findById(postId).orElseThrow(PostNotFoundException::new);
-        commentService.deleteById(post.getCommentId());
+    public void deleteScienceCommentById(Long scienceCommentId) {
+       if(!sciencePostCommentService.exist(scienceCommentId)) {
+           throw new RuntimeException("Comment not found");
+       }
+        sciencePostCommentService.deleteComment(scienceCommentId);
     }
 
     @Override
-    public void deleteReflectionCommentById(Long reflectionCommentId, Long postId) {
-        Post post = postService.findById(postId).orElseThrow(PostNotFoundException::new);
-        commentService.deleteById(post.getCommentId());
+    public void deleteReflectionCommentById(Long reflectionCommentId) {
+
+        if(!reflectionPostCommentService.exist(reflectionCommentId)) {
+            throw new RuntimeException("Comment not found");
+        }
+        reflectionPostCommentService.deleteComment(reflectionCommentId);
     }
 }

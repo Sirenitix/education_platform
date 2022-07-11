@@ -29,6 +29,10 @@ public class SciencePostCommentService {
         repository.save(comment);
     }
 
+    public Boolean exist(Long id) {
+       return repository.existsById(id);
+    }
+
     public void deleteComment(Long id) {
         repository.deleteById(id);
     }

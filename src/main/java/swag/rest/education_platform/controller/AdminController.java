@@ -35,12 +35,12 @@ public class AdminController {
     }
 
     @DeleteMapping("/deleteScienceCommentById")
-    public void deleteScienceCommentById(Long commnentId, Long postId) {
-        adminService.deleteScienceCommentById(commnentId, postId);
+    public void deleteScienceCommentById(Long commnentId) {
+        adminService.deleteScienceCommentById(commnentId);
     }
 
     @DeleteMapping("/deleteReflectionCommentById")
-    public void deleteReflectionCommentById(Long commentId, Long postId){
-        adminService.deleteReflectionCommentById(commentId, postId);
+    public void deleteReflectionCommentById(Long commentId){
+        adminService.deleteReflectionCommentById(commentId);
     }
 }
