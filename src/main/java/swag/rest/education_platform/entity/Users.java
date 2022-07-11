@@ -62,6 +62,14 @@ public class Users implements UserDetails {
     @OneToMany(mappedBy = "user")
     private List<PdfMaterial> pdfs;
 
+    @ManyToMany
+    @JoinTable(name = "users",
+            joinColumns = @JoinColumn(name = "users_id"),
+            inverseJoinColumns = @JoinColumn(name = "project_student_id"))
+    private List<ProjectStudent> projects;
+
+    @OneToMany(mappedBy = "user")
+    private List<ProjectMessage> messages;
     //--------------------------------
 
 
