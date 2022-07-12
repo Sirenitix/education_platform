@@ -9,9 +9,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import swag.rest.education_platform.dao.ReflectionPostCommentRepository;
 import swag.rest.education_platform.dao.ReflectionPostRepository;
 import swag.rest.education_platform.dto.ReflextionPostCreateDto;
 import swag.rest.education_platform.entity.ReflectionPost;
+import swag.rest.education_platform.entity.ReflectionPostComment;
 import swag.rest.education_platform.entity.Users;
 import swag.rest.education_platform.exception.PostException;
 import swag.rest.education_platform.exception.PostNotFoundException;
@@ -29,6 +31,7 @@ public class RefleсtionPostService {
 
     private final ReflectionPostRepository repository;
     private final UserService userService;
+    private final ReflectionPostCommentRepository commentRepository;
 
     @Transactional
     public void createPost(ReflextionPostCreateDto dto) {
@@ -40,7 +43,11 @@ public class RefleсtionPostService {
     }
     @Transactional(readOnly = true)
     public ReflectionPost getPostByIdWithComment(Long id) {
-        return repository.getPostByIdWithComment(id).orElseThrow(() -> new PostNotFoundException());
+        ReflectionPost post = repository.getOnlyPostById(id);
+        List<ReflectionPostComment> comments = commentRepository.getOnlyCommentByPostId(id);
+        post.setComment(comments);
+
+        return post;
     }
     @Transactional
     public void updatePost(ReflextionPostCreateDto dto, Long post_id, String username) {

@@ -1,6 +1,7 @@
 package swag.rest.education_platform.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import java.util.List;
 @Entity
 @Table(name = "reflexion_post")
 @Getter@Setter
+@NoArgsConstructor
 public class ReflectionPost {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +27,18 @@ public class ReflectionPost {
 
     private Long likes;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "post",fetch = FetchType.LAZY,cascade = CascadeType.REMOVE)
     private List<ReflectionPostComment> comment;
 
+    public ReflectionPost(Long id) {
+        this.id = id;
+    }
+
+    public ReflectionPost(Long id, String content, String title, LocalDate postDate, Long likes) {
+        this.id = id;
+        this.content = content;
+        this.title = title;
+        this.postDate = postDate;
+        this.likes = likes;
+    }
 }
