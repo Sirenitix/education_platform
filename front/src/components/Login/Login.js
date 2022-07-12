@@ -40,7 +40,7 @@ const Login = () => {
           display={"flex"}
           flexDirection={"column"}
           backgroundColor={"#BCD7DA"}
-          // justifyContent={"center"}
+          justifyContent={"center"}
           alignItems={"left"}
         >
           <Text

@@ -20,13 +20,16 @@ const Feed = () => {
   const [data, setData] = useState([]);
 
   const getUserPosts = useCallback(async () => {
-    const arr = await fetch(`http://164.92.192.48:8081/reflection/posts`, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
+    const arr = await fetch(
+      `http://164.92.192.48:8081/reflection/posts?page=0`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    )
       .then((arr) => arr.json())
       .catch((err) => {
         console.error(err);

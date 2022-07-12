@@ -1,6 +1,5 @@
 import {
   Box,
-  Textarea,
   Text,
   Menu,
   MenuButton,
@@ -49,7 +48,7 @@ const Profile = () => {
         flexDirection={"column"}
         justifyContent={"center"}
         alignItems={"center"}
-        alignText={"left"}
+        aligntext={"left"}
       >
         <Text margin={"2rem 0"} fontWeight={"600"}>
           О чем Вы хотите поделиться?
@@ -64,14 +63,19 @@ const Profile = () => {
             onChange={formik.handleChange}
           ></input>
           <Text fontWeight={"600"}>Содержимое</Text>
-          <input
+          <textarea
             className="postContent"
             name="content"
             value={formik.values.content}
             onChange={formik.handleChange}
-            type="text"
-          ></input>
-          <Box>
+            type="textarea"
+          ></textarea>
+          <Box
+            padding={"1rem"}
+            display={"flex"}
+            justifyContent={"right"}
+            alignItems={"right"}
+          >
             <Menu>
               <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
                 Прикрепить
@@ -85,19 +89,26 @@ const Profile = () => {
               </MenuList>
             </Menu>
           </Box>
-          <button
-            type="submit"
-            className="group relative w-full flex justify-center py-4 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            style={{
-              backgroundColor: "#F7A325",
-              width: "154px",
-              height: "50px",
-              display: "flex",
-              justifyContent: "center",
-            }}
+          <Box
+            padding={"1rem"}
+            display={"flex"}
+            justifyContent={"right"}
+            alignItems={"right"}
           >
-            Отправить
-          </button>
+            <button
+              type="submit"
+              style={{
+                backgroundColor: "#FFCA7A",
+                width: "154px",
+                height: "40px",
+                textAlign: "center",
+                fontWeight: "600",
+                borderRadius: "10px",
+              }}
+            >
+              Отправить
+            </button>
+          </Box>
         </form>
       </Box>
     </>

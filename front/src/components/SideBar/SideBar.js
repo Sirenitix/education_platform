@@ -27,6 +27,8 @@ const SideBar = () => {
           paddingTop: "60px",
           paddingLeft: "60px",
           fontWeight: "bold",
+          width: "275px",
+          position: "fixed",
         }}
       >
         <div

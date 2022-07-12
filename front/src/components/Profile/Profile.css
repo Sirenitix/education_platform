@@ -24,9 +24,12 @@
 }
 .userInfo {
   width: 30%;
+  margin-top: 1rem;
 }
 .userPosts {
   width: 70%;
   padding-right: 2rem;
+  margin-top: 1rem;
+
   /* border: 1px solid #e5c3c3; */
 }

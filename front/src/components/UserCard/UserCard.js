@@ -2,7 +2,12 @@ import { Avatar } from "@chakra-ui/react";
 import "./UserCard.css";
 import { Table, Tbody, Tr, Td, TableContainer } from "@chakra-ui/react";
 import { Button } from "@chakra-ui/react";
+
+import { useDisclosure } from "@chakra-ui/react";
+
 const UserCard = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
     <div className="uCard">
       <div className="avatarBackground"></div>
