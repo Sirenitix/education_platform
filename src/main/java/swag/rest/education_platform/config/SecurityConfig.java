@@ -49,10 +49,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .cors()
                 .and()
-                .authorizeRequests().antMatchers("/reflection/**").permitAll()
-                .and()
-                .authorizeRequests().antMatchers("/reflection-comment/**").permitAll()
-                .and()
                 .headers()
                 // allow same origin to frame our site to support iframe SockJS
                 .frameOptions().sameOrigin()
