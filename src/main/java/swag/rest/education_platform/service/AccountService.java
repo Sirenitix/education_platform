@@ -16,6 +16,7 @@ import swag.rest.education_platform.dao.AvatarRepository;
 import swag.rest.education_platform.dao.UserFullDetailsRepository;
 import swag.rest.education_platform.dao.UserRepository;
 import swag.rest.education_platform.dto.UserDto;
+import swag.rest.education_platform.dto.UserReponseDto;
 import swag.rest.education_platform.entity.Avatar;
 import swag.rest.education_platform.entity.UserFullDetails;
 import swag.rest.education_platform.entity.Users;
@@ -25,6 +26,8 @@ import swag.rest.education_platform.jwt.JwtUtil;
 import javax.servlet.http.HttpServletRequest;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
@@ -131,6 +134,21 @@ public class AccountService {
         catch (DataFormatException e) {
         }
         return outputStream.toByteArray();
+    }
+
+    @Transactional(readOnly = true)
+    public List<UserReponseDto> getUsers() {
+       List<UserReponseDto> response = new ArrayList<>();
+        List<Users> users = userRepository.findAll();
+        for(Users u : users) {
+            UserReponseDto dto = new UserReponseDto();
+            dto.setId(u.getId());
+            dto.setFirstname(u.getFirstname());
+            dto.setLastname(u.getLastname());
+            dto.setUsername(u.getUsername());
+            response.add(dto);
+        }
+        return response;
     }
 
 }

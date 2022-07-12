@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import swag.rest.education_platform.dto.UserDto;
+import swag.rest.education_platform.dto.UserReponseDto;
 import swag.rest.education_platform.entity.*;
 import swag.rest.education_platform.service.AccountService;
 import swag.rest.education_platform.service.ProjectStudentService;
@@ -31,7 +32,11 @@ public class AccountRestController  {
 
     private final AccountService service;
     private final ProjectStudentService projectStudentService;
-
+    @GetMapping("/get-users")
+    public ResponseEntity<?> getUsers() {
+        List<UserReponseDto> users = service.getUsers();
+        return ResponseEntity.status(HttpStatus.OK).body(users);
+    }
     @PostMapping("/register")
     public ResponseEntity<String> save(@RequestBody UserDto user) {
         service.register(user);
