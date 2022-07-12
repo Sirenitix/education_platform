@@ -9,19 +9,18 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import swag.rest.education_platform.dao.PostResponseDto;
 import swag.rest.education_platform.dao.SciencePostCommentRepository;
 import swag.rest.education_platform.dao.SciencePostRepository;
 import swag.rest.education_platform.dto.ReflextionPostCreateDto;
 import swag.rest.education_platform.dto.SciencePostRequestDto;
-import swag.rest.education_platform.entity.ReflectionPost;
-import swag.rest.education_platform.entity.ReflectionPostComment;
-import swag.rest.education_platform.entity.SciencePost;
-import swag.rest.education_platform.entity.SciencePostComment;
+import swag.rest.education_platform.entity.*;
 import swag.rest.education_platform.exception.PostException;
 import swag.rest.education_platform.exception.PostNotFoundException;
 import swag.rest.education_platform.service.UserService;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -34,11 +33,14 @@ public class SciencePostService {
     private final SciencePostCommentRepository commentRepository;
 
     @Transactional
-    public void createPost(SciencePostRequestDto dto) {
+    public void createPost(SciencePostRequestDto dto,String username) {
+        Users user = userService.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("user not found"));
         SciencePost post = new SciencePost();
         post.setTitle(dto.getTitle());
         post.setContent(dto.getContent());
         post.setPostDate(LocalDate.now());
+        post.setUser(user);
+
         repository.save(post);
     }
 
@@ -52,15 +54,22 @@ public class SciencePostService {
     }
 
     @Transactional(readOnly = true)
-    public List<SciencePost> getPosts(int page) {
+    public List<PostResponseDto> getPosts(int page) {
         Pageable paging = PageRequest.of(page, 50);
         List<SciencePost> pagePost = repository.findAll(paging).getContent();
+        List<PostResponseDto> dto = new ArrayList<>();
         for (SciencePost post : pagePost) {
             if (post.getContent().length() > 100) {
                 post.setContent(post.getContent().substring(0, 99));
             }
+            PostResponseDto response = new PostResponseDto();
+            response.setId(post.getId());
+            response.setContent(post.getContent());
+            response.setTitle(post.getTitle());
+            response.setOwnerId(post.getUser().getId());
+            dto.add(response);
         }
-        return pagePost;
+        return dto;
     }
 
     @Transactional

@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import swag.rest.education_platform.dao.PostResponseDto;
 import swag.rest.education_platform.dao.ReflectionPostCommentRepository;
 import swag.rest.education_platform.dao.ReflectionPostRepository;
 import swag.rest.education_platform.dto.ReflextionPostCreateDto;
@@ -34,13 +35,17 @@ public class RefleсtionPostService {
     private final ReflectionPostCommentRepository commentRepository;
 
     @Transactional
-    public void createPost(ReflextionPostCreateDto dto) {
+    public void createPost(ReflextionPostCreateDto dto, String username) {
+        Users user = userService.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("user not found"));
         ReflectionPost post = new ReflectionPost();
         post.setTitle(dto.getTitle());
         post.setContent(dto.getContent());
         post.setPostDate(LocalDate.now());
+        post.setUser(user);
         repository.save(post);
     }
+
+
     @Transactional(readOnly = true)
     public ReflectionPost getPostByIdWithComment(Long id) {
         ReflectionPost post = repository.getOnlyPostById(id);
@@ -60,17 +65,27 @@ public class RefleсtionPostService {
         repository.save(post);
     }
     @Transactional(readOnly = true)
-    public List<ReflectionPost> getPosts(int page) {
+    public List<PostResponseDto> getPosts(int page) {
 
         Pageable paging = PageRequest.of(page,50);
         List<ReflectionPost> pagePost =  repository.findAll(paging).getContent();
+        List<PostResponseDto> dto = new ArrayList<>();
 
         for (ReflectionPost post : pagePost) {
+
             if(post.getContent().length() >100) {
                 post.setContent(post.getContent().substring(0,99));
             }
+            PostResponseDto response = new PostResponseDto();
+            response.setId(post.getId());
+            response.setContent(post.getContent());
+            response.setTitle(post.getTitle());
+            response.setOwnerId(post.getUser().getId());
+            dto.add(response);
+
+
         }
-        return pagePost;
+        return dto;
     }
 
     public void deletePost(Long id) {

@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import swag.rest.education_platform.dao.PostResponseDto;
 import swag.rest.education_platform.dto.ReflextionPostCreateDto;
 import swag.rest.education_platform.entity.ReflectionPost;
 import swag.rest.education_platform.service.post.RefleсtionPostService;
@@ -23,8 +24,8 @@ public class ReflectionPostController {
     private final RefleсtionPostService service;
 
     @PostMapping("/create-post")
-    public ResponseEntity<String> createPost(@RequestBody ReflextionPostCreateDto dto) {
-        service.createPost(dto);
+    public ResponseEntity<String> createPost(@RequestBody ReflextionPostCreateDto dto, Principal principal) {
+        service.createPost(dto, principal.getName());
         return ResponseEntity.status(HttpStatus.CREATED).body("Post has been saved");
     }
 
@@ -44,7 +45,7 @@ public class ReflectionPostController {
     @GetMapping("/posts")
     public ResponseEntity<?> getPosts(@RequestParam(defaultValue = "1") int page) {
         //todo Content is also send, need to remove it from response
-        List<ReflectionPost> posts = service.getPosts(page);
+        List<PostResponseDto> posts = service.getPosts(page);
         System.out.println(posts.size());
 
         return ResponseEntity.status(HttpStatus.OK).body(posts);

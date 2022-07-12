@@ -23,8 +23,8 @@ import java.util.stream.Collectors;
 public class SciencePostController {
         private final SciencePostService service;
     @PostMapping("/create-post")
-    public ResponseEntity<String> createPost(@RequestBody SciencePostRequestDto dto) {
-        service.createPost(dto);
+    public ResponseEntity<String> createPost(@RequestBody SciencePostRequestDto dto, Principal principal) {
+        service.createPost(dto, principal.getName() );
         return ResponseEntity.status(HttpStatus.OK).body("Post has been saved");
     }
     @GetMapping("/post/{id}")
