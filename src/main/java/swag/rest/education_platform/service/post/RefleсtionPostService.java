@@ -55,7 +55,7 @@ public class RefleсtionPostService {
     @Transactional(readOnly = true)
     public List<ReflectionPost> getPosts(int page) {
 
-        Pageable paging = PageRequest.of(page,5);
+        Pageable paging = PageRequest.of(page,50);
         List<ReflectionPost> pagePost =  repository.findAll(paging).getContent();
 
         for (ReflectionPost post : pagePost) {

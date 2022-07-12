@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import swag.rest.education_platform.entity.Users;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -14,4 +15,7 @@ public interface UserRepository extends JpaRepository<Users, Long> {
     Optional<Users> findById(Integer id);
     Boolean existsByUsername(String username);
     void deleteById(Long id);
+
+//    @Query("Select u from Users u left join fetch u.fullDetails")
+//    List<Users> findAllUsers();
 }

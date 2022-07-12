@@ -38,7 +38,8 @@ public class Users implements UserDetails {
         this.enabled = enabled;
         this.role = role;
     }
-
+    private String firstname;
+    private String lastname;
 //relations with other entities
 
     @OneToMany(mappedBy = "user")
