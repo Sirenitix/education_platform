@@ -28,6 +28,8 @@ import java.util.List;
 public class SciencePostService {
     private final SciencePostRepository repository;
     private final UserService userService;
+
+    @Transactional
     public void createPost(SciencePostRequestDto dto) {
         SciencePost post = new SciencePost();
         post.setTitle(dto.getTitle());
@@ -36,23 +38,28 @@ public class SciencePostService {
         repository.save(post);
     }
 
+    @Transactional(readOnly = true)
     public SciencePost getPostByIdWithComment(Long id) {
         return repository.getPostByIdWithComment(id).orElseThrow(PostNotFoundException::new);
     }
 
+    @Transactional(readOnly = true)
     public List<SciencePost> getPosts(int page) {
         Pageable paging = PageRequest.of(page, 10);
-        Page<SciencePost> pagePost = repository.findAll(paging);
-        for (SciencePost post : pagePost.getContent()) {
-            post.setContent(post.getContent().substring(0,100)+"...");
+        List<SciencePost> pagePost = repository.findAll(paging).getContent();
+        for (SciencePost post : pagePost) {
+            if (post.getComment().size() > 100) {
+                post.setContent(post.getContent().substring(0, 100));
+            }
         }
-        return pagePost.getContent();
+        return pagePost;
     }
 
+    @Transactional
     public void updatePost(SciencePostRequestDto dto, Long post_id, String username) {
-        Long user_id = userService.findByUsername(username).orElseThrow(()-> new UsernameNotFoundException("User not found")).getId();
+        Long user_id = userService.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found")).getId();
         SciencePost post = repository.findById(post_id).orElseThrow(PostNotFoundException::new);
-        if(!post.getUser().getId().equals(user_id))
+        if (!post.getUser().getId().equals(user_id))
             throw new PostException("You are not owner of this post");
         post.setTitle(dto.getTitle());
         post.setContent(dto.getContent());
@@ -62,6 +69,7 @@ public class SciencePostService {
     public void deletePost(Long id) {
         repository.deleteById(id);
     }
+
     public SciencePost findById(Long id) {
         return repository.findById(id).orElseThrow(PostNotFoundException::new);
     }

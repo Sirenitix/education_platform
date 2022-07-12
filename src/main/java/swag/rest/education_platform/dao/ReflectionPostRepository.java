@@ -13,7 +13,6 @@ public interface ReflectionPostRepository extends JpaRepository<ReflectionPost,L
 
     @Query("select p from ReflectionPost p left join fetch p.comment where p.id = :id")
     Optional<ReflectionPost> getPostByIdWithComment(Long id);
-    @Override
-    Page<ReflectionPost> findAll(Pageable page);
+//    Page<ReflectionPost> findAll(Pageable page);
 
 }

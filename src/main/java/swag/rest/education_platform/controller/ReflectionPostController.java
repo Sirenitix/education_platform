@@ -42,12 +42,12 @@ public class ReflectionPostController {
     }
 
     @GetMapping("/posts")
-    public ResponseEntity<?> getPosts(@RequestParam(defaultValue = "0") int page) {
+    public ResponseEntity<?> getPosts(@RequestParam(defaultValue = "1") int page) {
         //todo Content is also send, need to remove it from response
+        List<ReflectionPost> posts = service.getPosts(page);
+        System.out.println(posts.size());
 
-        List<ReflectionPost> post = new ArrayList<>(service.getPosts(page));
-
-        return ResponseEntity.status(HttpStatus.OK).body(service.getPosts(page));
+        return ResponseEntity.status(HttpStatus.OK).body(posts);
     }
 
     @DeleteMapping("/delete-post/{id}")
