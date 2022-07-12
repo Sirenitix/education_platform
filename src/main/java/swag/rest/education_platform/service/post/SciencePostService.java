@@ -45,7 +45,7 @@ public class SciencePostService {
 
     @Transactional(readOnly = true)
     public List<SciencePost> getPosts(int page) {
-        Pageable paging = PageRequest.of(page, 10);
+        Pageable paging = PageRequest.of(page, 50);
         List<SciencePost> pagePost = repository.findAll(paging).getContent();
         for (SciencePost post : pagePost) {
             if (post.getContent().length() > 100) {
