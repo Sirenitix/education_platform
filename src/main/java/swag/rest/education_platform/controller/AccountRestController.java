@@ -97,4 +97,11 @@ public class AccountRestController  {
         return ResponseEntity.status(HttpStatus.OK).body("Project has been created");
 
     }
+
+    @PutMapping("/editProject")
+    public ResponseEntity<?> editProject (Principal principal,@RequestBody ProjectStudent projectStudent) {
+        projectStudentService.updateProject(projectStudent,principal);
+        return ResponseEntity.status(HttpStatus.OK).body("Project has been created");
+
     }
+}

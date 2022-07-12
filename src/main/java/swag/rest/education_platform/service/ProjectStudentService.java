@@ -6,9 +6,14 @@ import org.springframework.stereotype.Service;
 import swag.rest.education_platform.dao.ProjectStudentRepository;
 import swag.rest.education_platform.entity.ProjectStudent;
 import swag.rest.education_platform.entity.Users;
+import swag.rest.education_platform.exception.ProjectStudentNotFound;
+import swag.rest.education_platform.exception.UserNotInProjectException;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -38,5 +43,15 @@ public class ProjectStudentService {
         project.setUsers(usersList);
         project.setTitle(project_name);
         repository.save(project);
+    }
+
+    public void updateProject(ProjectStudent projectStudent, Principal principal){
+        String username = principal.getName();
+        Users currentUser = userService.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found!"));
+        ProjectStudent projectStudentFromDb = repository.findById(projectStudent.getId()).orElseThrow(() -> (new ProjectStudentNotFound("Project not found!")));
+        List<Users> hasProject = projectStudentFromDb.getUsers().stream().filter(user -> Objects.equals(user.getId(), currentUser.getId())).collect(Collectors.toList());
+        if(hasProject.isEmpty()){
+            throw new UserNotInProjectException("This user is not participated in this project");
+        }
     }
 }
