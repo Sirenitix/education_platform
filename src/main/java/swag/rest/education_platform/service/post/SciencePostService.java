@@ -9,11 +9,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import swag.rest.education_platform.dao.SciencePostCommentRepository;
 import swag.rest.education_platform.dao.SciencePostRepository;
 import swag.rest.education_platform.dto.ReflextionPostCreateDto;
 import swag.rest.education_platform.dto.SciencePostRequestDto;
 import swag.rest.education_platform.entity.ReflectionPost;
+import swag.rest.education_platform.entity.ReflectionPostComment;
 import swag.rest.education_platform.entity.SciencePost;
+import swag.rest.education_platform.entity.SciencePostComment;
 import swag.rest.education_platform.exception.PostException;
 import swag.rest.education_platform.exception.PostNotFoundException;
 import swag.rest.education_platform.service.UserService;
@@ -28,6 +31,7 @@ import java.util.List;
 public class SciencePostService {
     private final SciencePostRepository repository;
     private final UserService userService;
+    private final SciencePostCommentRepository commentRepository;
 
     @Transactional
     public void createPost(SciencePostRequestDto dto) {
@@ -40,7 +44,11 @@ public class SciencePostService {
 
     @Transactional(readOnly = true)
     public SciencePost getPostByIdWithComment(Long id) {
-        return repository.getPostByIdWithComment(id).orElseThrow(PostNotFoundException::new);
+        SciencePost post = repository.getOnlyPostById(id);
+        List<SciencePostComment> comments = commentRepository.getOnlyCommentByPostId(id);
+        post.setComment(comments);
+
+        return post;
     }
 
     @Transactional(readOnly = true)

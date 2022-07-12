@@ -15,4 +15,7 @@ public interface SciencePostRepository extends JpaRepository<SciencePost,Long> {
     @Override
     Page<SciencePost> findAll(Pageable page);
 
+    @Query("Select new SciencePost (p.id, p.content,p.title, p.postDate,  p.likes) from SciencePost p where p.id = :id")
+    SciencePost getOnlyPostById(Long id);
+
 }

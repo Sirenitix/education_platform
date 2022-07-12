@@ -1,6 +1,7 @@
 package swag.rest.education_platform.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import java.util.List;
 @Entity
 @Table(name = "science_post")
 @Getter@Setter
+@NoArgsConstructor
 public class SciencePost {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,5 +29,11 @@ public class SciencePost {
 
     @OneToMany(mappedBy = "post")
     private List<SciencePostComment> comment;
-
+    public SciencePost(Long id, String content, String title, LocalDate postDate, Long likes) {
+        this.id = id;
+        this.content = content;
+        this.title = title;
+        this.postDate = postDate;
+        this.likes = likes;
+    }
 }
