@@ -48,8 +48,8 @@ public class SciencePostService {
         Pageable paging = PageRequest.of(page, 10);
         List<SciencePost> pagePost = repository.findAll(paging).getContent();
         for (SciencePost post : pagePost) {
-            if (post.getComment().size() > 100) {
-                post.setContent(post.getContent().substring(0, 100));
+            if (post.getContent().length() > 100) {
+                post.setContent(post.getContent().substring(0, 99));
             }
         }
         return pagePost;

@@ -59,8 +59,8 @@ public class RefleсtionPostService {
         List<ReflectionPost> pagePost =  repository.findAll(paging).getContent();
 
         for (ReflectionPost post : pagePost) {
-            if(post.getComment().size()>100) {
-                post.setContent(post.getContent().substring(0,100));
+            if(post.getContent().length() >100) {
+                post.setContent(post.getContent().substring(0,99));
             }
         }
         return pagePost;
