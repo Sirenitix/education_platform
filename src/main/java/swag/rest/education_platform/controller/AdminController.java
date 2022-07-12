@@ -1,10 +1,7 @@
 package swag.rest.education_platform.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import swag.rest.education_platform.service.AdminService;
 
 @RestController
@@ -43,4 +40,5 @@ public class AdminController {
     public void deleteReflectionCommentById(Long commentId){
         adminService.deleteReflectionCommentById(commentId);
     }
+
 }

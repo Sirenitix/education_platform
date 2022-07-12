@@ -38,11 +38,11 @@ public class RefleсtionPostService {
         post.setPostDate(LocalDate.now());
         repository.save(post);
     }
-
+    @Transactional(readOnly = true)
     public ReflectionPost getPostByIdWithComment(Long id) {
         return repository.getPostByIdWithComment(id).orElseThrow(() -> new PostNotFoundException());
     }
-
+    @Transactional
     public void updatePost(ReflextionPostCreateDto dto, Long post_id, String username) {
         Long user_id = userService.findByUsername(username).orElseThrow(()-> new UsernameNotFoundException("User not found")).getId();
         ReflectionPost post = repository.findById(post_id).orElseThrow(() -> new PostNotFoundException());
@@ -52,14 +52,18 @@ public class RefleсtionPostService {
         post.setContent(dto.getContent());
         repository.save(post);
     }
-
+    @Transactional(readOnly = true)
     public List<ReflectionPost> getPosts(int page) {
-        Pageable paging = PageRequest.of(page, 10);
-        Page<ReflectionPost> pagePost = repository.findAll(paging);
-        for (ReflectionPost post : pagePost.getContent()) {
-            post.setContent(post.getContent().substring(0,100)+"...");
+
+        Pageable paging = PageRequest.of(page,5);
+        List<ReflectionPost> pagePost =  repository.findAll(paging).getContent();
+
+        for (ReflectionPost post : pagePost) {
+            if(post.getComment().size()>100) {
+                post.setContent(post.getContent().substring(0,100));
+            }
         }
-        return pagePost.getContent();
+        return pagePost;
     }
 
     public void deletePost(Long id) {
