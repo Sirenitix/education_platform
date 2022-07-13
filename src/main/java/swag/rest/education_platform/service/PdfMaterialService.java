@@ -38,7 +38,10 @@ public class PdfMaterialService {
         pdf.setUser(user);
         repository.save(pdf);
     }
-    public List<PdfMaterial> getDocument() {
-        return repository.findAll();
+
+    @Transactional(readOnly = true)
+    public PdfMaterial getDocumentById(Long id) {
+        return repository.getonlypdfbyid(id).orElseThrow(() -> new RuntimeException("Not found"));
     }
+
 }

@@ -26,5 +26,7 @@ public class PdfMaterial {
     @Lob
     private byte[] content;
 
-
+    public PdfMaterial(byte[] content) {
+        this.content = content;
+    }
 }
