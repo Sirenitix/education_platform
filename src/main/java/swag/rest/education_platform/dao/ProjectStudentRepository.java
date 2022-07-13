@@ -2,7 +2,6 @@ package swag.rest.education_platform.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import swag.rest.education_platform.dto.ProjectStudentDto;
 import swag.rest.education_platform.entity.ProjectStudent;
 import swag.rest.education_platform.entity.Users;
 

@@ -27,6 +27,7 @@ public class Users implements UserDetails {
     @NotNull
     private String password;
 
+    @Column(name = "enabled")
     private boolean enabled;
 
     private String role;
