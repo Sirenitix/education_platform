@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Builder
-public class ProjectMessagesDto {
+public class ProjectMessagesDto extends ProjectMessage{
     private Long user_id;
     private String username;
     private String content;

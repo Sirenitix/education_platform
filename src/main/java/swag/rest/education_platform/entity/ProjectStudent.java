@@ -1,6 +1,7 @@
 package swag.rest.education_platform.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
@@ -10,6 +11,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class ProjectStudent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,4 +22,9 @@ public class ProjectStudent {
 
     @OneToMany(mappedBy = "project")
     private List<ProjectMessage> messages;
+
+    public ProjectStudent(Long id, String title) {
+        this.id = id;
+        this.title = title;
+    }
 }
