@@ -26,16 +26,20 @@ public class VideoMaterialController {
         return ResponseEntity.status(HttpStatus.OK).body(videos);
     }
 
+    @GetMapping("/videos")
+    public ResponseEntity<?> getAllVideos() {
+        return ResponseEntity.status(HttpStatus.OK).body(service.getAllVideos());
+    }
+
     @DeleteMapping("delete/{id}")
     public ResponseEntity<String> deleteVideoById(@PathVariable Long id, Principal principal) {
         service.deleteVideoById(id, principal.getName());
         return ResponseEntity.status(HttpStatus.OK).body("Deleted video with id: " + id);
     }
 
-    @PutMapping("/upload")
+    @PostMapping("/upload")
     public ResponseEntity<String> uploadVideo(@RequestBody VideoUploadDto dto,Principal principal) {
         service.uploadVideo(dto,principal.getName());
         return ResponseEntity.status(HttpStatus.CREATED).body("Video " + dto.getTitle() + " has been uploaded");
-
     }
 }

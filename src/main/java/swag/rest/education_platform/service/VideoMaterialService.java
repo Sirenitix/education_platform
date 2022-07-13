@@ -28,6 +28,10 @@ public class VideoMaterialService {
         return pageVideo.getContent();
     }
 
+    public List<VideoMaterial> getAllVideos(){
+        return repository.findAllVideos();
+    }
+
     public void deleteVideoById(Long id, String username){
       if(!repository.findById(id).orElseThrow(VideoNotFounException::new).getUser().getUsername().equals(username)){
           throw new VideoException("You are not authorized");

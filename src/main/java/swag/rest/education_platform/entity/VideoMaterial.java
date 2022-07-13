@@ -22,4 +22,10 @@ public class VideoMaterial {
     @JoinColumn(name = "uploaded_by")
     private Users user;
 
+    public VideoMaterial(Long id, String title, String tag, String url) {
+        this.id = id;
+        this.title = title;
+        this.tag = tag;
+        this.url = url;
+    }
 }
