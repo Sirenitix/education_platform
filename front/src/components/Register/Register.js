@@ -1,34 +1,27 @@
 import { useFormik } from "formik";
-import "./Login.css";
+import "./Register.css";
 import { Flex, Box, Text, Image } from "@chakra-ui/react";
 import { Service } from "../../service/Service";
 import net from "../../assets/net.jpg";
 
-const Login = () => {
+const Register = () => {
   const service = new Service();
+//   service.isAdmin();
   const validate = (values) => {
     const errors = {};
-    const passRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/g;
+    // const passRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/g;
 
-    if (!passRegex.test(values.password)) {
-      errors.password = "";
-    }
-
+   
     return errors;
   };
   const formik = useFormik({
     initialValues: {
       username: "",
       password: "",
-      firstname: "",
-      lastname: "",
-      school: "",
-      city: "",
-
-    },
+        },
     validate,
     onSubmit: (values) => {
-      service.registerUser(values);
+      service.handleLogin(values);
     },
   });
 
@@ -90,9 +83,8 @@ const Login = () => {
                     Почта
                   </label>
                   <input
-                    id="email-address"
+                    id="username"
                     name="username"
-                    type="email"
                     autoComplete="email"
                     required
                     className="loginInput appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
@@ -120,70 +112,7 @@ const Login = () => {
                     <span>{formik.errors.password}</span>
                   )} */}
                 </div>
-                <div>
-                  <label htmlFor="email-address" className="sr-only">
-                    Имя
-                  </label>
-                  <input
-                    id="firstname"
-                    name="firstname"
-                    type="text"
-                    autoComplete="text"
-                    required
-                    className="loginInput appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                    placeholder="Имя"
-                    value={formik.values.firstname}
-                    onChange={formik.handleChange}
-                  />
-                </div>
-                <div>
-                  <label htmlFor="email-address" className="sr-only">
-                    Фамилия
-                  </label>
-                  <input
-                    id="lastname"
-                    name="lastname"
-                    type="text"
-                    autoComplete="text"
-                    required
-                    className="loginInput appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                    placeholder="Фамилия"
-                    value={formik.values.lastname}
-                    onChange={formik.handleChange}
-                  />
-                </div>
-                <div>
-                  <label htmlFor="email-address" className="sr-only">
-                    Город
-                  </label>
-                  <input
-                    id="city"
-                    name="city"
-                    type="text"
-                    autoComplete="text"
-                    required
-                    className="loginInput appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                    placeholder="Город"
-                    value={formik.values.city}
-                    onChange={formik.handleChange}
-                  />
-                </div>
-                <div>
-                  <label htmlFor="email-address" className="sr-only">
-                    Школа
-                  </label>
-                  <input
-                    id="school"
-                    name="school"
-                    type="text"
-                    autoComplete=""
-                    required
-                    className="loginInput appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                    placeholder="Школа"
-                    value={formik.values.school}
-                    onChange={formik.handleChange}
-                  />
-                </div>
+                
               </div>
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <button
@@ -207,4 +136,4 @@ const Login = () => {
     </>
   );
 };
-export default Login;
+export default Register;

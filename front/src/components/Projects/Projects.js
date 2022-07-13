@@ -42,6 +42,7 @@ const Projects = () => {
     getProjects();
   }, []);
 
+  console.log(projects)
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const service = new Service();
@@ -60,6 +61,8 @@ const Projects = () => {
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
       service.createProject(values);
+      window.location.reload()
+
     },
   });
   const navigate = useNavigate();

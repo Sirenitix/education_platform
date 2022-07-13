@@ -1,22 +1,10 @@
 import "./Mentorship.css";
 import Header from "../Header";
 import SideBar from "../SideBar";
-import UserCard from "../UserCard";
-import AddPost from "../AddPost";
-import { Service } from "../../service/Service";
-import { useState, useEffect, useCallback } from "react";
+import { useEffect, useCallback } from "react";
 import { useFormik } from "formik";
 import { useDisclosure } from "@chakra-ui/react";
-import {
-  Tabs,
-  TabList,
-  TabPanels,
-  Tab,
-  TabPanel,
-  Box,
-  Badge,
-  Text,
-} from "@chakra-ui/react";
+import { Text } from "@chakra-ui/react";
 import {
   Modal,
   ModalOverlay,
@@ -46,17 +34,33 @@ const Mentorship = () => {
     },
     validate,
     onSubmit: (values) => {
-      // alert(JSON.stringify(values, null, 2));
       //service.handleLogin(values);
     },
   });
 
-  const getMeetingRoom = useCallback(async () => {
+  const getToken = useCallback(async () => {
+    const token = sessionStorage.getItem("access_token");
+    const result = await fetch(
+      "http://164.92.192.48:8081/generateMeetingToken",
+      {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: ` ${token}`,
+        },
+      }
+    );
+    const postRes = await result.text();
+    console.log("token is", postRes);
+    return postRes;
+  }, []);
+
+  // console.log("checking", meetingToken);
+  const getMeetingRoom = useCallback(async (meetingToken) => {
     const options = {
       method: "POST",
       headers: {
-        Authorization:
-          "$a6d627e2ab765977a2b6c76852ee47b9a0cee43715add7c5e92fe77f06f77b9d",
+        Authorization: `${meetingToken}`,
         "Content-Type": "application/json",
       },
     };
@@ -66,8 +70,14 @@ const Mentorship = () => {
     console.log(data);
   });
 
+  async function getMeeting() {
+    const meetingToken = await getToken();
+    console.log("meeting token", meetingToken);
+    getMeetingRoom(meetingToken);
+  }
+
   useEffect(() => {
-    getMeetingRoom();
+    getMeeting();
   }, []);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -104,14 +114,14 @@ const Mentorship = () => {
             <Modal isOpen={isOpen} onClose={onClose}>
               <ModalOverlay />
               <ModalContent>
-                <ModalHeader>Создать новый проект</ModalHeader>
+                <ModalHeader>Создать новый митинг</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
                   <form
                     className="mt-8 space-y-6"
                     onSubmit={formik.handleSubmit}
                   >
-                    <input type="hiddaen" name="remember" defaultValue="true" />
+                    <input type="hidden" name="remember" defaultValue="true" />
                     <div className="rounded-md shadow-sm -space-y-px">
                       <div color="#000000">
                         <p htmlFor="email-address" className="sr-only">

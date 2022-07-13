@@ -1,24 +1,8 @@
-import { ChatIcon } from "@chakra-ui/icons";
-import {
-  Box,
-  Badge,
-  Text,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  ModalFooter,
-  Button,
-} from "@chakra-ui/react";
+import { Text } from "@chakra-ui/react";
 import Header from "../Header";
 import SideBar from "../SideBar";
-import { useEffect, useState, useCallback } from "react";
-import { Service } from "../../service/Service";
-import { useFormik } from "formik";
 
-const Training = ({ postsArr }) => {
+const Training = () => {
   return (
     <>
       <div className="profileLayout">

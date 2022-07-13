@@ -3,7 +3,6 @@ import Header from "../Header";
 import SideBar from "../SideBar";
 import UserCard from "../UserCard";
 import AddPost from "../AddPost";
-import { Service } from "../../service/Service";
 import { useState, useEffect, useCallback } from "react";
 import {
   Tabs,
@@ -11,21 +10,9 @@ import {
   TabPanels,
   Tab,
   TabPanel,
-  Box,
-  Badge,
   Text,
 } from "@chakra-ui/react";
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  ModalFooter,
-  Button,
-} from "@chakra-ui/react";
-import { useDisclosure } from "@chakra-ui/react";
+
 import Posts from "../Posts";
 import { useFormik } from "formik";
 import Projects from "../Projects/Projects";

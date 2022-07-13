@@ -2,11 +2,33 @@ import { Avatar } from "@chakra-ui/react";
 import "./UserCard.css";
 import { Table, Tbody, Tr, Td, TableContainer } from "@chakra-ui/react";
 import { Button } from "@chakra-ui/react";
-
-import { useDisclosure } from "@chakra-ui/react";
+import { useState, useCallback,useEffect } from "react";
 
 const UserCard = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [user, setUser] = useState([]);
+
+  const getCurrentUser = useCallback(async () => {
+    const token = sessionStorage.getItem("access_token");
+    console.log(token);
+    const arr = await fetch(`http://164.92.192.48:8081/current-user`, {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: ` ${token}`,
+      },
+    })
+      .then((arr) => arr.json())
+      .catch((err) => {
+        console.error(err);
+      });
+    console.log(arr);
+
+    setUser(arr);
+  }, []);
+
+  useEffect(() => {
+    getCurrentUser();
+  }, []);
 
   return (
     <div className="uCard">
@@ -16,7 +38,7 @@ const UserCard = () => {
         src="../../public/avatar.png"
         marginTop={"80px"}
       />{" "}
-      <div className="userName">Нурсулу Оспан</div>
+      <div className="userName">{user.firstname}  {user.lastname}</div>
       <div className="title">Личные данные</div>
       <TableContainer>
         <Table
@@ -31,8 +53,8 @@ const UserCard = () => {
               <Td>Школа-гимназия им. Абая</Td>
             </Tr>
             <Tr>
-              <Td fontWeight={"600"}>Профиль:</Td>
-              <Td> Биология</Td>
+              <Td fontWeight={"600"}>Почта:</Td>
+              <Td> {user.username}</Td>
             </Tr>
             <Tr>
               <Td fontWeight={"600"}>Город:</Td>
@@ -45,14 +67,14 @@ const UserCard = () => {
           </Tbody>
         </Table>
       </TableContainer>
-      <Button
+      {/* <Button
         fontWeight={"500"}
         backgroundColor={"#FFCA7A"}
         width={"138px"}
         marginTop={"2rem"}
       >
         Редактировать
-      </Button>
+      </Button> */}
     </div>
   );
 };

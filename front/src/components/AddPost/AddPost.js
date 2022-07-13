@@ -37,6 +37,9 @@ const Profile = () => {
       console.log(values);
       alert(JSON.stringify(values, null, 2));
       service.addPost(values);
+      values.content=""
+      values.title=""
+     window.location.reload()
     },
   });
 

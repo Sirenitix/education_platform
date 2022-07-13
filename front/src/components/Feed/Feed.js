@@ -1,18 +1,7 @@
 // import "./Profile.css";
 import Header from "../Header";
 import SideBar from "../SideBar";
-import UserCard from "../UserCard";
-import AddPost from "../AddPost";
-import {
-  Tabs,
-  TabList,
-  TabPanels,
-  Tab,
-  TabPanel,
-  Box,
-  Badge,
-  Text,
-} from "@chakra-ui/react";
+import { Text } from "@chakra-ui/react";
 import Posts from "../Posts";
 import { useState, useEffect, useCallback } from "react";
 

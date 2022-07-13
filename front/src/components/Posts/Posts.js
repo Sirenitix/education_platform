@@ -4,26 +4,28 @@ import {
   Badge,
   Text,
   Modal,
-  ModalOverlay,
   ModalContent,
-  ModalHeader,
   ModalCloseButton,
   ModalBody,
   ModalFooter,
   Button,
 } from "@chakra-ui/react";
 import { useDisclosure } from "@chakra-ui/react";
-import { useEffect, useState, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { Service } from "../../service/Service";
 import { useFormik } from "formik";
 import { Divider } from "@chakra-ui/react";
 const Posts = ({ postsArr }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [postData, setPostData] = useState({});
+  // const [liked, setLiked] = useState("");
+  const [count, setCount] = useState(0);
+const[pid, setId] = useState(1);
 
   const getPostData = useCallback(async (postID) => {
     const token = sessionStorage.getItem("access_token");
     console.log(token);
+    setId(postID);
     const arr = await fetch(
       `http://164.92.192.48:8081/reflection/post/${postID}`,
       {
@@ -42,7 +44,26 @@ const Posts = ({ postsArr }) => {
     setPostData(arr);
   }, []);
 
-  const service = new Service();
+  console.log("postsARR", postsArr)
+  const sendComment=useCallback(async(comment, pid)=>{
+    const token = sessionStorage.getItem("access_token");
+    console.log(token);
+    console.log(JSON.stringify(comment));
+    const res = await fetch(
+      `http://164.92.192.48:8081/reflection-comment?content=${comment}&name=name&postId=${pid}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: ` ${token}`,
+        },
+      }
+    );
+    const resJson = await res.text();
+    console.log(resJson);
+  },[])
+
+  // const service = new Service();
   const validate = (values) => {
     const errors = {};
 
@@ -54,13 +75,14 @@ const Posts = ({ postsArr }) => {
     },
     validate,
     onSubmit: (values) => {
-      service.sendComment(values["content"], 1);
+      sendComment(values["content"], pid);
+      values.content=""
     },
   });
 
   return (
     <>
-      {postsArr.map((p) => (
+      {postsArr?.map((p) => (
         <Box
           key={p.id}
           width={"70%"}
@@ -72,7 +94,7 @@ const Posts = ({ postsArr }) => {
           <Box p="6">
             <Box display="flex" alignItems="baseline">
               <Badge borderRadius="full" px="2" backgroundColor={"#FFCA7A"}>
-                Нурсулу Оспан
+                {p.username}
               </Badge>
               <Box
                 color="gray.500"
@@ -102,6 +124,7 @@ const Posts = ({ postsArr }) => {
                 display={"flex"}
                 gap="10px"
                 fontSize="xs"
+                onClick={() => setCount(count + 1)}
               >
                 <svg
                   strokeWidth="currentColor"
@@ -115,14 +138,9 @@ const Posts = ({ postsArr }) => {
                 >
                   <path d="M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z"></path>
                 </svg>{" "}
-                <Box>Нравится</Box>
+                <Box>Нравится {count} </Box>
               </Badge>
-              <Badge
-                // onClick={onOpen}
-                borderRadius="full"
-                px="2"
-                backgroundColor={"#F5F5F5"}
-              >
+              <Badge borderRadius="full" px="2" backgroundColor={"#F5F5F5"}>
                 <span>
                   <ChatIcon></ChatIcon> Комментарии
                 </span>
@@ -188,7 +206,7 @@ const Posts = ({ postsArr }) => {
                           </Text>
                           <Box
                             border={"1px solid"}
-                            borderColor={"#BCD7DA"}
+                            borderColor={"#ffffff"}
                             borderRadius={"8px"}
                           >
                             <Text
@@ -236,7 +254,6 @@ const Posts = ({ postsArr }) => {
                               Написать комментарии:
                             </Badge>
                             <form
-                              // className=" space-y-6 flex center"
                               style={{
                                 display: "flex",
                                 alignItems: "center",

@@ -1,5 +1,5 @@
 import "./SideBar.css";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import DynamicFeedIcon from "@mui/icons-material/DynamicFeed";
 import ArticleIcon from "@mui/icons-material/Article";
@@ -15,8 +15,6 @@ const SideBar = () => {
           height: "100vh",
           backgroundColor: "#151E27",
           color: "#9DA2A5",
-          // borderTopRightRadius: "16px",
-          // borderBottomRightRadius: "16px",
           display: "flex",
           flexDirection: "column",
           gap: "1rem",

@@ -2,8 +2,22 @@ import { useNavigate } from "react-router-dom";
 export class Service {
   navigate = useNavigate();
 
+  async isAdmin() {
+    const res = await fetch(
+      "http://164.92.192.48:8081/admin",
+      {
+        method: "GET",
+      }
+    );
+    const getPostRes = await res.text();
+    console.log("admin check")
+    return getPostRes;
+  }
+
+
   async handleLogin(userData) {
-    console.log("hey");
+
+    console.log(userData.username);
     console.log(JSON.stringify(userData));
     const res = await fetch("http://164.92.192.48:8081/authenticate", {
       method: "POST",
@@ -14,14 +28,38 @@ export class Service {
       },
     });
     const resJson = await res.json();
+
     console.log(resJson);
+    console.log(typeof userData.username, typeof "[ROLE_ADMIN]")
+
     if (res.status === 200) {
       sessionStorage.setItem("access_token", resJson.token);
+      const check = await this.isAdmin();
+      console.log("role is:", check);
+      if(userData.username === "admin"){
+        console.log("true")
+        this.navigate("/admin");
+      }
+
       console.log(sessionStorage.getItem("access_token"));
       this.navigate("/profile");
     }
+  }
 
-    // this.navigate("/profile");
+  async registerUser(userData) {
+    console.log("hey");
+    console.log(JSON.stringify(userData));
+    const res = await fetch("http://164.92.192.48:8081/full-register", {
+      method: "POST",
+      body: JSON.stringify(userData), //TODO: check this point, maybe they need body
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    });
+    const resJson = await res.json();
+    console.log(resJson);
+    
   }
 
   async logout() {
@@ -49,54 +87,28 @@ export class Service {
   }
 
   async getUserPosts() {
-    // const page = 1;
     const res = await fetch(
       "http://164.92.192.48:8081/reflection/posts?page=0",
       {
         method: "GET",
-        // headers: {
-        //   Accept: "application/json",
-        //   "Content-Type": "application/json",
-        // },
       }
     );
     const getPostRes = await res.json();
     console.log(getPostRes);
   }
 
-  async sendComment(comment, postId) {
-    const token = sessionStorage.getItem("access_token");
-    console.log(token);
-    console.log(JSON.stringify(comment));
-    const res = await fetch(
-      `http://164.92.192.48:8081/reflection-comment?content=${comment}&name=name&postId=${postId}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-          Authorization: ` ${token}`,
-        },
-      }
-    );
-    const resJson = await res.json();
-    console.log(resJson);
-
-    // this.navigate("/profile");
-  }
 
   async createProject(projectData) {
     console.log("hey");
     const token = sessionStorage.getItem("access_token");
 
-    console.log(JSON.stringify(projectData));
+    console.log("names: ", JSON.stringify(projectData));
     const project_name = projectData.project_name;
     console.log("arr", projectData);
 
     const res = await fetch(
       `http://164.92.192.48:8081/createProject?name=${"gggggg"}&project_name=${project_name}&users=${
-        (projectData.user1, projectData.user2, projectData.user3)
-      }
-    `,
+        projectData.user1},${projectData.user2},${projectData.user3}`,
       {
         method: "POST",
         headers: {
@@ -110,4 +122,50 @@ export class Service {
 
     // this.navigate("/profile");
   }
+  async addProjectDiscussion(discussion) {
+    const token = sessionStorage.getItem("access_token");
+    console.log(token);
+    console.log(JSON.stringify(discussion));
+    const res = await fetch(
+      "http://164.92.192.48:8081/science/create-post",
+      {
+        method: "POST",
+        body: JSON.stringify(discussion), //TODO: check this point, maybe they need body
+        headers: {
+          "Content-type": "application/json",
+          Authorization: ` ${token}`,
+        },
+      }
+    );
+    const postRes = await res;
+    console.log(postRes);
+  }
+
+  async acceptUser(userID) {
+    const token = sessionStorage.getItem("access_token");
+    console.log(token);
+    const res = await fetch(
+      `http://164.92.192.48:8081/activate-user/${userID}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: ` ${token}`,
+        },
+      }
+    );
+   
+    const postRes = await res.text();
+    console.log(postRes);
+    return postRes;
+
+//     if(postRes === "User activated"){
+//       return true;
+//     }
+// else{
+//   return false;
+// }
+
+  }
+
 }

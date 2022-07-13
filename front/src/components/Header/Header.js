@@ -18,7 +18,7 @@ const Header = () => {
         </Text>
         <Wrap>
           <WrapItem>
-            <Avatar name="Anna Troya" src="https://bit.ly/tioluwani-kolawole" />
+            <Avatar name="Anna Kroya" src="https://bit.ly/tioluwani-kolawole" />
           </WrapItem>
         </Wrap>
       </Flex>
