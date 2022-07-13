@@ -36,6 +36,7 @@ const IndividualProject = () => {
             >
               Проект
             </Text>
+            <AddPost></AddPost>
           </div>
         </div>
       </div>

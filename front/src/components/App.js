@@ -17,7 +17,7 @@ function App() {
         <Route path="feed" element={<Feed />} />
         <Route path="mentorship" element={<Mentorship />} />
         <Route path="training" element={<Training />} />
-        <Route path="/:projectId" element={<IndividualProject />} />
+        <Route path="profile/:projectId" element={<IndividualProject />} />
       </Routes>
     </div>
   );
