@@ -200,22 +200,24 @@ const Posts = ({ postsArr }) => {
                           >
                             Комментарии:
                           </Text>
-                          {postData?.comment.map((q) => (
-                            <Box
-                              border={"1px solid"}
-                              borderColor={"#BCD7DA"}
-                              borderRadius={"8px"}
-                              marginBottom={"1rem"}
-                            >
-                              <Text
-                                textAlign={"left"}
-                                fontSize="md"
-                                margin={"1rem"}
-                              >
-                                {q.content}
-                              </Text>
-                            </Box>
-                          ))}
+                          {postData
+                            ? ""
+                            : postData.comment.map((q) => (
+                                <Box
+                                  border={"1px solid"}
+                                  borderColor={"#BCD7DA"}
+                                  borderRadius={"8px"}
+                                  marginBottom={"1rem"}
+                                >
+                                  <Text
+                                    textAlign={"left"}
+                                    fontSize="md"
+                                    margin={"1rem"}
+                                  >
+                                    {q.content}
+                                  </Text>
+                                </Box>
+                              ))}
                           <Box>
                             <Badge
                               borderRadius="full"
