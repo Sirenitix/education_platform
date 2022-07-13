@@ -16,7 +16,7 @@ import { useDisclosure } from "@chakra-ui/react";
 import { useEffect, useState, useCallback } from "react";
 import { Service } from "../../service/Service";
 import { useFormik } from "formik";
-
+import { Divider } from "@chakra-ui/react";
 const Posts = ({ postsArr }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [postData, setPostData] = useState({});
@@ -85,6 +85,7 @@ const Posts = ({ postsArr }) => {
                 11 Июля &bull; 12:05
               </Box>
             </Box>
+            <Divider color={"#000000"} />
             <Box as="span" color="gray.600" fontSize="sm">
               <Text textAlign={"left"} fontSize="md" margin={"2rem"}>
                 {p.title}
@@ -206,10 +207,10 @@ const Posts = ({ postsArr }) => {
                           >
                             Комментарии:
                           </Badge>
-                          {postData
-                            ? ""
-                            : postData.comment.map((q) => (
+                          {postData && postData.comment
+                            ? postData.comment.map((q) => (
                                 <Box
+                                  key={q.id}
                                   border={"1px solid"}
                                   borderColor={"#BCD7DA"}
                                   borderRadius={"8px"}
@@ -224,7 +225,8 @@ const Posts = ({ postsArr }) => {
                                     {q.content}
                                   </Text>
                                 </Box>
-                              ))}
+                              ))
+                            : ""}
                           <Box>
                             <Badge
                               borderRadius="full"

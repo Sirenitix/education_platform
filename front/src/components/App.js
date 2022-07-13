@@ -1,11 +1,11 @@
 import "./App.css";
-// import Profile from "./Profile";
 import Login from "./Login";
 import Profile from "./Profile";
 
 import { Routes, Route } from "react-router-dom";
-import UserCard from "./UserCard";
 import Feed from "./Feed";
+import Mentorship from "./Mentorship/Mentorship";
+import Training from "./Training/Training";
 
 function App() {
   return (
@@ -14,10 +14,9 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="profile" element={<Profile />} />
         <Route path="feed" element={<Feed />} />
-        {/* <Route path="profile" element={<Profile />} />
-        <Route path="profile" element={<Profile />} /> */}
+        <Route path="mentorship" element={<Mentorship />} />
+        <Route path="training" element={<Training />} />
       </Routes>
-      {/* <Login></Login> */}
     </div>
   );
 }

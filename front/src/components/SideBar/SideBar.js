@@ -1,11 +1,8 @@
 import "./SideBar.css";
 import { Link, useNavigate } from "react-router-dom";
-import Feed from "../Feed";
-import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import DynamicFeedIcon from "@mui/icons-material/DynamicFeed";
 import ArticleIcon from "@mui/icons-material/Article";
-import SendIcon from "@mui/icons-material/Send";
 import CastForEducationIcon from "@mui/icons-material/CastForEducation";
 import FeedIcon from "@mui/icons-material/Feed";
 const SideBar = () => {
@@ -68,14 +65,12 @@ const SideBar = () => {
           <ArticleIcon />
           Статьи
         </div>
-        <div className="menuItem">
-          <SendIcon /> Сообщения
-        </div>
-        <div className="menuItem">
+
+        <div className="menuItem" onClick={() => navigate("/mentorship")}>
           <CastForEducationIcon />
           Менторство
         </div>
-        <div className="menuItem">
+        <div className="menuItem" onClick={() => navigate("/training")}>
           <FeedIcon />
           Обучение
         </div>

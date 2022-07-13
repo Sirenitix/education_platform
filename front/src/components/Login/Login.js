@@ -4,6 +4,7 @@ import "./Login.css";
 import { Flex, Box, Text, Image } from "@chakra-ui/react";
 import { Service } from "../../service/Service";
 import SideBar from "../SideBar";
+import net from "../../assets/net.jpg";
 
 const Login = () => {
   const service = new Service();
@@ -35,108 +36,108 @@ const Login = () => {
       <Flex color="black">
         <Box
           flex="1.3"
-          height={"100vh"}
+          height={"100%"}
           textAlign={"left"}
           display={"flex"}
           flexDirection={"column"}
-          backgroundColor={"#BCD7DA"}
+          // backgroundColor={"#BCD7DA"}
           justifyContent={"center"}
           alignItems={"left"}
         >
           <Text
-            fontSize="9xl"
-            color={"#ffffff"}
+            fontSize="8xl"
+            color={"#001951"}
             fontWeight={"bold"}
-            padding={"2rem 0 0 3rem"}
+            padding={"2rem 0 0 5rem"}
           >
             SHARE
           </Text>
           <Text
-            fontSize="4xl"
-            color={"#ffffff"}
+            fontSize="2xl"
+            color={"#F7A325"}
             fontWeight={"bold"}
-            padding={"2rem 0 0 3rem"}
+            padding={"1rem 0 0 5rem"}
           >
-            School Hub for Action Research<br></br> in Education
+            School Hub for Action Research <br></br> in Education
           </Text>
-          <img src="../public/networking.svg"></img>
+          <Box margin={"0 8rem"}>
+            {" "}
+            <Image src={net} alt="net"></Image>
+          </Box>
         </Box>
         <Box
           flex="0.8"
-          height={"100vh"}
+          height={"100%"}
           display={"flex"}
           flexDirection={"column"}
           justifyContent={"center"}
-          alignItems={"left"}
+          alignItems={"center"}
           borderTopLeftRadius={"3rem"}
           borderTopRightRadius={"3rem"}
+          paddingTop={"15%"}
         >
-          <>
-            <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-              <div className="max-w-md w-full space-y-8">
+          <Box>
+            <Text fontSize="xl" color={"black"} fontWeight={"bold"}>
+              Авторизация
+            </Text>
+          </Box>
+          <Box>
+            <form className="mt-8 space-y-6" onSubmit={formik.handleSubmit}>
+              <input type="hidden" name="remember" defaultValue="true" />
+              <div className="rounded-md shadow-sm -space-y-px">
                 <div>
-                  <Text fontSize="xl" color={"black"} fontWeight={"bold"}>
-                    Авторизация
-                  </Text>
+                  <label htmlFor="email-address" className="sr-only">
+                    Email address
+                  </label>
+                  <input
+                    id="email-address"
+                    name="username"
+                    type="email"
+                    autoComplete="email"
+                    required
+                    className="loginInput appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                    placeholder="Email address"
+                    value={formik.values.username}
+                    onChange={formik.handleChange}
+                  />
                 </div>
-                <form className="mt-8 space-y-6" onSubmit={formik.handleSubmit}>
-                  <input type="hidden" name="remember" defaultValue="true" />
-                  <div className="rounded-md shadow-sm -space-y-px">
-                    <div>
-                      <label htmlFor="email-address" className="sr-only">
-                        Email address
-                      </label>
-                      <input
-                        id="email-address"
-                        name="username"
-                        type="email"
-                        autoComplete="email"
-                        required
-                        className="loginInput appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                        placeholder="Email address"
-                        value={formik.values.username}
-                        onChange={formik.handleChange}
-                      />
-                    </div>
-                    <div>
-                      <label htmlFor="password" className="sr-only">
-                        Password
-                      </label>
-                      <input
-                        id="password"
-                        name="password"
-                        type="password"
-                        autoComplete="current-password"
-                        required
-                        className="loginInput appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                        placeholder="Password"
-                        value={formik.values.password}
-                        onChange={formik.handleChange}
-                      />
-                      {formik.errors.password && (
-                        <span>{formik.errors.password}</span>
-                      )}
-                    </div>
-                  </div>
-                  <div style={{ display: "flex", justifyContent: "center" }}>
-                    <button
-                      type="submit"
-                      className=" loginBtn group relative w-full flex justify-center py-4 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                      style={{
-                        backgroundColor: "#BCD7DA",
-                        width: "154px",
-                        height: "50px",
-                        display: "flex",
-                        justifyContent: "center",
-                      }}
-                    >
-                      Войти
-                    </button>
-                  </div>
-                </form>
+                <div>
+                  <label htmlFor="password" className="sr-only">
+                    Password
+                  </label>
+                  <input
+                    id="password"
+                    name="password"
+                    type="password"
+                    autoComplete="current-password"
+                    required
+                    className="loginInput appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                    placeholder="Password"
+                    value={formik.values.password}
+                    onChange={formik.handleChange}
+                  />
+                  {formik.errors.password && (
+                    <span>{formik.errors.password}</span>
+                  )}
+                </div>
               </div>
-            </div>
-          </>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <button
+                  type="submit"
+                  className=" loginBtn group relative w-full flex justify-center py-4 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  style={{
+                    backgroundColor: "#F7A325",
+                    width: "154px",
+                    height: "50px",
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
+                  Войти
+                </button>
+              </div>
+            </form>
+          </Box>
         </Box>
       </Flex>
     </>
