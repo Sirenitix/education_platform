@@ -177,7 +177,13 @@ const Posts = ({ postsArr }) => {
                             fontSize="md"
                             marginTop={"1rem"}
                           >
-                            {postData?.title}
+                            <Badge
+                              borderRadius="full"
+                              px="2"
+                              backgroundColor={"#BCD7DA"}
+                            >
+                              Тема рефлексии:{postData?.title}
+                            </Badge>
                           </Text>
                           <Box
                             border={"1px solid"}
@@ -193,13 +199,13 @@ const Posts = ({ postsArr }) => {
                             </Text>
                           </Box>
 
-                          <Text
-                            textAlign={"left"}
-                            fontSize="md"
-                            marginTop={"1rem"}
+                          <Badge
+                            borderRadius="full"
+                            px="2"
+                            backgroundColor={"#BCD7DA"}
                           >
                             Комментарии:
-                          </Text>
+                          </Badge>
                           {postData
                             ? ""
                             : postData.comment.map((q) => (
@@ -208,6 +214,7 @@ const Posts = ({ postsArr }) => {
                                   borderColor={"#BCD7DA"}
                                   borderRadius={"8px"}
                                   marginBottom={"1rem"}
+                                  marginLeft={"3rem"}
                                 >
                                   <Text
                                     textAlign={"left"}
