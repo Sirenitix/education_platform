@@ -19,8 +19,8 @@ public class MeetingController {
 
     @PostMapping("/generateMeetingToken")
     public ResponseEntity<String> generateMeeting() {
-        String meetingLink = meetingService.generateMeeting();
-        return ResponseEntity.status(HttpStatus.CREATED).body(meetingLink);
+        String meetingToken = meetingService.generateMeeting();
+        return ResponseEntity.status(HttpStatus.CREATED).body(meetingToken);
     }
 
 }
