@@ -63,4 +63,24 @@ export class Service {
     const getPostRes = await res.json();
     console.log(getPostRes);
   }
+
+  async sendComment(comment, postId) {
+    const token = sessionStorage.getItem("access_token");
+    console.log(token);
+    console.log(JSON.stringify(comment));
+    const res = await fetch(
+      `http://164.92.192.48:8081/reflection-comment?content=${comment}&name=name&postId=${postId}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: ` ${token}`,
+        },
+      }
+    );
+    const resJson = await res.json();
+    console.log(resJson);
+
+    // this.navigate("/profile");
+  }
 }

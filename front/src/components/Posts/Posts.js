@@ -14,9 +14,10 @@ import {
 } from "@chakra-ui/react";
 import { useDisclosure } from "@chakra-ui/react";
 import { useEffect, useState, useCallback } from "react";
-const Posts = ({ postsArr }) => {
-  // console.log("postsarr", postsArr);
+import { Service } from "../../service/Service";
+import { useFormik } from "formik";
 
+const Posts = ({ postsArr }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [postData, setPostData] = useState({});
 
@@ -41,7 +42,22 @@ const Posts = ({ postsArr }) => {
     setPostData(arr);
   }, []);
 
-  console.log("post data", postData);
+  const service = new Service();
+  const validate = (values) => {
+    const errors = {};
+
+    return errors;
+  };
+  const formik = useFormik({
+    initialValues: {
+      content: "",
+    },
+    validate,
+    onSubmit: (values) => {
+      service.sendComment(values["content"], 1);
+    },
+  });
+
   return (
     <>
       {postsArr.map((p) => (
@@ -159,20 +175,84 @@ const Posts = ({ postsArr }) => {
                           <Text
                             textAlign={"left"}
                             fontSize="md"
-                            margin={"2rem"}
+                            marginTop={"1rem"}
                           >
-                            {p.title}
+                            {postData?.title}
                           </Text>
+                          <Box
+                            border={"1px solid"}
+                            borderColor={"#BCD7DA"}
+                            borderRadius={"8px"}
+                          >
+                            <Text
+                              textAlign={"left"}
+                              fontSize="md"
+                              margin={"1rem"}
+                            >
+                              {postData?.content}
+                            </Text>
+                          </Box>
+
                           <Text
                             textAlign={"left"}
                             fontSize="md"
-                            margin={"2rem"}
+                            marginTop={"1rem"}
                           >
-                            {p.content}
+                            Комментарии:
                           </Text>
-                          <Text color={"#000"}>
-                            {postData?.comment[0]?.content}
-                          </Text>
+                          {postData?.comment.map((q) => (
+                            <Box
+                              border={"1px solid"}
+                              borderColor={"#BCD7DA"}
+                              borderRadius={"8px"}
+                              marginBottom={"1rem"}
+                            >
+                              <Text
+                                textAlign={"left"}
+                                fontSize="md"
+                                margin={"1rem"}
+                              >
+                                {q.content}
+                              </Text>
+                            </Box>
+                          ))}
+                          <Box>
+                            <Badge
+                              borderRadius="full"
+                              px="2"
+                              backgroundColor={"#FFCA7A"}
+                            >
+                              Написать комментарии:
+                            </Badge>
+                            <form
+                              // className=" space-y-6 flex center"
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                              }}
+                              onSubmit={formik.handleSubmit}
+                            >
+                              <input
+                                id="comment"
+                                name="content"
+                                type="text"
+                                required
+                                className="loginInput appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                                placeholder="Пишите комментарии здесь"
+                                value={formik.values.content}
+                                onChange={formik.handleChange}
+                              />{" "}
+                              <button
+                                type="submit"
+                                style={{
+                                  backgroundColor: "#BCD7DA",
+                                }}
+                              >
+                                Отправить
+                              </button>
+                            </form>
+                          </Box>
                         </Box>
                       </Box>
                     </Box>
