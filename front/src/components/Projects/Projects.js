@@ -15,6 +15,7 @@ import {
 } from "@chakra-ui/react";
 import { useDisclosure } from "@chakra-ui/react";
 import { useFormik } from "formik";
+import { Link, useNavigate } from "react-router-dom";
 const Projects = () => {
   const [projects, setProjects] = useState([]);
 
@@ -42,6 +43,7 @@ const Projects = () => {
   }, []);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
+
   const service = new Service();
   const validate = (values) => {
     const errors = {};
@@ -50,7 +52,9 @@ const Projects = () => {
   const formik = useFormik({
     initialValues: {
       project_name: "",
-      users: "",
+      user1: "",
+      user2: "",
+      user3: "altynay@gmail.com",
     },
     validate,
     onSubmit: (values) => {
@@ -58,6 +62,8 @@ const Projects = () => {
       service.createProject(values);
     },
   });
+  const navigate = useNavigate();
+
   return (
     <>
       <div className="project">
@@ -69,17 +75,22 @@ const Projects = () => {
                 borderWidth="1px"
                 borderRadius="lg"
                 overflow="hidden"
+                onClick={() => navigate(`${p.id}`)}
               >
                 <Box
                   width={"100%"}
                   height={"120px"}
                   backgroundColor={"#FFCA7A"}
                 ></Box>
-                <Text margin={"2rem"}> {p.title}</Text>
+                <Link to={`/${p.id}`}>
+                  {" "}
+                  <Text margin={"2rem"}> {p.title}</Text>
+                </Link>
               </Box>
             ))
           : "[Пока тут пусто, можете добавить новый проект]"}
       </div>
+
       <div className="addproject">
         <Button margin={"2rem"} onClick={onOpen}>
           + Cоздать проект
@@ -113,12 +124,29 @@ const Projects = () => {
                       Добавить участников проекта:
                     </p>
                     <input
-                      id="user"
-                      name="users"
+                      id="user1"
+                      name="user1"
                       required
                       className="loginInput appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                       placeholder="Участник 1"
-                      value={formik.values.users}
+                      value={formik.values.user1}
+                      onChange={formik.handleChange}
+                    />
+                    <input
+                      id="user2"
+                      name="user2"
+                      required
+                      className="loginInput appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                      placeholder="Участник 1"
+                      value={formik.values.user2}
+                      onChange={formik.handleChange}
+                    />
+                    <input
+                      id="user3"
+                      name="user3"
+                      className="loginInput appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                      placeholder="Участник 1"
+                      value={formik.values.user3}
                       onChange={formik.handleChange}
                     />
                   </div>

@@ -90,9 +90,12 @@ export class Service {
 
     console.log(JSON.stringify(projectData));
     const project_name = projectData.project_name;
-    const userArr = projectData.users;
+    console.log("arr", projectData);
+
     const res = await fetch(
-      `http://164.92.192.48:8081/createProject?name=${"gggggg"}&project_name=${project_name}&users=${userArr}
+      `http://164.92.192.48:8081/createProject?name=${"gggggg"}&project_name=${project_name}&users=${
+        (projectData.user1, projectData.user2, projectData.user3)
+      }
     `,
       {
         method: "POST",

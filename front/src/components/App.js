@@ -6,6 +6,7 @@ import { Routes, Route } from "react-router-dom";
 import Feed from "./Feed";
 import Mentorship from "./Mentorship/Mentorship";
 import Training from "./Training/Training";
+import IndividualProject from "./IndividualProject";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="feed" element={<Feed />} />
         <Route path="mentorship" element={<Mentorship />} />
         <Route path="training" element={<Training />} />
+        <Route path="/:projectId" element={<IndividualProject />} />
       </Routes>
     </div>
   );
