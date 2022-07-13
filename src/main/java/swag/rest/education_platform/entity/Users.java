@@ -92,4 +92,11 @@ public class Users implements UserDetails {
     public boolean isCredentialsNonExpired() {
         return true;
     }
+
+    public Users(Long id, String username, String firstname, String lastname) {
+        this.id = id;
+        this.username = username;
+        this.firstname = firstname;
+        this.lastname = lastname;
+    }
 }

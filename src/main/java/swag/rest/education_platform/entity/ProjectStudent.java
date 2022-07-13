@@ -22,6 +22,9 @@ public class ProjectStudent {
 
     @OneToMany(mappedBy = "project")
     private List<ProjectMessage> messages;
+    private Long userid;
+    private String userfirstname;
+    private String userlastname;
 
     public ProjectStudent(Long id, String title) {
         this.id = id;

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import swag.rest.education_platform.dao.ProjectMessageRepository;
 import swag.rest.education_platform.dao.ProjectStudentRepository;
+import swag.rest.education_platform.dao.UserRepository;
 import swag.rest.education_platform.entity.ProjectMessage;
 import swag.rest.education_platform.entity.ProjectStudent;
 import swag.rest.education_platform.entity.Users;
@@ -25,6 +26,7 @@ public class ProjectStudentService {
     private final UserService userService;
     private final ProjectStudentRepository projectStudentRepository;
     private final ProjectMessageRepository projectMessageRepository;
+    private final UserRepository userRepository;
     public ProjectStudent getProjectById(Long id) {
         return repository.findById(id).orElseThrow(() -> new RuntimeException("Project not found"));
     }
@@ -37,9 +39,19 @@ public class ProjectStudentService {
 //        for(ProjectStudent s : user.getProjects()) {
 //            System.out.println(s.getTitle());
 //        }
+
         List<ProjectStudent> projects = projectStudentRepository.findProjectStudentByUsers(user);
         for(ProjectStudent p : projects) {
-            p.setUsers(null);
+           for(Users u:  p.getUsers())
+           {
+               u.setProjects(null);
+               u.setPassword(null);
+               u.setSciencePosts(null);
+               u.setReflectionPosts(null);
+               u.setReflectionPostComments(null);
+               u.setSciencePostComments(null);
+
+           }
             p.setMessages(null);
             p.setMessages(projectMessageRepository.findByProject(p));
 
