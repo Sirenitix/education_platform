@@ -34,7 +34,7 @@ public class ProjectStudentService {
         }
     }
 
-    public void createProject(String username, String project_name, List<String> users) {
+    public void createProject(String username, String project_name, String[] users) {
         List<Users> usersList = new ArrayList<>();
         for (String s : users) {
             usersList.add(userService.findByUsername(s).orElseThrow(()-> new UsernameNotFoundException("user not found")));

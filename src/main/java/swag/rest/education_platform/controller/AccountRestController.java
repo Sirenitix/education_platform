@@ -97,7 +97,7 @@ public class AccountRestController  {
     }
 
     @PostMapping("/createProject")
-    public ResponseEntity<?> createProject (Principal principal, String project_name, List<String> users) {
+    public ResponseEntity<?> createProject (Principal principal, String project_name, String[] users) {
         projectStudentService.createProject(principal.getName(),project_name,users);
         return ResponseEntity.status(HttpStatus.OK).body("Project has been created");
 
