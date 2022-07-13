@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import swag.rest.education_platform.dto.UserDto;
+import swag.rest.education_platform.dto.UserFullDto;
 import swag.rest.education_platform.dto.UserReponseDto;
 import swag.rest.education_platform.entity.*;
 import swag.rest.education_platform.service.AccountService;
@@ -40,6 +41,11 @@ public class AccountRestController  {
     @PostMapping("/register")
     public ResponseEntity<String> save(@RequestBody UserDto user) {
         service.register(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body("User has been created");
+    }
+    @PostMapping("/full-register")
+    public ResponseEntity<String> registerUserWithFullDetails(@RequestBody UserFullDto user) {
+        service.registerWithFullDetails(user);
         return ResponseEntity.status(HttpStatus.CREATED).body("User has been created");
     }
 
