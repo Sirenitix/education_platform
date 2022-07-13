@@ -42,6 +42,11 @@ public class AccountRestController  {
         service.register(user);
         return ResponseEntity.status(HttpStatus.CREATED).body("User has been created");
     }
+    @PostMapping("/full-register")
+    public ResponseEntity<String> registerUserWithFullDetails(@RequestBody UserDto user) {
+        service.register(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body("User has been created");
+    }
 
     @PostMapping("/set-profile-image")
     public ResponseEntity<String> updateProfilePicture(@RequestParam(name = "image") MultipartFile file, Principal principal){

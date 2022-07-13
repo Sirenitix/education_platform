@@ -16,6 +16,7 @@ import swag.rest.education_platform.dao.AvatarRepository;
 import swag.rest.education_platform.dao.UserFullDetailsRepository;
 import swag.rest.education_platform.dao.UserRepository;
 import swag.rest.education_platform.dto.UserDto;
+import swag.rest.education_platform.dto.UserFullDto;
 import swag.rest.education_platform.dto.UserReponseDto;
 import swag.rest.education_platform.entity.Avatar;
 import swag.rest.education_platform.entity.UserFullDetails;
@@ -64,6 +65,24 @@ public class AccountService {
 
     }
 
+    public void registerWithFullDetails(UserFullDto dto) {
+        if (userRepository.existsByUsername(dto.getUsername()))
+            throw new UserExistException();
+        Users user = new Users();
+        user.setUsername(dto.getUsername());
+        user.setPassword(encoder.encode(dto.getPassword()));
+        user.setEnabled(true);
+        user.setRole("ROLE_USER");
+        user.setFirstname(dto.getFirstname());
+        user.setLastname(dto.getLastname());
+        userRepository.save(user);
+        UserFullDetails fullDetails = new UserFullDetails();
+        fullDetails.setSchool(dto.getSchool());
+        fullDetails.setUser(user);
+        fullDetails.setCity(dto.getCity());
+        userFullDetailsRepository.save(fullDetails);
+
+    }
     @Transactional
     public void updateProfileImage(MultipartFile file, String username) {
         Users user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User has not been found"));
