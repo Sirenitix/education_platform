@@ -191,12 +191,14 @@ export class Service {
         },
       }
     );
-    const postRes = await res;
-    console.log(postRes);
-
-    if(postRes.ok){
+  
+    if(res.ok){
       alert("Приглашения были отправлены участникам")
     }
+    const postRes = await res.text();
+    console.log(postRes)
+    return postRes;
+
   }
 
   // async getProjects() {

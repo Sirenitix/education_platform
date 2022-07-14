@@ -16,9 +16,11 @@ import {
   ModalFooter,
   Button,
 } from "@chakra-ui/react";
-
+import { useState } from "react";
 const Mentorship = () => {
   const service = new Service()
+  const [link, setLink] = useState("");
+
   const validate = (values) => {
     const errors = {};
 
@@ -34,8 +36,8 @@ const Mentorship = () => {
     ,
     validate,
     onSubmit: (values) => {
-      service.startMeeting(values);
-      
+    service.startMeeting(values);
+    setLink("https://meet.google.com/avu-ctaa-mrfz");
       console.log(values);
     },
   });
@@ -60,7 +62,7 @@ const Mentorship = () => {
             >
               Доступные онлайн собрания / митинги
             </Text>
-            <Text color="gray.600">[Пока нет доступных ссылок]</Text>
+            <Button color="gray.700"><a href={link}>{link=="" ? "" : link}</a></Button>
             <Text
               fontSize="3xl"
               fontWeight={"600"}
