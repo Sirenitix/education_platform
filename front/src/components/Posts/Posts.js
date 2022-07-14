@@ -27,7 +27,7 @@ const[pid, setId] = useState(1);
     console.log(token);
     setId(postID);
     const arr = await fetch(
-      `http://164.92.192.48:8081/reflection/post/${postID}`,
+      `http://164.92.192.48:8085/reflection/post/${postID}`,
       {
         method: "GET",
         headers: {
@@ -50,7 +50,7 @@ const[pid, setId] = useState(1);
     console.log(token);
     console.log(JSON.stringify(comment));
     const res = await fetch(
-      `http://164.92.192.48:8081/reflection-comment?content=${comment}&name=name&postId=${pid}`,
+      `http://164.92.192.48:8085/reflection-comment?content=${comment}&name=name&postId=${pid}`,
       {
         method: "POST",
         headers: {
@@ -79,7 +79,7 @@ const[pid, setId] = useState(1);
       values.content=""
     },
   });
-
+console.log(postData)
   return (
     <>
       {postsArr?.map((p) => (
@@ -225,8 +225,11 @@ const[pid, setId] = useState(1);
                           >
                             Комментарии:
                           </Badge>
+                          <br></br>
                           {postData && postData.comment
                             ? postData.comment.map((q) => (
+                              <>
+                              {/* {q.firstname}  {q.lastname} */}
                                 <Box
                                   key={q.id}
                                   border={"1px solid"}
@@ -235,6 +238,15 @@ const[pid, setId] = useState(1);
                                   marginBottom={"1rem"}
                                   marginLeft={"3rem"}
                                 >
+                                                                <Text
+                                    textAlign={"left"}
+                                    fontSize="md"
+                                    margin={"1rem"}
+                                    color={"#5891F9"}
+                                    fontWeight={'600'}
+                                  >
+                                    {q.firstname}  {q.lastname}
+                                  </Text>
                                   <Text
                                     textAlign={"left"}
                                     fontSize="md"
@@ -243,6 +255,7 @@ const[pid, setId] = useState(1);
                                     {q.content}
                                   </Text>
                                 </Box>
+                                </>
                               ))
                             : ""}
                           <Box>

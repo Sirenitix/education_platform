@@ -29,7 +29,7 @@ const IndividualProject = () => {
     const token = sessionStorage.getItem("access_token");
     console.log(token);
     const arr = await fetch(
-      `http://164.92.192.48:8081/science/posts?page=0`,
+      `http://164.92.192.48:8085/science/posts?page=0`,
       {
         method: "GET",
         headers: {
@@ -49,7 +49,7 @@ const IndividualProject = () => {
   const getProjects = useCallback(async () => {
     const token = sessionStorage.getItem("access_token");
     console.log(token);
-    const arr = await fetch(`http://164.92.192.48:8081/projects`, {
+    const arr = await fetch(`http://164.92.192.48:8085/projects`, {
       method: "GET",
       headers: {
         "Content-type": "application/json",
@@ -60,7 +60,7 @@ const IndividualProject = () => {
       .catch((err) => {
         console.error(err);
       });
-    console.log(arr);
+    // console.log(arr);
 
     setProjects(arr);
   }, []);
@@ -124,11 +124,11 @@ const IndividualProject = () => {
           {data?.map((t)=>(
           <>
           <Badge borderRadius="full" px="2" backgroundColor={"#FFCA7A"}>
-          Учитель {t.ownerId}
+          Учитель {t.ownerId} 
 
               </Badge>
             <Box key={t.id} border={'1px solid #E5E7EB'} borderRadius={'12px'} padding={'0.5rem'} marginBottom={'1rem'}>
-                {t.content}
+                {t.content} 
             </Box>
             </>
           ) )

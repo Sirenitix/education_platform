@@ -3,16 +3,14 @@ import "./Login.css";
 import { Flex, Box, Text, Image } from "@chakra-ui/react";
 import { Service } from "../../service/Service";
 import net from "../../assets/net.jpg";
+import { useNavigate } from "react-router-dom";
+import { style } from "@mui/system";
 
 const Login = () => {
   const service = new Service();
   const validate = (values) => {
     const errors = {};
-    const passRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/g;
 
-    if (!passRegex.test(values.password)) {
-      errors.password = "";
-    }
 
     return errors;
   };
@@ -31,6 +29,7 @@ const Login = () => {
       service.registerUser(values);
     },
   });
+  const navigate = useNavigate();
 
   return (
     <>
@@ -186,6 +185,7 @@ const Login = () => {
                 </div>
               </div>
               <div style={{ display: "flex", justifyContent: "center" }}>
+                <div>
                 <button
                   type="submit"
                   className=" loginBtn group relative w-full flex justify-center py-4 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
@@ -197,8 +197,16 @@ const Login = () => {
                     justifyContent: "center",
                   }}
                 >
-                  Войти
+              
+                  Регистрация
+                  
                 </button>
+                </div>
+                <div >
+                Есть аккаунт? <br></br>
+                <span onClick={()=>{navigate("/login")}} style={{color: '#F7A325'}}>Войдите</span>
+                </div>
+              
               </div>
             </form>
           </Box>

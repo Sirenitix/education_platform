@@ -28,7 +28,7 @@ const AdminPage = () => {
     const token = sessionStorage.getItem("access_token");
     console.log(token);
     const arr = await fetch(
-      "http://164.92.192.48:8081/get-users",
+      "http://164.92.192.48:8085/get-users",
       {
         method: "GET",
         headers: {
@@ -47,6 +47,8 @@ const AdminPage = () => {
   useEffect(() => {
     getUsersAdmin();
   }, []);
+
+  console.log(users)
   return (
     <div className="profileLayout">
       <div className="navigation">

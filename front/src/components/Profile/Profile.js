@@ -46,7 +46,7 @@ const Profile = () => {
     const token = sessionStorage.getItem("access_token");
     console.log(token);
     const arr = await fetch(
-      "http://164.92.192.48:8081/reflection/posts?page=0",
+      "http://164.92.192.48:8085/reflection/posts?page=0",
       {
         method: "GET",
         headers: {
@@ -82,10 +82,10 @@ const Profile = () => {
             <Tabs>
               <TabList>
                 <Tab fontWeight={"600"}>Мои посты</Tab>
-                <Tab fontWeight={"600"} marginLeft={"3rem"}>
+                <Tab  fontWeight={"600"} marginLeft={"3rem"}>
                   Написать пост
                 </Tab>
-                <Tab fontWeight={"600"} marginLeft={"3rem"}>
+                <Tab   fontWeight={"600"} marginLeft={"3rem"}>
                   Мои проекты
                 </Tab>
               </TabList>
@@ -108,7 +108,7 @@ const Profile = () => {
                 <TabPanel>
                   <AddPost></AddPost>
                 </TabPanel>
-                <TabPanel>
+                <TabPanel >
                   <Projects></Projects>
                 </TabPanel>
               </TabPanels>

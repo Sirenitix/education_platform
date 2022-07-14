@@ -10,7 +10,7 @@ const UserCard = () => {
   const getCurrentUser = useCallback(async () => {
     const token = sessionStorage.getItem("access_token");
     console.log(token);
-    const arr = await fetch(`http://164.92.192.48:8081/current-user`, {
+    const arr = await fetch(`http://164.92.192.48:8085/current-user`, {
       method: "GET",
       headers: {
         "Content-type": "application/json",

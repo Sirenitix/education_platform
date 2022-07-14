@@ -39,7 +39,6 @@ const Profile = () => {
       service.addPost(values);
       values.content=""
       values.title=""
-     window.location.reload()
     },
   });
 

@@ -22,7 +22,7 @@ const Projects = () => {
   const getProjects = useCallback(async () => {
     const token = sessionStorage.getItem("access_token");
     console.log(token);
-    const arr = await fetch(`http://164.92.192.48:8081/projects`, {
+    const arr = await fetch(`http://164.92.192.48:8085/projects`, {
       method: "GET",
       headers: {
         "Content-type": "application/json",
@@ -33,7 +33,6 @@ const Projects = () => {
       .catch((err) => {
         console.error(err);
       });
-    console.log(arr);
 
     setProjects(arr);
   }, []);
@@ -41,6 +40,7 @@ const Projects = () => {
   useEffect(() => {
     getProjects();
   }, []);
+
 
   console.log(projects)
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -61,7 +61,6 @@ const Projects = () => {
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
       service.createProject(values);
-      window.location.reload()
 
     },
   });
@@ -70,6 +69,7 @@ const Projects = () => {
   return (
     <>
       <div className="project">
+      
         {projects
           ? projects.map((p) => (
               <Box
@@ -95,6 +95,7 @@ const Projects = () => {
       </div>
 
       <div className="addproject">
+   
         <Button margin={"2rem"} onClick={onOpen}>
           + Cоздать проект
         </Button>

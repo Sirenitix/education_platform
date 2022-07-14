@@ -12,7 +12,7 @@ const Feed = () => {
     const token = sessionStorage.getItem("access_token");
     console.log(token);
     const arr = await fetch(
-      `http://164.92.192.48:8081/reflection/posts?page=0`,
+      `http://164.92.192.48:8085/reflection/posts?page=0`,
       {
         method: "GET",
         headers: {

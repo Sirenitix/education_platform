@@ -2,24 +2,24 @@ import { useNavigate } from "react-router-dom";
 export class Service {
   navigate = useNavigate();
 
-  async isAdmin() {
-    const res = await fetch(
-      "http://164.92.192.48:8081/admin",
-      {
-        method: "GET",
-      }
-    );
-    const getPostRes = await res.text();
-    console.log("admin check")
-    return getPostRes;
-  }
+  // async isAdmin() {
+  //   const res = await fetch(
+  //     "http://164.92.192.48:8085/admin",
+  //     {
+  //       method: "GET",
+  //     }
+  //   );
+  //   const getPostRes = await res.text();
+  //   console.log("admin check")
+  //   return getPostRes;
+  // }
 
 
   async handleLogin(userData) {
 
     console.log(userData.username);
     console.log(JSON.stringify(userData));
-    const res = await fetch("http://164.92.192.48:8081/authenticate", {
+    const res = await fetch("http://164.92.192.48:8085/authenticate", {
       method: "POST",
       body: JSON.stringify(userData), //TODO: check this point, maybe they need body
       headers: {
@@ -34,22 +34,25 @@ export class Service {
 
     if (res.status === 200) {
       sessionStorage.setItem("access_token", resJson.token);
-      const check = await this.isAdmin();
-      console.log("role is:", check);
+      // const check =  await this.isAdmin();
+      // console.log("role is:", check);
       if(userData.username === "admin"){
         console.log("true")
         this.navigate("/admin");
       }
+      else{
+        this.navigate("/profile");
+
+      }
 
       console.log(sessionStorage.getItem("access_token"));
-      this.navigate("/profile");
     }
   }
 
   async registerUser(userData) {
     console.log("hey");
     console.log(JSON.stringify(userData));
-    const res = await fetch("http://164.92.192.48:8081/full-register", {
+    const res = await fetch("http://164.92.192.48:8085/full-register", {
       method: "POST",
       body: JSON.stringify(userData), //TODO: check this point, maybe they need body
       headers: {
@@ -72,7 +75,7 @@ export class Service {
     console.log(token);
     console.log(JSON.stringify(postContent));
     const res = await fetch(
-      "http://164.92.192.48:8081/reflection/create-post",
+      "http://164.92.192.48:8085/reflection/create-post",
       {
         method: "POST",
         body: JSON.stringify(postContent), //TODO: check this point, maybe they need body
@@ -88,7 +91,7 @@ export class Service {
 
   async getUserPosts() {
     const res = await fetch(
-      "http://164.92.192.48:8081/reflection/posts?page=0",
+      "http://164.92.192.48:5/reflection/posts?page=0",
       {
         method: "GET",
       }
@@ -107,7 +110,7 @@ export class Service {
     console.log("arr", projectData);
 
     const res = await fetch(
-      `http://164.92.192.48:8081/createProject?name=${"gggggg"}&project_name=${project_name}&users=${
+      `http://164.92.192.48:8085/createProject?name=${"gggggg"}&project_name=${project_name}&users=${
         projectData.user1},${projectData.user2},${projectData.user3}`,
       {
         method: "POST",
@@ -127,7 +130,7 @@ export class Service {
     console.log(token);
     console.log(JSON.stringify(discussion));
     const res = await fetch(
-      "http://164.92.192.48:8081/science/create-post",
+      "http://164.92.192.48:8085/science/create-post",
       {
         method: "POST",
         body: JSON.stringify(discussion), //TODO: check this point, maybe they need body
@@ -145,7 +148,7 @@ export class Service {
     const token = sessionStorage.getItem("access_token");
     console.log(token);
     const res = await fetch(
-      `http://164.92.192.48:8081/activate-user/${userID}`,
+      `http://164.92.192.48:8085/activate-user/${userID}`,
       {
         method: "POST",
         headers: {
@@ -167,5 +170,48 @@ export class Service {
 // }
 
   }
+
+  async startMeeting(participants) {
+    console.log("fff", participants)
+    const arr=[
+      JSON.stringify({email: `${participants.email1}`}),
+      JSON.stringify({email: `${participants.email2}`}),
+      JSON.stringify({email: `${participants.email3}`})
+    ]
+    const token = sessionStorage.getItem("access_token");
+    console.log(token);
+    const res = await fetch(
+      "http://164.92.192.48:8085/generateMeetingAndSend",
+      {
+        method: "POST",
+        body: arr, //TODO: check this point, maybe they need body
+        headers: {
+          "Content-type": "application/json",
+          Authorization: ` ${token}`,
+        },
+      }
+    );
+    const postRes = await res;
+    console.log(postRes);
+
+    if(postRes.ok){
+      alert("Приглашения были отправлены участникам")
+    }
+  }
+
+  // async getProjects() {
+  //   const token = sessionStorage.getItem("access_token");
+  //   console.log(token);
+  //   const arr = await fetch(`http://164.92.192.48:8085/projects`, {
+  //     method: "GET",
+  //     headers: {
+  //       "Content-type": "application/json",
+  //       Authorization: ` ${token}`,
+  //     },
+  //   })
+     
+  //   return arr.json();
+  // }
+
 
 }

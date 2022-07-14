@@ -5,6 +5,7 @@ import { useEffect, useCallback } from "react";
 import { useFormik } from "formik";
 import { useDisclosure } from "@chakra-ui/react";
 import { Text } from "@chakra-ui/react";
+import { Service } from "../../service/Service";
 import {
   Modal,
   ModalOverlay,
@@ -17,68 +18,27 @@ import {
 } from "@chakra-ui/react";
 
 const Mentorship = () => {
+  const service = new Service()
   const validate = (values) => {
     const errors = {};
-    const passRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/g;
-
-    if (!passRegex.test(values.password)) {
-      errors.password = "";
-    }
 
     return errors;
   };
   const formik = useFormik({
     initialValues: {
-      username: "",
-      password: "",
-    },
+        email1: "",
+        email2: "",
+        email3: "",
+
+      }
+    ,
     validate,
     onSubmit: (values) => {
-      //service.handleLogin(values);
+      service.startMeeting(values);
+      
+      console.log(values);
     },
   });
-
-  const getToken = useCallback(async () => {
-    const token = sessionStorage.getItem("access_token");
-    const result = await fetch(
-      "http://164.92.192.48:8081/generateMeetingToken",
-      {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-          Authorization: ` ${token}`,
-        },
-      }
-    );
-    const postRes = await result.text();
-    console.log("token is", postRes);
-    return postRes;
-  }, []);
-
-  // console.log("checking", meetingToken);
-  const getMeetingRoom = useCallback(async (meetingToken) => {
-    const options = {
-      method: "POST",
-      headers: {
-        Authorization: `${meetingToken}`,
-        "Content-Type": "application/json",
-      },
-    };
-    const url = `https://api.videosdk.live/v2/rooms`;
-    const response = await fetch(url, options);
-    const data = await response.json();
-    console.log(data);
-  });
-
-  async function getMeeting() {
-    const meetingToken = await getToken();
-    console.log("meeting token", meetingToken);
-    getMeetingRoom(meetingToken);
-  }
-
-  useEffect(() => {
-    getMeeting();
-  }, []);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
@@ -125,57 +85,60 @@ const Mentorship = () => {
                     <div className="rounded-md shadow-sm -space-y-px">
                       <div color="#000000">
                         <p htmlFor="email-address" className="sr-only">
-                          Название проекта
+                          Тема собрания 
                         </p>
-                        <input
-                          id="email-address"
-                          name="username"
-                          type="email"
-                          required
-                          className="loginInput appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                          placeholder="Название проекта"
-                          value={formik.values.username}
-                          onChange={formik.handleChange}
-                        />
+                     
                       </div>
                       <div>
-                        <p htmlFor="password" className="sr-only">
-                          Добавить участников проекта:
-                        </p>
-                        <input
-                          id="password"
-                          name="password"
-                          autoComplete="current-password"
-                          required
-                          className="loginInput appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                          placeholder="Участник 1"
-                          value={formik.values.password}
-                          onChange={formik.handleChange}
-                        />
-                        <input
-                          id="password"
-                          name="password"
-                          autoComplete="current-password"
-                          required
-                          className="loginInput appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                          placeholder="Участник 2"
-                          value={formik.values.password}
-                          onChange={formik.handleChange}
-                        />
-                        <input
-                          id="password"
-                          name="password"
-                          autoComplete="current-password"
-                          required
-                          className="loginInput appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                          placeholder="Участник 3"
-                          value={formik.values.password}
-                          onChange={formik.handleChange}
-                        />
-                        {formik.errors.password && (
-                          <span>{formik.errors.password}</span>
-                        )}
-                      </div>
+                  <label htmlFor="email-address" className="sr-only">
+                    Участник 1
+                  </label>
+                  <input
+                    id="email1"
+                    name="email1"
+                    type="email"
+                    autoComplete="email"
+                    required
+                    className="loginInput appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                    placeholder="Участник 1"
+                    value={formik.values.email1}
+                    onChange={formik.handleChange}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="email-address" className="sr-only">
+                    Участник 2
+                  </label>
+                  <input
+                    id="email2"
+                    name="email2"
+                    type="email"
+                    autoComplete="email"
+                    required
+                    className="loginInput appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                    placeholder="Участник 2"
+                    value={formik.values.email2}
+                    onChange={formik.handleChange}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="email-address" className="sr-only">
+                    Участник 3
+                  </label>
+                  <input
+                    id="email3"
+                    name="email3"
+                    type="email"
+                    autoComplete="email"
+                    required
+                    className="loginInput appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                    placeholder="Участник 3"
+                    value={formik.values.email3}
+                    onChange={formik.handleChange}
+                  />
+                </div>
+                
+              
                     </div>
                     <div
                       style={{
@@ -185,6 +148,7 @@ const Mentorship = () => {
                     >
                       <button
                         type="submit"
+                        onClick={onClose}
                         className=" loginBtn group relative w-full flex justify-center py-4 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         style={{
                           backgroundColor: "#BCD7DA",
