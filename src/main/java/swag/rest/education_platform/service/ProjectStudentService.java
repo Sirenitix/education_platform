@@ -14,9 +14,7 @@ import swag.rest.education_platform.exception.ProjectStudentNotFound;
 import swag.rest.education_platform.exception.UserNotInProjectException;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -41,6 +39,7 @@ public class ProjectStudentService {
 //        }
 
         List<ProjectStudent> projects = projectStudentRepository.findProjectStudentByUsers(user);
+        Set<Users> tempUsers = new HashSet<>();
         for(ProjectStudent p : projects) {
            for(Users u:  p.getUsers())
            {
@@ -50,8 +49,11 @@ public class ProjectStudentService {
                u.setReflectionPosts(null);
                u.setReflectionPostComments(null);
                u.setSciencePostComments(null);
-
+               u.setFullDetails(null);
+               tempUsers.add(u);
            }
+           List<Users> test = new ArrayList<>(tempUsers);
+           p.setUsers(test);
             p.setMessages(null);
             p.setMessages(projectMessageRepository.findByProject(p));
 
