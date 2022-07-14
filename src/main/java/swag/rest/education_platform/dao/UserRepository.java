@@ -1,6 +1,7 @@
 package swag.rest.education_platform.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import swag.rest.education_platform.entity.ProjectStudent;
@@ -18,6 +19,10 @@ public interface UserRepository extends JpaRepository<Users, Long> {
     Optional<Users> findById(Integer id);
     Boolean existsByUsername(String username);
     void deleteById(Long id);
+
+    @Modifying
+    @Query(value = "update users set enabled = true where id = ?1", nativeQuery = true)
+    void setEnableTrue(Long b);
 
 //    @Query("Select u from Users u left join fetch u.fullDetails")
 //    List<Users> findAllUsers();

@@ -8,6 +8,6 @@ import lombok.Setter;
 public class PostResponseDto {
     private Long id;
     private String title;
-    private Long ownerId;
+    private String username;
     private String content;
 }

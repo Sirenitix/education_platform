@@ -8,6 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +19,7 @@ import swag.rest.education_platform.dao.UserRepository;
 import swag.rest.education_platform.dto.UserDto;
 import swag.rest.education_platform.dto.UserFullDto;
 import swag.rest.education_platform.dto.UserReponseDto;
+import swag.rest.education_platform.dto.UserWithCred;
 import swag.rest.education_platform.entity.Avatar;
 import swag.rest.education_platform.entity.UserFullDetails;
 import swag.rest.education_platform.entity.Users;
@@ -45,6 +47,7 @@ public class AccountService {
     private final AuthenticationManager authenticationManager;
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
+
     public String authenticate(UserDto userDto, HttpServletRequest request) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userDto.getUsername(), userDto.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -59,7 +62,7 @@ public class AccountService {
         Users user = new Users();
         user.setUsername(userDto.getUsername());
         user.setPassword(encoder.encode(userDto.getPassword()));
-        user.setEnabled(true);
+        user.setEnabled(false);
         user.setRole("ROLE_USER");
         userRepository.save(user);
 
@@ -71,7 +74,7 @@ public class AccountService {
         Users user = new Users();
         user.setUsername(dto.getUsername());
         user.setPassword(encoder.encode(dto.getPassword()));
-        user.setEnabled(true);
+        user.setEnabled(false);
         user.setRole("ROLE_USER");
         user.setFirstname(dto.getFirstname());
         user.setLastname(dto.getLastname());
@@ -160,14 +163,37 @@ public class AccountService {
        List<UserReponseDto> response = new ArrayList<>();
         List<Users> users = userRepository.findAll();
         for(Users u : users) {
-            UserReponseDto dto = new UserReponseDto();
-            dto.setId(u.getId());
-            dto.setFirstname(u.getFirstname());
-            dto.setLastname(u.getLastname());
-            dto.setUsername(u.getUsername());
-            response.add(dto);
+            if(!u.isEnabled()) {
+                UserReponseDto dto = new UserReponseDto();
+                dto.setId(u.getId());
+                dto.setFirstname(u.getFirstname());
+                dto.setLastname(u.getLastname());
+                dto.setUsername(u.getUsername());
+                dto.setEnabled(u.isEnabled());
+                response.add(dto);
+            }
         }
         return response;
     }
 
+
+
+    @Transactional(readOnly = true)
+    public UserReponseDto getCurrentUser(String username) {
+        Users users = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(username + " - not found"));
+        UserReponseDto userReponseDto = new UserReponseDto();
+        userReponseDto.setId(users.getId());
+        userReponseDto.setFirstname(users.getFirstname());
+        userReponseDto.setLastname(users.getLastname());
+        userReponseDto.setEnabled(users.isEnabled());
+        userReponseDto.setUsername(users.getUsername());
+        return userReponseDto;
+    }
+
+    @Transactional
+    public void setEnableTrue(Long id) {
+      Users users = userRepository.findById(id).orElseThrow(UserExistException::new);
+      users.setEnabled(true);
+      userRepository.setEnableTrue(id);
+    }
 }

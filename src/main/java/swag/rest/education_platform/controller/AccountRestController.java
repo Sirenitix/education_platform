@@ -8,11 +8,13 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import swag.rest.education_platform.dto.UserDto;
 import swag.rest.education_platform.dto.UserFullDto;
 import swag.rest.education_platform.dto.UserReponseDto;
+import swag.rest.education_platform.dto.UserWithCred;
 import swag.rest.education_platform.entity.*;
 import swag.rest.education_platform.service.AccountService;
 import swag.rest.education_platform.service.ProjectStudentService;
@@ -31,6 +33,7 @@ import java.util.Map;
 @CrossOrigin(origins = "*")
 public class AccountRestController  {
 
+
     private final AccountService service;
     private final ProjectStudentService projectStudentService;
     @GetMapping("/get-users")
@@ -38,6 +41,20 @@ public class AccountRestController  {
         List<UserReponseDto> users = service.getUsers();
         return ResponseEntity.status(HttpStatus.OK).body(users);
     }
+
+
+    @GetMapping("/current-user")
+    public ResponseEntity<?> currentUser(Principal principal) {
+        UserReponseDto users = service.getCurrentUser(principal.getName());
+        return ResponseEntity.status(HttpStatus.OK).body(users);
+    }
+
+    @PostMapping("/activate-user/{id}")
+    public ResponseEntity<?> currentUser(@PathVariable("id") Long id) {
+        service.setEnableTrue(id);
+        return ResponseEntity.status(HttpStatus.OK).body("User activated");
+    }
+
     @PostMapping("/register")
     public ResponseEntity<String> save(@RequestBody UserDto user) {
         service.register(user);

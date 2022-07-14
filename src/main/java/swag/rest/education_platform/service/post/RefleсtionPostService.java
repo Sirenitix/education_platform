@@ -80,7 +80,7 @@ public class RefleсtionPostService {
             response.setId(post.getId());
             response.setContent(post.getContent());
             response.setTitle(post.getTitle());
-            response.setOwnerId(post.getUser().getId());
+            response.setUsername(post.getUser().getUsername());
             dto.add(response);
 
 
