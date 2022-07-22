@@ -34,7 +34,7 @@ public class MeetingController {
         List<String> meetingList = meetingService.generateMeeting(1);
         String meetingLink = meetingList.get(0);
         try {
-             emailSenderService.sendEmailWithAttachment(email, meetingLink);
+             emailSenderService.sendEmailWithAttachment(email   , meetingLink);
         } catch (MessagingException e) {
              throw new RuntimeException(e);
         }

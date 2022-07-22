@@ -6,9 +6,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import swag.rest.education_platform.dao.ProjectMessageRepository;
 import swag.rest.education_platform.dao.ProjectStudentRepository;
+import swag.rest.education_platform.dao.TagRepository;
 import swag.rest.education_platform.dao.UserRepository;
-import swag.rest.education_platform.entity.ProjectMessage;
 import swag.rest.education_platform.entity.ProjectStudent;
+import swag.rest.education_platform.entity.Tag;
 import swag.rest.education_platform.entity.Users;
 import swag.rest.education_platform.exception.ProjectStudentNotFound;
 import swag.rest.education_platform.exception.UserNotInProjectException;
@@ -24,6 +25,7 @@ public class ProjectStudentService {
     private final UserService userService;
     private final ProjectStudentRepository projectStudentRepository;
     private final ProjectMessageRepository projectMessageRepository;
+    private final TagRepository tagRepository;
     private final UserRepository userRepository;
     public ProjectStudent getProjectById(Long id) {
         return repository.findById(id).orElseThrow(() -> new RuntimeException("Project not found"));
@@ -63,7 +65,7 @@ public class ProjectStudentService {
     }
 
     @Transactional
-    public void createProject(String username, String project_name, String[] users) {
+    public void createProject(String project_name, String[] users, Set<Tag> tagName) {
         List<Users> usersList = new ArrayList<>();
         for (String s : users) {
             usersList.add(userService.findByUsername(s).orElseThrow(() -> new UsernameNotFoundException("user not found")));
@@ -71,6 +73,7 @@ public class ProjectStudentService {
         ProjectStudent project = new ProjectStudent();
         project.setUsers(usersList);
         project.setTitle(project_name);
+        project.setTags(tagName);
         repository.save(project);
         System.out.println(project.getUsers().toString());
     }

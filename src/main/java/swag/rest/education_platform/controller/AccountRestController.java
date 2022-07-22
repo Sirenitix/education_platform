@@ -25,7 +25,7 @@ import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import java.util.Set;
 
 
 @RestController
@@ -120,8 +120,8 @@ public class AccountRestController  {
     }
 
     @PostMapping("/createProject")
-    public ResponseEntity<?> createProject (Principal principal, String project_name, String[] users) {
-        projectStudentService.createProject(principal.getName(),project_name,users);
+    public ResponseEntity<?> createProject (String project_name, String[] users, @RequestBody Set<Tag> projectStudents) {
+        projectStudentService.createProject(project_name,users, projectStudents);
         return ResponseEntity.status(HttpStatus.OK).body("Project has been created");
 
     }
