@@ -17,18 +17,11 @@ public class TagController {
     private final TagService tagService;
 
     @GetMapping("/tags")
-    public Page<Tag> getTagPage(@RequestParam("offset") Integer offset,
+    public List<Tag> getTagPage(@RequestParam("offset") Integer offset,
                                 @RequestParam("limit") Integer limit) {
         Page<Tag> projectStudents = tagService.getAllProject(offset, limit);
-        return projectStudents;
+        return projectStudents.toList();
     }
 
-    @GetMapping("/project/tag/{id}")
-    @ResponseBody
-    public Set<ProjectStudent> getProjectById(@RequestParam("offset") Integer offset,
-                                     @RequestParam("limit") Integer limit,
-                                     @PathVariable("id") Integer id) {
-        Set<ProjectStudent> projectStudents = tagService.getProjectByTagId(offset, limit, id);
-        return projectStudents;
-    }
+
 }
