@@ -73,6 +73,10 @@ public class ProjectStudentService {
         ProjectStudent project = new ProjectStudent();
         project.setUsers(usersList);
         project.setTitle(project_name);
+//        Set<ProjectStudent> set = new HashSet<>();
+//        set.add(project);
+//        tagName.forEach(s -> s.setPosts(set));
+//        tagName.forEach(g -> tagRepository.save(g));
         project.setTags(tagName);
         repository.save(project);
         System.out.println(project.getUsers().toString());

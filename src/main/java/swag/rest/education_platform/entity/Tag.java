@@ -20,6 +20,7 @@ public class Tag implements Serializable {
     @Id
     @SequenceGenerator(name = "seq_tag_id", sequenceName = "seq_tag_id", initialValue = 1001, allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_tag_id")
+    @JsonIgnore
     private Integer id;
 
     private String name;
@@ -27,6 +28,7 @@ public class Tag implements Serializable {
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name = "project2tag", joinColumns = @JoinColumn(name = "tag_id"),
             inverseJoinColumns = @JoinColumn(name = "project_id"))
+    @JsonIgnore
     private Set<ProjectStudent> posts = new HashSet<>();
 
 
@@ -36,6 +38,7 @@ public class Tag implements Serializable {
         return "Tag{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", posts='" + posts + '\'' +
                 '}';
     }
 }
