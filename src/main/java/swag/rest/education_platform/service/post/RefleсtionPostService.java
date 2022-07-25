@@ -41,6 +41,7 @@ public class RefleсtionPostService {
         post.setTitle(dto.getTitle());
         post.setContent(dto.getContent());
         post.setPostDate(LocalDate.now());
+        post.setTags(dto.getTags());
         post.setUser(user);
         repository.save(post);
     }

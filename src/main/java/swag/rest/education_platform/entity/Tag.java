@@ -26,8 +26,8 @@ public class Tag implements Serializable {
     private String name;
 
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinTable(name = "project2tag", joinColumns = @JoinColumn(name = "tag_id"),
-            inverseJoinColumns = @JoinColumn(name = "project_id"))
+    @JoinTable(name = "post2tag", joinColumns = @JoinColumn(name = "tag_id"),
+            inverseJoinColumns = @JoinColumn(name = "reflexion_post_id"))
     @JsonIgnore
     private Set<ProjectStudent> posts = new HashSet<>();
 

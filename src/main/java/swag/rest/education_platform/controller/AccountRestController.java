@@ -120,8 +120,8 @@ public class AccountRestController  {
     }
 
     @PostMapping("/createProject")
-    public ResponseEntity<?> createProject (String project_name, String[] users, @RequestBody Set<Tag> projectStudents) {
-        projectStudentService.createProject(project_name,users, projectStudents);
+    public ResponseEntity<?> createProject (String project_name, String[] users) {
+        projectStudentService.createProject(project_name,users);
         return ResponseEntity.status(HttpStatus.OK).body("Project has been created");
 
     }

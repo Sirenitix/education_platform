@@ -8,11 +8,13 @@ import org.springframework.web.bind.annotation.*;
 import swag.rest.education_platform.dao.PostResponseDto;
 import swag.rest.education_platform.dto.ReflextionPostCreateDto;
 import swag.rest.education_platform.entity.ReflectionPost;
+import swag.rest.education_platform.entity.Tag;
 import swag.rest.education_platform.service.post.RefleсtionPostService;
 
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
@@ -24,8 +26,8 @@ public class ReflectionPostController {
     private final RefleсtionPostService service;
 
     @PostMapping("/create-post")
-    public ResponseEntity<String> createPost(@RequestBody ReflextionPostCreateDto dto, Principal principal) {
-        service.createPost(dto, principal.getName());
+    public ResponseEntity<String> createPost(@RequestBody ReflextionPostCreateDto dto, Principal principal ) {
+        service.createPost(dto, principal.getName() );
         return ResponseEntity.status(HttpStatus.CREATED).body("Post has been saved");
     }
 

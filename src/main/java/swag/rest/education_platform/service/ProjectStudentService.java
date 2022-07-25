@@ -65,7 +65,7 @@ public class ProjectStudentService {
     }
 
     @Transactional
-    public void createProject(String project_name, String[] users, Set<Tag> tagName) {
+    public void createProject(String project_name, String[] users) {
         List<Users> usersList = new ArrayList<>();
         for (String s : users) {
             usersList.add(userService.findByUsername(s).orElseThrow(() -> new UsernameNotFoundException("user not found")));
@@ -77,7 +77,6 @@ public class ProjectStudentService {
 //        set.add(project);
 //        tagName.forEach(s -> s.setPosts(set));
 //        tagName.forEach(g -> tagRepository.save(g));
-        project.setTags(tagName);
         repository.save(project);
         System.out.println(project.getUsers().toString());
     }

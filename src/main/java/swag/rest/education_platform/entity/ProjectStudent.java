@@ -28,10 +28,7 @@ public class ProjectStudent {
     private String userfirstname;
     private String userlastname;
 
-    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinTable(name = "project2tag", joinColumns = @JoinColumn(name = "project_id"),
-            inverseJoinColumns = @JoinColumn(name = "tag_id"))
-    private Set<Tag> tags = new HashSet<>();
+
 
 
     public ProjectStudent(Long id, String title) {
