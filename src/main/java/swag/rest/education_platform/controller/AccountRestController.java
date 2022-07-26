@@ -44,9 +44,9 @@ public class AccountRestController  {
 
 
     @GetMapping("/current-user")
-    public ResponseEntity<?> currentUser(Principal principal) {
+    public UserReponseDto currentUser(Principal principal) {
         UserReponseDto users = service.getCurrentUser(principal.getName());
-        return ResponseEntity.status(HttpStatus.OK).body(users);
+        return users;
     }
 
     @PostMapping("/activate-user/{id}")
