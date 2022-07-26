@@ -25,35 +25,34 @@ public class ReflectionPostController {
 
     private final RefleсtionPostService service;
 
-    @PostMapping("/create-post")
+    @PostMapping("/post")
     public ResponseEntity<String> createPost(@RequestBody ReflextionPostCreateDto dto, Principal principal ) {
         service.createPost(dto, principal.getName() );
         return ResponseEntity.status(HttpStatus.CREATED).body("Post has been saved");
     }
 
     @GetMapping("/post/{id}")
-    public ResponseEntity<ReflectionPost> getPostById(@PathVariable Long id) {
+    public ReflectionPost getPostById(@PathVariable Long id) {
         ReflectionPost post = service.getPostByIdWithComment(id);
-        return ResponseEntity.status(HttpStatus.OK).body(post);
+        return post;
     }
 
-    @PostMapping("/update/{post_id}")
+    @PostMapping("/post/{post_id}")
     public ResponseEntity<String> updatePostById(@PathVariable Long post_id,
                                                  @RequestBody ReflextionPostCreateDto dto, Principal principal) {
         service.updatePost(dto, post_id, principal.getName());
         return ResponseEntity.status(HttpStatus.OK).body("Updated post");
     }
 
-    @GetMapping("/posts")
-    public ResponseEntity<?> getPosts(@RequestParam(defaultValue = "1") int page) {
+    @GetMapping("/post")
+    public List<?> getPosts(@RequestParam(defaultValue = "1") int page) {
         //todo Content is also send, need to remove it from response
         List<PostResponseDto> posts = service.getPosts(page);
-        System.out.println(posts.size());
 
-        return ResponseEntity.status(HttpStatus.OK).body(posts);
+        return posts;
     }
 
-    @DeleteMapping("/delete-post/{id}")
+    @DeleteMapping("/post/{id}")
     public ResponseEntity<String> deletePost(@PathVariable Long id) {
         service.deletePost(id);
         return ResponseEntity.status(HttpStatus.OK).body("Post has been deleted");
