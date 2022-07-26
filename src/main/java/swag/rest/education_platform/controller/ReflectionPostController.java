@@ -8,14 +8,10 @@ import org.springframework.web.bind.annotation.*;
 import swag.rest.education_platform.dao.PostResponseDto;
 import swag.rest.education_platform.dto.ReflextionPostCreateDto;
 import swag.rest.education_platform.entity.ReflectionPost;
-import swag.rest.education_platform.entity.Tag;
-import swag.rest.education_platform.service.post.RefleсtionPostService;
+import swag.rest.education_platform.service.post.ReflectionPostService;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,7 +19,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/reflection")
 public class ReflectionPostController {
 
-    private final RefleсtionPostService service;
+    private final ReflectionPostService service;
 
     @PostMapping("/post")
     public ResponseEntity<String> createPost(@RequestBody ReflextionPostCreateDto dto, Principal principal ) {

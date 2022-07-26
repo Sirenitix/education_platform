@@ -4,13 +4,11 @@ package swag.rest.education_platform.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import swag.rest.education_platform.dao.SciencePostCommentRepository;
 import swag.rest.education_platform.entity.ReflectionPost;
 import swag.rest.education_platform.entity.SciencePost;
 import swag.rest.education_platform.entity.Users;
-import swag.rest.education_platform.exception.PostNotFoundException;
 import swag.rest.education_platform.service.post.ReflectionPostCommentService;
-import swag.rest.education_platform.service.post.RefleсtionPostService;
+import swag.rest.education_platform.service.post.ReflectionPostService;
 import swag.rest.education_platform.service.post.SciencePostCommentService;
 import swag.rest.education_platform.service.post.SciencePostService;
 
@@ -20,7 +18,7 @@ public class AdminServiceIml implements AdminService {
 
     private final UserService userService;
 
-    private final RefleсtionPostService refleсtionPostService;
+    private final ReflectionPostService reflectionPostService;
 
     private final SciencePostService sciencePostService;
 
@@ -48,7 +46,7 @@ public class AdminServiceIml implements AdminService {
 
     @Override
     public void deleteReflectionPostById(Long postId) {
-        ReflectionPost post = refleсtionPostService.findById(postId);
+        ReflectionPost post = reflectionPostService.findById(postId);
         sciencePostService.deletePost(post.getId());
     }
 

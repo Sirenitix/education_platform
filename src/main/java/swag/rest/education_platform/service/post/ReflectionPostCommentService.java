@@ -11,8 +11,6 @@ import swag.rest.education_platform.entity.ReflectionPost;
 import swag.rest.education_platform.entity.ReflectionPostComment;
 import swag.rest.education_platform.entity.Users;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 @Getter
@@ -20,7 +18,7 @@ import java.util.List;
 public class ReflectionPostCommentService {
     private final ReflectionPostCommentRepository repository;
     private final UserRepository userRepository;
-    private final RefleсtionPostService postService;
+    private final ReflectionPostService postService;
 
     public void createComment(String content, Long postId, String username) {
         Users user =  userRepository.findByUsername(username).orElseThrow(()->new UsernameNotFoundException("User not found"));

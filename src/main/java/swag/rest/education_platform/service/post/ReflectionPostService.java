@@ -20,15 +20,13 @@ import swag.rest.education_platform.service.UserService;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
 @Getter
 @Setter
-public class RefleсtionPostService {
+public class ReflectionPostService {
 
     private final ReflectionPostRepository repository;
     private final UserService userService;
