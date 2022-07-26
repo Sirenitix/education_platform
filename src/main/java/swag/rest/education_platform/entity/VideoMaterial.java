@@ -1,5 +1,6 @@
 package swag.rest.education_platform.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,6 +21,7 @@ public class VideoMaterial {
 
     @ManyToOne
     @JoinColumn(name = "uploaded_by")
+    @JsonIgnore
     private Users user;
 
     public VideoMaterial(Long id, String title, String tag, String url) {
