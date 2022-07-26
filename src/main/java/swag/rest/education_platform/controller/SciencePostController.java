@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/science")
 public class SciencePostController {
         private final SciencePostService service;
-    @PostMapping("/create-post")
+    @PostMapping("/post")
     public ResponseEntity<String> createPost(@RequestBody SciencePostRequestDto dto, Principal principal) {
         service.createPost(dto, principal.getName() );
         return ResponseEntity.status(HttpStatus.OK).body("Post has been saved");
@@ -32,7 +32,7 @@ public class SciencePostController {
         SciencePost post = service.getPostByIdWithComment(id);
         return ResponseEntity.status(HttpStatus.OK).body(post);
     }
-    @PostMapping("/update/{post_id}")
+    @PostMapping("/post/{post_id}")
     public ResponseEntity<String> updatePostById(@PathVariable Long post_id,
                                                  @RequestBody SciencePostRequestDto dto, Principal principal) {
         service.updatePost(dto, post_id, principal.getName());
@@ -43,7 +43,7 @@ public class SciencePostController {
     public ResponseEntity<?> getPosts(@RequestParam(defaultValue = "0") int page) {
         return ResponseEntity.status(HttpStatus.OK).body(service.getPosts(page));
     }
-    @DeleteMapping("/delete-post/{id}")
+    @DeleteMapping("/post{id}")
     public ResponseEntity<String> deletePost(@PathVariable Long id) {
         service.deletePost(id);
         return ResponseEntity.status(HttpStatus.OK).body("Post has been deleted");
