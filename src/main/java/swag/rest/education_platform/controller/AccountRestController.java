@@ -36,10 +36,10 @@ public class AccountRestController  {
 
     private final AccountService service;
     private final ProjectStudentService projectStudentService;
-    @GetMapping("/get-users")
-    public ResponseEntity<?> getUsers() {
+    @GetMapping("/users")
+    public List<UserReponseDto> getUsers() {
         List<UserReponseDto> users = service.getUsers();
-        return ResponseEntity.status(HttpStatus.OK).body(users);
+        return users;
     }
 
 
@@ -66,13 +66,13 @@ public class AccountRestController  {
         return ResponseEntity.status(HttpStatus.CREATED).body("User has been created");
     }
 
-    @PostMapping("/set-profile-image")
+    @PostMapping("/user/avatar")
     public ResponseEntity<String> updateProfilePicture(@RequestParam(name = "image") MultipartFile file, Principal principal){
         service.updateProfileImage(file,principal.getName());
         return ResponseEntity.status(HttpStatus.OK).body("Image has been updated");
     }
 
-    @GetMapping("/avatar/{id}")
+    @GetMapping("/user/avatar/{id}")
     public Avatar getProfilePicture(@PathVariable Long id) {
         Avatar image = service.getImage(id);
         return image;
@@ -88,7 +88,7 @@ public class AccountRestController  {
     }
 
 
-    @PostMapping("/authenticate")
+    @PostMapping("/auth")
     public Map<String,String> authenticateUser(@Valid @RequestBody UserDto user, HttpServletRequest request) {
         String jwt =  service.authenticate(user,request);
         Map<String, String> token = new HashMap<>();
@@ -114,22 +114,22 @@ public class AccountRestController  {
     }
 
     @GetMapping("/projects")
-    public ResponseEntity<?> getProjects (Principal principal) {
+    public List<?> getProjects (Principal principal) {
         List<ProjectStudent> projects = projectStudentService.getProjectByUsername(principal.getName());
-        return ResponseEntity.status(HttpStatus.OK).body(projects);
+        return projects;
     }
 
-    @PostMapping("/createProject")
+    @PostMapping("/projects")
     public ResponseEntity<?> createProject (String project_name, String[] users) {
         projectStudentService.createProject(project_name,users);
         return ResponseEntity.status(HttpStatus.OK).body("Project has been created");
 
     }
 
-    @PutMapping("/editProject")
+    @PutMapping("/projects")
     public ResponseEntity<?> editProject (Principal principal,@RequestBody ProjectStudent projectStudent) {
         projectStudentService.updateProject(projectStudent,principal);
-        return ResponseEntity.status(HttpStatus.OK).body("Project has been created");
+        return ResponseEntity.status(HttpStatus.OK).body("Project has been changed");
 
     }
 }
