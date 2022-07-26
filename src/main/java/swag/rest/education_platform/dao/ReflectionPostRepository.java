@@ -5,9 +5,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import swag.rest.education_platform.entity.ReflectionPost;
+import swag.rest.education_platform.entity.Tag;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.Optional;
+import java.util.Set;
 
 public interface ReflectionPostRepository extends JpaRepository<ReflectionPost,Long> {
 
@@ -16,7 +18,9 @@ public interface ReflectionPostRepository extends JpaRepository<ReflectionPost,L
     Optional<ReflectionPost> getPostByIdWithComment(Long id);
 //    Page<ReflectionPost> findAll(Pageable page);
 
-    @Query("Select new ReflectionPost(p.id, p.content,p.title, p.postDate,  p.likes) from ReflectionPost p where p.id = :id")
-    ReflectionPost getOnlyPostById(Long id);
 
+    Optional<ReflectionPost> findById(Long id);
+
+
+    Page<ReflectionPost> findByTag(Tag tag, Pageable pageable);
 }

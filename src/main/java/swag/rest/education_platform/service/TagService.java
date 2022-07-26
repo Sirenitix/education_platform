@@ -23,4 +23,9 @@ public class TagService {
         return tags;
     }
 
+
+    public Tag getProject(String name) {
+        return Objects.requireNonNull(tagRepository.findByName(name));
+    }
+
 }

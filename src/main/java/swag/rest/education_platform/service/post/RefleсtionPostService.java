@@ -14,7 +14,7 @@ import swag.rest.education_platform.dao.ReflectionPostCommentRepository;
 import swag.rest.education_platform.dao.ReflectionPostRepository;
 import swag.rest.education_platform.dto.ReflextionPostCreateDto;
 import swag.rest.education_platform.entity.ReflectionPost;
-import swag.rest.education_platform.entity.ReflectionPostComment;
+import swag.rest.education_platform.entity.Tag;
 import swag.rest.education_platform.entity.Users;
 import swag.rest.education_platform.exception.PostException;
 import swag.rest.education_platform.exception.PostNotFoundException;
@@ -22,7 +22,9 @@ import swag.rest.education_platform.service.UserService;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -41,7 +43,7 @@ public class RefleсtionPostService {
         post.setTitle(dto.getTitle());
         post.setContent(dto.getContent());
         post.setPostDate(LocalDate.now());
-        post.setTags(dto.getTags());
+        post.setTag(dto.getTag());
         post.setUser(user);
         repository.save(post);
     }
@@ -49,10 +51,7 @@ public class RefleсtionPostService {
 
     @Transactional(readOnly = true)
     public ReflectionPost getPostByIdWithComment(Long id) {
-        ReflectionPost post = repository.getOnlyPostById(id);
-        List<ReflectionPostComment> comments = commentRepository.getOnlyCommentByPostId(id);
-        post.setComment(comments);
-
+        ReflectionPost post = repository.findById(id).get();
         return post;
     }
     @Transactional
@@ -82,6 +81,7 @@ public class RefleсtionPostService {
             response.setContent(post.getContent());
             response.setTitle(post.getTitle());
             response.setUsername(post.getUser().getUsername());
+            response.setTag(post.getTag());
             dto.add(response);
 
 
@@ -95,5 +95,11 @@ public class RefleсtionPostService {
 
     public ReflectionPost findById(Long id) {
         return repository.findById(id).orElseThrow(() -> new PostNotFoundException());
+    }
+
+    public Page<ReflectionPost> findByTag(Integer offset, Integer limit, Tag tag) {
+        Pageable paging = PageRequest.of(offset,limit);
+
+        return repository.findByTag(tag, paging);
     }
 }

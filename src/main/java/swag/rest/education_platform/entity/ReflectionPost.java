@@ -1,5 +1,6 @@
 package swag.rest.education_platform.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,8 +24,9 @@ public class ReflectionPost {
     private String title;
     private LocalDate postDate;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_creator_id")
+    @JsonIgnore
     private Users user;
 
     private Long likes;
@@ -32,20 +34,19 @@ public class ReflectionPost {
     @OneToMany(mappedBy = "post",fetch = FetchType.LAZY,cascade = CascadeType.REMOVE)
     private List<ReflectionPostComment> comment;
 
-    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinTable(name = "post2tag", joinColumns = @JoinColumn(name = "reflexion_post_id"),
-            inverseJoinColumns = @JoinColumn(name = "tag_id"))
-    private Set<Tag> tags = new HashSet<>();
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Tag tag = new Tag();
 
     public ReflectionPost(Long id) {
         this.id = id;
     }
 
-    public ReflectionPost(Long id, String content, String title, LocalDate postDate, Long likes) {
+    public ReflectionPost(Long id, String content, String title, LocalDate postDate, Long likes, Tag tag) {
         this.id = id;
         this.content = content;
         this.title = title;
         this.postDate = postDate;
         this.likes = likes;
+        this.tag = tag;
     }
 }

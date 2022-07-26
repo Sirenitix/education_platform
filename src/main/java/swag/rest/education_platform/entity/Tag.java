@@ -12,9 +12,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table(name = "tags")
-@NamedEntityGraph(name = "tag.posts",
-        attributeNodes = @NamedAttributeNode(value = "posts"))
+@Table(name = "tag")
 public class Tag implements Serializable {
 
     @Id
@@ -25,11 +23,9 @@ public class Tag implements Serializable {
 
     private String name;
 
-    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinTable(name = "post2tag", joinColumns = @JoinColumn(name = "tag_id"),
-            inverseJoinColumns = @JoinColumn(name = "reflexion_post_id"))
+    @OneToMany(cascade = CascadeType.ALL)
     @JsonIgnore
-    private Set<ProjectStudent> posts = new HashSet<>();
+    private Set<ReflectionPost> posts = new HashSet<>();
 
 
 
