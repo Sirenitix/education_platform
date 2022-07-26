@@ -1,5 +1,6 @@
 package swag.rest.education_platform.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -24,5 +25,6 @@ public class UserFullDetails {
 
     @OneToOne
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private Users user;
 }

@@ -1,5 +1,6 @@
 package swag.rest.education_platform.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,27 +14,28 @@ import javax.persistence.*;
 public class SciencePostComment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Long id;
 
     @ManyToOne
     @JoinColumn(name = "user_creator_id")
+    @JsonIgnore
     private Users user;
 
     private String content;
 
     @ManyToOne
     @JoinColumn(name = "parent_id")
+    @JsonIgnore
     private SciencePost post;
     private String ownername;
     private String ownerlastname;
     private Long ownerid;
 
-    public SciencePostComment(Long id, String content, String ownername, String ownerlastname, Long ownerid) {
+    public SciencePostComment(Long id, String content, String ownerName, String ownerLastname, Long ownerId) {
         this.id = id;
         this.content = content;
-        this.ownername = ownername;
-        this.ownerlastname = ownerlastname;
-        this.ownerid = ownerid;
+        this.ownername = ownerName;
+        this.ownerlastname = ownerLastname;
+        this.ownerid = ownerId;
     }
 }
