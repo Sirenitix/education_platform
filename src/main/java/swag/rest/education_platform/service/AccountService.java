@@ -205,15 +205,26 @@ public class AccountService {
              users.addAll(userRepository.findAllByFirstnameContaining(firstName)) ;
         }
         if(lastName != null) {
-            users.addAll(userRepository.findAllByFirstnameContaining(firstName)) ;
+            if(users.isEmpty())
+            users.addAll(userRepository.findAllByLastnameContaining(lastName)) ;
+            else {
+               users =  users.stream().filter(u->u.getLastname().contains(lastName)).collect(Collectors.toSet());
+            }
 
         }
         if(role != null) {
-            users.addAll(userRepository.findAllByFirstnameContaining(firstName)) ;
+           if(users.isEmpty()) users.addAll(userRepository.findAllByRoleContaining(role)) ;
+            else {
+               users =  users.stream().filter(u->u.getRole().contains(role)).collect(Collectors.toSet());
 
+           }
         }
         if(school != null) {
-            users.addAll(userRepository.findAllByFirstnameContaining(firstName)) ;
+            if(users.isEmpty()) users.addAll(userRepository.findAllBySchool(firstName)) ;
+            else {
+               users = users.stream().filter(u -> u.getFullDetails().getSchool().contains(school)).collect(Collectors.toSet());
+            }
+
         }
         return users;
 
