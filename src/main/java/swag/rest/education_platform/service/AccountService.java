@@ -29,8 +29,7 @@ import swag.rest.education_platform.jwt.JwtUtil;
 import javax.servlet.http.HttpServletRequest;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
@@ -195,5 +194,30 @@ public class AccountService {
       Users users = userRepository.findById(id).orElseThrow(UserExistException::new);
       users.setEnabled(true);
       userRepository.setEnableTrue(id);
+    }
+
+    public Set<Users> searchUser(String firstName, String lastName, String role, String school) {
+        ArrayList<String> filters = new ArrayList<>(Arrays.asList(firstName, lastName, role, school));
+
+        Set<Users> users = new HashSet<>();
+
+        if(firstName != null) {
+             users.addAll(userRepository.findAllByFirstnameContaining(firstName)) ;
+        }
+        if(lastName != null) {
+            users.addAll(userRepository.findAllByFirstnameContaining(firstName)) ;
+
+        }
+        if(role != null) {
+            users.addAll(userRepository.findAllByFirstnameContaining(firstName)) ;
+
+        }
+        if(school != null) {
+            users.addAll(userRepository.findAllByFirstnameContaining(firstName)) ;
+        }
+        return users;
+
+
+
     }
 }

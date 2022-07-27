@@ -22,10 +22,7 @@ import swag.rest.education_platform.service.ProjectStudentService;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.security.Principal;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 
 @RestController
@@ -132,4 +129,18 @@ public class AccountRestController  {
         return ResponseEntity.status(HttpStatus.OK).body("Project has been changed");
 
     }
+
+    @GetMapping("/search")
+    public Set<Users> searchUser(@RequestParam(required = false) String firstName,
+                                     @RequestParam(required = false) String lastName,
+                                     @RequestParam(required = false) String role,
+                                     @RequestParam(required = false) String school){
+        Set<Users> users = service.searchUser(firstName, lastName, role, school);
+
+        return users;
+
+
+    }
+
+
 }

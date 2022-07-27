@@ -35,7 +35,9 @@ public class PdfMaterialService {
             throw new RuntimeException(e);
         }
         pdf.setTag("TEST");
-        pdf.setUser(user);
+                pdf.setUser(null);
+
+//        pdf.setUser(user);
         repository.save(pdf);
     }
 

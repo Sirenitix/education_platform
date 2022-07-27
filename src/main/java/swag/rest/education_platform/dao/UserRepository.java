@@ -9,6 +9,7 @@ import swag.rest.education_platform.entity.Users;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 public interface UserRepository extends JpaRepository<Users, Long> {
@@ -23,6 +24,13 @@ public interface UserRepository extends JpaRepository<Users, Long> {
     @Modifying
     @Query(value = "update users set enabled = true where id = ?1", nativeQuery = true)
     void setEnableTrue(Long b);
+
+    Set<Users> findAllByFirstnameContaining(String firstname);
+    Set<Users> findAllByLastnameContaining(String firstname);
+    Set<Users> findAllByRoleContaining(String firstname);
+
+    @Query("select f.user from Users inner join fetch UserFullDetails f where f.school like :school")
+    Set<Users> findAllBySchool(String school);
 
 //    @Query("Select u from Users u left join fetch u.fullDetails")
 //    List<Users> findAllUsers();

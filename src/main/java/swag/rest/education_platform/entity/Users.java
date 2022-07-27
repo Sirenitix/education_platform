@@ -1,6 +1,7 @@
 package swag.rest.education_platform.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -25,6 +26,7 @@ public class Users implements UserDetails {
     private String username;
 
     @NotNull
+    @JsonIgnore
     private String password;
 
     @Column(name = "enabled")
@@ -42,31 +44,39 @@ public class Users implements UserDetails {
     private String firstname;
     private String lastname;
 //relations with other entities
-
+    @JsonIgnore
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<SciencePost> sciencePosts;
-
+    @JsonIgnore
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<ReflectionPost> reflectionPosts;
 
+
+    @JsonIgnore
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<SciencePostComment> sciencePostComments;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<ReflectionPostComment> reflectionPostComments;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
     private UserFullDetails fullDetails;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<VideoMaterial> videos;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<PdfMaterial> pdfs;
 
+    @JsonIgnore
     @ManyToMany
     private List<ProjectStudent> projects;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY)
     private List<ProjectMessage> messages;
     //--------------------------------
