@@ -85,12 +85,13 @@ public class AccountService {
         userFullDetailsRepository.save(fullDetails);
 
     }
+
     @Transactional
     public void updateProfileImage(MultipartFile file, String username) {
         Users user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User has not been found"));
         UserFullDetails fullDetails = user.getFullDetails();
         Avatar avatar = fullDetails.getAvatar();
-        if(avatar == null) avatar = new Avatar();
+        if (avatar == null) avatar = new Avatar();
         avatar.setName(file.getOriginalFilename());
         try {
             avatar.setPicByte(compressByte(file.getBytes()));
@@ -106,7 +107,7 @@ public class AccountService {
 
     public Avatar getImage(Long id) {
         Users user = userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("User has not been found"));
-        if(user.getFullDetails().getAvatar() == null) return null;
+        if (user.getFullDetails().getAvatar() == null) return null;
         Avatar avatar = user.getFullDetails().getAvatar();
         Avatar result = new Avatar();
         result.setId(avatar.getId());
@@ -124,45 +125,42 @@ public class AccountService {
         deflater.finish();
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
         byte[] buffer = new byte[1024];
-        while(!deflater.finished()){
+        while (!deflater.finished()) {
             int count = deflater.deflate(buffer);
-            outputStream.write(buffer,0,count);
+            outputStream.write(buffer, 0, count);
         }
         try {
             outputStream.close();
-        }
-        catch (IOException e){
+        } catch (IOException e) {
 
         }
         return outputStream.toByteArray();
 
     }
 
-    public static  byte[] decompressByte(byte[] data){
+    public static byte[] decompressByte(byte[] data) {
         Inflater inflater = new Inflater();
         inflater.setInput(data);
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
         byte[] buffer = new byte[1024];
         try {
-            while (!inflater.finished()){
+            while (!inflater.finished()) {
                 int count = inflater.inflate(buffer);
-                outputStream.write(buffer,0,count);
+                outputStream.write(buffer, 0, count);
             }
             outputStream.close();
-        }
-        catch (IOException e) {
-        }
-        catch (DataFormatException e) {
+        } catch (IOException e) {
+        } catch (DataFormatException e) {
         }
         return outputStream.toByteArray();
     }
 
     @Transactional(readOnly = true)
     public List<UserReponseDto> getUsers() {
-       List<UserReponseDto> response = new ArrayList<>();
+        List<UserReponseDto> response = new ArrayList<>();
         List<Users> users = userRepository.findAll();
-        for(Users u : users) {
-            if(!u.isEnabled()) {
+        for (Users u : users) {
+            if (!u.isEnabled()) {
                 UserReponseDto dto = new UserReponseDto();
                 dto.setId(u.getId());
                 dto.setFirstname(u.getFirstname());
@@ -174,7 +172,6 @@ public class AccountService {
         }
         return response;
     }
-
 
 
     @Transactional(readOnly = true)
@@ -191,9 +188,9 @@ public class AccountService {
 
     @Transactional
     public void setEnableTrue(Long id) {
-      Users users = userRepository.findById(id).orElseThrow(UserExistException::new);
-      users.setEnabled(true);
-      userRepository.setEnableTrue(id);
+        Users users = userRepository.findById(id).orElseThrow(UserExistException::new);
+        users.setEnabled(true);
+        userRepository.setEnableTrue(id);
     }
 
     public Set<Users> searchUser(String firstName, String lastName, String role, String school) {
@@ -201,33 +198,32 @@ public class AccountService {
 
         Set<Users> users = new HashSet<>();
 
-        if(firstName != null) {
-             users.addAll(userRepository.findAllByFirstnameContaining(firstName)) ;
+        if (firstName != null) {
+            users.addAll(userRepository.findAllByFirstnameContaining(firstName));
         }
-        if(lastName != null) {
-            if(users.isEmpty())
-            users.addAll(userRepository.findAllByLastnameContaining(lastName)) ;
+        if (lastName != null) {
+            if (users.isEmpty())
+                users.addAll(userRepository.findAllByLastnameContaining(lastName));
             else {
-               users =  users.stream().filter(u->u.getLastname().contains(lastName)).collect(Collectors.toSet());
+                users = users.stream().filter(u -> u.getLastname().contains(lastName)).collect(Collectors.toSet());
             }
 
         }
-        if(role != null) {
-           if(users.isEmpty()) users.addAll(userRepository.findAllByRoleContaining(role)) ;
+        if (role != null) {
+            if (users.isEmpty()) users.addAll(userRepository.findAllByRoleContaining(role));
             else {
-               users =  users.stream().filter(u->u.getRole().contains(role)).collect(Collectors.toSet());
+                users = users.stream().filter(u -> u.getRole().contains(role)).collect(Collectors.toSet());
 
-           }
+            }
         }
-        if(school != null) {
-            if(users.isEmpty()) users.addAll(userRepository.findAllBySchool(firstName)) ;
+        if (school != null) {
+            if (users.isEmpty()) users.addAll(userRepository.findAllBySchool(firstName));
             else {
-               users = users.stream().filter(u -> u.getFullDetails().getSchool().contains(school)).collect(Collectors.toSet());
+                users = users.stream().filter(u -> u.getFullDetails().getSchool().contains(school)).collect(Collectors.toSet());
             }
 
         }
         return users;
-
 
 
     }

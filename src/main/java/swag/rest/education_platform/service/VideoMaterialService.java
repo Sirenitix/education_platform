@@ -40,6 +40,9 @@ public class VideoMaterialService {
     }
 
     public void uploadVideo(VideoUploadDto dto, String username) {
+        if(!dto.getUrl().contains("youtu")) {
+            throw new VideoException("Source should be youtube");
+        }
         Users user = userService.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
         VideoMaterial video = new VideoMaterial();
         video.setTitle(dto.getTitle());
