@@ -29,7 +29,7 @@ public interface UserRepository extends JpaRepository<Users, Long> {
     Set<Users> findAllByLastnameContaining(String firstname);
     Set<Users> findAllByRoleContaining(String firstname);
 
-    @Query("select f.user from Users inner join fetch UserFullDetails f where f.school like :school")
+    @Query("select f.user from Users inner join fetch UserFullDetails f where f.school like %:school%")
     Set<Users> findAllBySchool(String school);
 
 //    @Query("Select u from Users u left join fetch u.fullDetails")
