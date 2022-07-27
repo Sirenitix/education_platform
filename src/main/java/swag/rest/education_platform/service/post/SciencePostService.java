@@ -90,4 +90,9 @@ public class SciencePostService {
     public SciencePost findById(Long id) {
         return repository.findById(id).orElseThrow(PostNotFoundException::new);
     }
+
+    public List<SciencePost> searchPost(String query) {
+        List<SciencePost> posts = repository.findAllByContentContaining(query);
+        return posts;
+    }
 }

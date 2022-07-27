@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import swag.rest.education_platform.dto.DtoForPost;
 import swag.rest.education_platform.dto.ReflextionPostCreateDto;
 import swag.rest.education_platform.dto.SciencePostRequestDto;
 import swag.rest.education_platform.entity.ReflectionPost;
@@ -48,4 +49,18 @@ public class SciencePostController {
         service.deletePost(id);
         return ResponseEntity.status(HttpStatus.OK).body("Post has been deleted");
     }
+
+    @GetMapping("/search")
+    public List<DtoForPost> searchPost(@RequestParam String query) {
+        List<DtoForPost> response = new ArrayList<>();
+        List<SciencePost> posts = service.searchPost(query);
+        for(SciencePost post : posts) {
+            DtoForPost dtoForPost = new DtoForPost();
+            dtoForPost.setId(post.getId());
+            dtoForPost.setOwnerId(post.getUser().getId());
+            dtoForPost.setOwnerName(post.getUser().getFirstname());
+            dtoForPost.setOwnerLastname(post.getUser().getLastname());
+            response.add(dtoForPost);
+        }
+        return response;
 }

@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import swag.rest.education_platform.entity.ReflectionPost;
 import swag.rest.education_platform.entity.SciencePost;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface SciencePostRepository extends JpaRepository<SciencePost,Long> {
@@ -17,5 +18,6 @@ public interface SciencePostRepository extends JpaRepository<SciencePost,Long> {
 
     @Query("Select new SciencePost (p.id, p.content,p.title, p.postDate,  p.likes) from SciencePost p where p.id = :id")
     SciencePost getOnlyPostById(Long id);
+    List<SciencePost> findAllByContentContaining(String query);
 
 }

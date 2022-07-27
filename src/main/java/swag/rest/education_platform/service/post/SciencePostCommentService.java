@@ -10,6 +10,8 @@ import swag.rest.education_platform.dao.SciencePostCommentRepository;
 import swag.rest.education_platform.dao.UserRepository;
 import swag.rest.education_platform.entity.*;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Getter
@@ -36,4 +38,6 @@ public class SciencePostCommentService {
     public void deleteComment(Long id) {
         repository.deleteById(id);
     }
+
+
 }
