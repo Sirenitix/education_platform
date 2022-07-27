@@ -98,4 +98,9 @@ public class ReflectionPostService {
 
         return repository.findByTag(tag, paging);
     }
+
+    public List<ReflectionPost> searchPost(String query) {
+        List<ReflectionPost> posts = repository.findAllByContentContaining(query);
+        return posts;
+    }
 }

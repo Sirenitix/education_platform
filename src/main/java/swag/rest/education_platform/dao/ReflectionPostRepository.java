@@ -8,6 +8,7 @@ import swag.rest.education_platform.entity.ReflectionPost;
 import swag.rest.education_platform.entity.Tag;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -23,4 +24,6 @@ public interface ReflectionPostRepository extends JpaRepository<ReflectionPost,L
 
 
     Page<ReflectionPost> findByTag(Tag tag, Pageable pageable);
+
+    List<ReflectionPost> findAllByContentContaining(String query);
 }
