@@ -54,7 +54,7 @@ public class SciencePostController {
     public List<DtoForPost> searchPost(@RequestParam String query) {
         List<DtoForPost> response = new ArrayList<>();
         List<SciencePost> posts = service.searchPost(query);
-        for(SciencePost post : posts) {
+        for (SciencePost post : posts) {
             DtoForPost dtoForPost = new DtoForPost();
             dtoForPost.setId(post.getId());
             dtoForPost.setOwnerId(post.getUser().getId());
@@ -63,4 +63,5 @@ public class SciencePostController {
             response.add(dtoForPost);
         }
         return response;
+    }
 }
