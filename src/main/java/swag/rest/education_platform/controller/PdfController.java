@@ -25,30 +25,31 @@ public class PdfController {
         private final PdfMaterialService service;
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity getPdfs(@PathVariable Long id) {
+    public byte[] getPdfs(@PathVariable Long id) {
         PdfMaterial document = service.getDocumentById(id);
         HttpHeaders responseheaders = new HttpHeaders();
         responseheaders.setContentType(MediaType.APPLICATION_PDF);
         responseheaders.setContentDisposition(ContentDisposition.inline().build());
-        return  new ResponseEntity(document.getContent(),responseheaders,HttpStatus.OK);
+        return document.getContent();//new ResponseEntity(document.getContent(),responseheaders,HttpStatus.OK);
     }
 
     @GetMapping(value = "/html/{id}")
     public byte[] getHtml(@PathVariable Long id) throws IOException {
+//
         PdfMaterial document = service.getDocumentById(id);
-        HttpHeaders responseheaders = new HttpHeaders();
-        responseheaders.setContentType(MediaType.APPLICATION_PDF);
-        responseheaders.setContentDisposition(ContentDisposition.inline().build());
-        OutputStream out = Files.newOutputStream(Paths.get("/tmp/out.pdf"));
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.setContentType(MediaType.APPLICATION_PDF);
+        responseHeaders.setContentDisposition(ContentDisposition.inline().build());
+        OutputStream out = Files.newOutputStream(Paths.get("tmp/out.pdf"));
         out.write(document.getContent());
         out.close();
-        Converter converter = new Converter("/tmp/out.pdf");
+        Converter converter = new Converter("tmp/out.pdf");
         MarkupConvertOptions options = new MarkupConvertOptions();
         options.setFixedLayout(true);
         options.setPageNumber(1);
-        String outputFile =  "/tmp/warning.html";
+        String outputFile =  "tmp/warning.html";
         converter.convert(outputFile, options);
-        File file = new File("/tmp/warning.html");
+        File file = new File("tmp/warning.html");
         byte[] bytes = new byte[(int) file.length()];
         try(FileInputStream fis = new FileInputStream(file)){
             fis.read(bytes);

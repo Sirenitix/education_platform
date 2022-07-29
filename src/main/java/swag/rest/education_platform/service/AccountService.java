@@ -167,6 +167,7 @@ public class AccountService {
                 dto.setLastname(u.getLastname());
                 dto.setUsername(u.getUsername());
                 dto.setEnabled(u.isEnabled());
+                dto.setImage(u.getFullDetails().getAvatar());
                 response.add(dto);
             }
         }

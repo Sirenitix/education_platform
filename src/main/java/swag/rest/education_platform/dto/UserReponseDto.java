@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.web.bind.annotation.GetMapping;
+import swag.rest.education_platform.entity.Avatar;
 
 @Getter
 @Setter
@@ -14,6 +15,7 @@ public class UserReponseDto {
     private String firstname;
     private String lastname;
     private Boolean enabled;
+    private Avatar image;
 
     public UserReponseDto(Long id, String username, String firstname, String lastname, Boolean enabled) {
         this.id = id;

@@ -78,11 +78,11 @@ public class AccountRestController  {
 
 
 
-    @Operation(description = "Login")
-    @PostMapping("/login")
-    public void fakeLogin(@RequestBody Users user) {
-        throw new IllegalStateException("This method shouldn't be called. It's implemented by Spring Security filters.");
-    }
+//    @Operation(description = "Login")
+//    @PostMapping("/login")
+//    public void fakeLogin(@RequestBody Users user) {
+//        throw new IllegalStateException("This method shouldn't be called. It's implemented by Spring Security filters.");
+//    }
 
 
     @PostMapping("/auth")
@@ -94,11 +94,11 @@ public class AccountRestController  {
     }
 
 
-    @Operation(description = "Logout")
-    @PostMapping("/logout")
-    public void fakeLogout() {
-        throw new IllegalStateException("This method shouldn't be called. It's implemented by Spring Security filters.");
-    }
+//    @Operation(description = "Logout")
+//    @PostMapping("/logout")
+//    public void fakeLogout() {
+//        throw new IllegalStateException("This method shouldn't be called. It's implemented by Spring Security filters.");
+//    }
 
     @Operation(description = "Rated student list")
     @GetMapping("/admin")
