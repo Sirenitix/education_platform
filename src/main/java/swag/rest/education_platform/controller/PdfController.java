@@ -3,14 +3,16 @@ package swag.rest.education_platform.controller;
 import com.groupdocs.conversion.Converter;
 import com.groupdocs.conversion.options.convert.MarkupConvertOptions;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.io.FileUtils;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import swag.rest.education_platform.entity.PdfMaterial;
 import swag.rest.education_platform.service.PdfMaterialService;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.Principal;
@@ -32,23 +34,26 @@ public class PdfController {
     }
 
     @GetMapping(value = "/html/{id}")
-    public ResponseEntity getHtml(@PathVariable Long id) throws IOException {
+    public byte[] getHtml(@PathVariable Long id) throws IOException {
         PdfMaterial document = service.getDocumentById(id);
         HttpHeaders responseheaders = new HttpHeaders();
         responseheaders.setContentType(MediaType.APPLICATION_PDF);
         responseheaders.setContentDisposition(ContentDisposition.inline().build());
-        OutputStream out = Files.newOutputStream(Paths.get("/root/out.pdf"));
+        OutputStream out = Files.newOutputStream(Paths.get("/tmp/out.pdf"));
         out.write(document.getContent());
         out.close();
-        Converter converter = new Converter("/root/out.pdf");
+        Converter converter = new Converter("/tmp/out.pdf");
         MarkupConvertOptions options = new MarkupConvertOptions();
         options.setFixedLayout(true);
         options.setPageNumber(1);
-        String outputFile =  "/root/sample.html";
+        String outputFile =  "/tmp/warning.html";
         converter.convert(outputFile, options);
-        File file = new File("/root/sample.html");
-        byte[] bytes = FileUtils.readFileToByteArray(file);
-        return  new ResponseEntity(bytes,responseheaders,HttpStatus.OK);
+        File file = new File("/tmp/warning.html");
+        byte[] bytes = new byte[(int) file.length()];
+        try(FileInputStream fis = new FileInputStream(file)){
+            fis.read(bytes);
+        }
+        return bytes;
     }
 
 

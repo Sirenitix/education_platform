@@ -57,6 +57,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests().antMatchers(HttpMethod.POST,  "/authenticate").permitAll()
                 .and()
+                .authorizeRequests().antMatchers("/pdf/**").permitAll()
+                .and()
                 .authorizeRequests().antMatchers("/resources/**").permitAll()
                 .and()
                 .authorizeRequests().antMatchers("/admin").permitAll()
