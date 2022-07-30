@@ -55,11 +55,11 @@ public class PdfMaterialService {
 //            String testFile = "html/test.pdf";
             converter = new Converter(file.getInputStream());
 //            converter = new Converter(testFile);
+            String outputFile =  "html/warning.html";
             MarkupConvertOptions options = new MarkupConvertOptions();
             options.setFixedLayout(true);
-            options.setPageNumber(1);
-            //storing html locally
-            String outputFile =  "html/warning.html";
+            options.setPageNumber(3);
+            options.setPagesCount(100);
             converter.convert(outputFile, options);
             //converting html to bytes
 

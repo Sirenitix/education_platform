@@ -61,7 +61,7 @@ public class AccountService {
         Users user = new Users();
         user.setUsername(userDto.getUsername());
         user.setPassword(encoder.encode(userDto.getPassword()));
-        user.setEnabled(false);
+        user.setEnabled(true);
         user.setRole("ROLE_USER");
         userRepository.save(user);
 
@@ -184,6 +184,7 @@ public class AccountService {
         userReponseDto.setLastname(users.getLastname());
         userReponseDto.setEnabled(users.isEnabled());
         userReponseDto.setUsername(users.getUsername());
+        userReponseDto.setImage(users.getFullDetails().getAvatar());
         return userReponseDto;
     }
 
