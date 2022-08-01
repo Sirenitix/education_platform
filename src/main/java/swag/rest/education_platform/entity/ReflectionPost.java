@@ -37,6 +37,11 @@ public class ReflectionPost {
     @ManyToMany
     private List<Tag> tag = new ArrayList<>();
 
+
+    public void addTag(Tag tag){
+        this.tag.add(tag);
+    }
+
     public ReflectionPost(Long id) {
         this.id = id;
     }

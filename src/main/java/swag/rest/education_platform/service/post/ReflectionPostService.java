@@ -18,6 +18,7 @@ import swag.rest.education_platform.entity.Tag;
 import swag.rest.education_platform.entity.Users;
 import swag.rest.education_platform.exception.PostException;
 import swag.rest.education_platform.exception.PostNotFoundException;
+import swag.rest.education_platform.service.TagService;
 import swag.rest.education_platform.service.UserService;
 
 import java.time.LocalDate;
@@ -32,7 +33,7 @@ public class ReflectionPostService {
 
     private final ReflectionPostRepository repository;
 
-    private  final TagRepository tagRepository;
+    private  final TagService tagService;
     private final UserService userService;
     private final ReflectionPostCommentRepository commentRepository;
 
@@ -44,9 +45,15 @@ public class ReflectionPostService {
         post.setTitle(dto.getTitle());
         post.setContent(dto.getContent());
         post.setPostDate(LocalDate.now());
-        List<Tag> tags = tagRepository.findAll();
-        dto.getTag().stream().filter(s -> !tags.contains(s)).forEach(tagRepository::saveVoid);
-        post.setTag(dto.getTag());
+        for(String tagString: dto.getTag()){
+          if(tagService.tagExist(tagString)) {
+              post.addTag(tagService.findByTag(tagString));
+
+          }
+          else {
+            post.addTag(tagService.saveTag(new Tag(tagString)));
+          }
+        }
         post.setUser(user);
         repository.save(post);
     }

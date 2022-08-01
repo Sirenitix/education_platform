@@ -12,5 +12,5 @@ import java.util.Set;
 public class ReflextionPostCreateDto {
     private String title;
     private String content;
-    private List<Tag> tag;
+    private List<String> tag;
 }
