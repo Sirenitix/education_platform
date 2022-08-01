@@ -12,4 +12,5 @@ public class UserFullDto {
     private String lastname;
     private String school;
     private String city;
+    private String role;
 }

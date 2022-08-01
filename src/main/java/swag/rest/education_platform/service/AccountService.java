@@ -1,5 +1,7 @@
 package swag.rest.education_platform.service;
 
+import com.dropbox.core.DbxException;
+import com.dropbox.core.v2.files.Metadata;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -45,7 +47,7 @@ public class AccountService {
     private final AvatarRepository avatarRepository;
     private final AuthenticationManager authenticationManager;
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-
+    private final DropBoxService dropbox;
 
     public String authenticate(UserDto userDto, HttpServletRequest request) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userDto.getUsername(), userDto.getPassword()));
@@ -74,6 +76,7 @@ public class AccountService {
         user.setUsername(dto.getUsername());
         user.setPassword(encoder.encode(dto.getPassword()));
         user.setEnabled(false);
+        //todo role is selected at registration
         user.setRole("ROLE_USER");
         user.setFirstname(dto.getFirstname());
         user.setLastname(dto.getLastname());
@@ -90,32 +93,45 @@ public class AccountService {
     public void updateProfileImage(MultipartFile file, String username) {
         Users user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User has not been found"));
         UserFullDetails fullDetails = user.getFullDetails();
-        Avatar avatar = fullDetails.getAvatar();
-        if (avatar == null) avatar = new Avatar();
-        avatar.setName(file.getOriginalFilename());
+       Avatar avatar = new Avatar();
+       avatar.setUserFullDetails(fullDetails);
+       avatar.setName(file.getOriginalFilename());
         try {
-            avatar.setPicByte(compressByte(file.getBytes()));
-            avatar.setType(file.getContentType());
-            avatar.setUserFullDetails(fullDetails);
-            avatarRepository.save(avatar);
-
+            avatar.setPicByte(file.getBytes());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        avatarRepository.save(avatar);
+//        String filePath = fullDetails.getFilePath();
+//        if (filePath == null || filePath.equals("")) filePath = UUID.randomUUID().toString()+".jpeg";
+
+//        try {
+//            dropbox.uploadFile(file, filePath);
+//            fullDetails.setFilePath(filePath);
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        } catch (DbxException e) {
+//            throw new RuntimeException(e);
+//        }
+
 
     }
 
     public Avatar getImage(Long id) {
         Users user = userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("User has not been found"));
-        if (user.getFullDetails().getAvatar() == null) return null;
-        Avatar avatar = user.getFullDetails().getAvatar();
-        Avatar result = new Avatar();
-        result.setId(avatar.getId());
-        result.setType(avatar.getType());
-        result.setName(avatar.getName());
-        result.setPicByte(decompressByte(avatar.getPicByte()));
+//        String filePath = user.getFullDetails().getFilePath();
+//        if(filePath == null) {return null;}
+//        return dropbox.getFileDetails(filePath);
 
-        return result;
+//        if (user.getFullDetails().getAvatar() == null) return null;
+//        Avatar avatar = user.getFullDetails().getAvatar();
+//        Avatar result = new Avatar();
+//        result.setId(avatar.getId());
+//        result.setType(avatar.getType());
+//        result.setName(avatar.getName());
+//        result.setPicByte(decompressByte(avatar.getPicByte()));
+
+       return user.getFullDetails().getAvatar();
 
     }
 

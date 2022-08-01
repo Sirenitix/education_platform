@@ -22,9 +22,12 @@ public class UserFullDetails {
     private String achievements;
     @OneToOne(mappedBy = "userFullDetails")
     private Avatar avatar;
+    private String filePath;
 
     @OneToOne
     @JoinColumn(name = "user_id")
     @JsonIgnore
     private Users user;
+
+
 }

@@ -1,5 +1,6 @@
 package swag.rest.education_platform.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,6 +21,7 @@ public class ProjectStudent {
     private String title;
 
     @ManyToMany
+    @JsonIgnore
     private List<Users> users;
 
     @OneToMany(mappedBy = "project")
@@ -27,7 +29,7 @@ public class ProjectStudent {
     private Long userid;
     private String userfirstname;
     private String userlastname;
-
+    private String description;
 
 
 
