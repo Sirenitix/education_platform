@@ -85,6 +85,7 @@ public class AccountService {
         fullDetails.setSchool(dto.getSchool());
         fullDetails.setUser(user);
         fullDetails.setCity(dto.getCity());
+        fullDetails.setTitle(dto.getRole());
         userFullDetailsRepository.save(fullDetails);
 
     }
@@ -188,6 +189,11 @@ public class AccountService {
             }
         }
         return response;
+    }
+
+    public Users getUser(Long id) {
+        Users user = userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("User has not been found"));
+        return user;
     }
 
 

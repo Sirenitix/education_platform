@@ -21,10 +21,7 @@ import swag.rest.education_platform.service.ProjectStudentService;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.security.Principal;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 
 @RestController
@@ -42,12 +39,27 @@ public class AccountRestController {
         return users;
     }
 
+    @GetMapping("/users/{id}")
+    public UserFullDto getUsers(@PathVariable Long id) {
+        Users user = service.getUser(id);
+        UserFullDto dto = new UserFullDto();
+        dto.setCity(user.getFullDetails().getCity());
+        dto.setFirstname(user.getFirstname());
+        dto.setLastname(user.getLastname());
+        dto.setSchool(user.getFullDetails().getSchool());
+        dto.setRole(user.getFullDetails().getTitle());
+        dto.setUsername(user.getUsername());
+       return dto;
+    }
+
 
     @GetMapping("/current-user")
     public UserReponseDto currentUser(Principal principal) {
         UserReponseDto users = service.getCurrentUser(principal.getName());
         return users;
     }
+
+
 
     @PostMapping("/activate-user/{id}")
     public ResponseEntity<?> currentUser(@PathVariable("id") Long id) {
@@ -105,13 +117,23 @@ public class AccountRestController {
 
 
     @GetMapping("/search")
-    public Set<Users> searchUser(@RequestParam(required = false) String firstName,
+    public List<?> searchUser(@RequestParam(required = false) String firstName,
                                  @RequestParam(required = false) String lastName,
                                  @RequestParam(required = false) String role,
                                  @RequestParam(required = false) String school) {
         Set<Users> users = service.searchUser(firstName, lastName, role, school);
-
-        return users;
+        List<UserFullDto> dtos = new ArrayList<>();
+        for(Users user : users) {
+            UserFullDto dto = new UserFullDto();
+            dto.setCity(user.getFullDetails().getCity());
+            dto.setFirstname(user.getFirstname());
+            dto.setLastname(user.getLastname());
+            dto.setSchool(user.getFullDetails().getSchool());
+            dto.setRole(user.getFullDetails().getTitle());
+            dto.setUsername(user.getUsername());
+            dtos.add(dto);
+        }
+        return dtos;
 
 
     }

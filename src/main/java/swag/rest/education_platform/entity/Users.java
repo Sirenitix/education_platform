@@ -60,7 +60,7 @@ public class Users implements UserDetails {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<ReflectionPostComment> reflectionPostComments;
 
-    @JsonIgnore
+
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
     private UserFullDetails fullDetails;
 

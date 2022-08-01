@@ -21,8 +21,10 @@ public class UserFullDetails {
     private String city;
     private String achievements;
     @OneToOne(mappedBy = "userFullDetails")
+    @JsonIgnore
     private Avatar avatar;
     private String filePath;
+    private String title;
 
     @OneToOne
     @JoinColumn(name = "user_id")
