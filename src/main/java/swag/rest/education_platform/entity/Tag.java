@@ -22,6 +22,7 @@ public class Tag {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private Long id;
     private String tag;
 
@@ -29,4 +30,9 @@ public class Tag {
     @ManyToMany
     @JsonIgnore
     private List<PdfMaterial> pdfMaterials;
+
+
+    @ManyToMany
+    @JsonIgnore
+    private List<ReflectionPost>  reflectionPosts;
 }

@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import swag.rest.education_platform.entity.Tag;
 
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -11,5 +12,5 @@ import java.util.Set;
 public class ReflextionPostCreateDto {
     private String title;
     private String content;
-    private Tag tag;
+    private List<Tag> tag;
 }

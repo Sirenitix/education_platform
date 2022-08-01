@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import swag.rest.education_platform.entity.Tag;
 
+import java.util.List;
 import java.util.Set;
 
 @Setter
@@ -13,5 +14,5 @@ public class PostResponseDto {
     private String title;
     private String username;
     private String content;
-    private Tag tag;
+    private List<Tag> tag;
 }

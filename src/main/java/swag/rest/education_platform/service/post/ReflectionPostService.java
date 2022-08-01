@@ -1,5 +1,6 @@
 package swag.rest.education_platform.service.post;
 
+import com.groupdocs.conversion.internal.c.a.i.fileformats.emf.emfplus.consts.s;
 import lombok.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import swag.rest.education_platform.dao.PostResponseDto;
 import swag.rest.education_platform.dao.ReflectionPostCommentRepository;
 import swag.rest.education_platform.dao.ReflectionPostRepository;
+import swag.rest.education_platform.dao.TagRepository;
 import swag.rest.education_platform.dto.ReflextionPostCreateDto;
 import swag.rest.education_platform.entity.ReflectionPost;
 import swag.rest.education_platform.entity.Tag;
@@ -29,16 +31,21 @@ import java.util.List;
 public class ReflectionPostService {
 
     private final ReflectionPostRepository repository;
+
+    private  final TagRepository tagRepository;
     private final UserService userService;
     private final ReflectionPostCommentRepository commentRepository;
 
     @Transactional
     public void createPost(ReflextionPostCreateDto dto, String username) {
         Users user = userService.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("user not found"));
+
         ReflectionPost post = new ReflectionPost();
         post.setTitle(dto.getTitle());
         post.setContent(dto.getContent());
         post.setPostDate(LocalDate.now());
+        List<Tag> tags = tagRepository.findAll();
+        dto.getTag().stream().filter(s -> !tags.contains(s)).forEach(tagRepository::saveVoid);
         post.setTag(dto.getTag());
         post.setUser(user);
         repository.save(post);

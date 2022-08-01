@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -33,14 +34,14 @@ public class ReflectionPost {
     @OneToMany(mappedBy = "post",fetch = FetchType.LAZY,cascade = CascadeType.REMOVE)
     private List<ReflectionPostComment> comment;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Tag tag = new Tag();
+    @ManyToMany
+    private List<Tag> tag = new ArrayList<>();
 
     public ReflectionPost(Long id) {
         this.id = id;
     }
 
-    public ReflectionPost(Long id, String content, String title, LocalDate postDate, Long likes, Tag tag) {
+    public ReflectionPost(Long id, String content, String title, LocalDate postDate, Long likes, List<Tag> tag) {
         this.id = id;
         this.content = content;
         this.title = title;
