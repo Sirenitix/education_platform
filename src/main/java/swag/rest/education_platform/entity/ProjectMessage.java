@@ -13,6 +13,7 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 public class    ProjectMessage {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,6 +29,7 @@ public class    ProjectMessage {
 
     @ManyToOne
     @JoinColumn(name = "project_id")
+    @JsonIgnore
     private ProjectStudent project;
 
     public ProjectMessage(Long id, LocalDate date, String text, String userfirstname, String userlastname) {

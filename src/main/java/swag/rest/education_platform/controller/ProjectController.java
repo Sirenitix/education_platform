@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import swag.rest.education_platform.entity.ProjectMessage;
 import swag.rest.education_platform.entity.ProjectMessagesDto;
 import swag.rest.education_platform.entity.ProjectStudent;
 import swag.rest.education_platform.service.ProjectMessageService;
@@ -46,12 +47,12 @@ public class ProjectController {
     @PostMapping("project/{id}/addMessage")
     public ResponseEntity<?> createMessage(@PathVariable Long id,  Principal principal, @RequestParam String message) {
         projectMessageService.addMessage(id,message, principal.getName());
-        return ResponseEntity.status(HttpStatus.OK).body("Message has been changed");
+        return ResponseEntity.status(HttpStatus.OK).body("Message has been sent");
     }
 
     @GetMapping("project/{id}/messages")
-    public List<ProjectMessagesDto> getMessage(@PathVariable Long id) {
-        List<ProjectMessagesDto> messages = projectMessageService.getMessages(id);
-        return messages;
+    public List<?> getMessage(@PathVariable Long id) {
+
+        return projectMessageService.getMessages(id);
     }
 }

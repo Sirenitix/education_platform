@@ -28,10 +28,8 @@ import java.util.*;
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 public class AccountRestController {
-    private final DropBoxService dropbox;
 
     private final AccountService service;
-    private final ProjectStudentService projectStudentService;
 
     @GetMapping("/users")
     public List<UserReponseDto> getUsers() {

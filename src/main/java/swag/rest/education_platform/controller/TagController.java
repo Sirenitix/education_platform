@@ -15,27 +15,7 @@ import java.util.List;
 @RestController
 public class TagController {
 
-    private final TagService tagService;
 
-    private final ReflectionPostService reflectionPostService;
-
-    @PostMapping("/post_by_tag")
-    @Transactional
-    public List<ReflectionPost> getTagPage(@RequestParam("offset") Integer offset,
-                                @RequestParam("limit") Integer limit,
-                                @RequestBody Tag tag) {
-        Tag tagCurrent = tagService.getProject(tag.getName());
-        Page<ReflectionPost> posts = reflectionPostService.findByTag(offset, limit, tagCurrent);
-
-        return posts.toList();
-    }
-
-    @GetMapping("/tags")
-    public List<Tag> getPostByTag(@RequestParam("offset") Integer offset,
-                                  @RequestParam("limit") Integer limit) {
-        Page<Tag> projectStudents = tagService.getAllProject(offset, limit);
-        return projectStudents.toList();
-    }
 
 
 }

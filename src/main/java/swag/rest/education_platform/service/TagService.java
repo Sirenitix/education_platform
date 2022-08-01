@@ -17,15 +17,19 @@ public class TagService {
     private final TagRepository tagRepository;
 
 
-    public Page<Tag> getAllProject(Integer offset, Integer limit) {
-        Pageable nextPage = PageRequest.of(offset, limit);
-        Page<Tag> tags = Objects.requireNonNull(tagRepository.findAll(nextPage));
-        return tags;
+
+
+    public boolean tagExist(String tag) {
+        return tagRepository.existsByTag(tag);
+    }
+
+    public Tag findByTag(String tag) {
+        return tagRepository.findByTag(tag).orElseThrow(()-> new RuntimeException("Tag not found"));
     }
 
 
-    public Tag getProject(String name) {
-        return Objects.requireNonNull(tagRepository.findByName(name));
-    }
 
+    public void saveTag(Tag tag) {
+        tagRepository.save(tag);
+    }
 }

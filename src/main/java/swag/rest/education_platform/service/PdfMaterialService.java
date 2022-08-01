@@ -1,27 +1,20 @@
 package swag.rest.education_platform.service;
 
-import com.groupdocs.conversion.Converter;
-import com.groupdocs.conversion.options.convert.MarkupConvertOptions;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import swag.rest.education_platform.dao.PdfMaterialRepository;
 import swag.rest.education_platform.entity.PdfMaterial;
+import swag.rest.education_platform.entity.Tag;
 import swag.rest.education_platform.entity.Users;
 
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.security.Principal;
+import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.zip.DataFormatException;
-import java.util.zip.Deflater;
-import java.util.zip.Inflater;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -29,6 +22,7 @@ public class PdfMaterialService {
 
     private final PdfMaterialRepository repository;
     private final UserService userService;
+    private final TagService tagService;
 
     @Transactional
     public void saveDocument(MultipartFile file, String username, String[] tags) {
@@ -37,54 +31,49 @@ public class PdfMaterialService {
         pdf.setTitle(file.getOriginalFilename());
         pdf.setType(file.getContentType());
         pdf.setDate(LocalDate.now());
-//        try {
-//            pdf.setContent(file.getBytes());
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-        pdf.setTag("TEST");
-                pdf.setUser(null);
-
-        Converter converter = null;
-        byte[] htmlToDb;
         try {
-
-//            OutputStream out = Files.newOutputStream(Paths.get("html/out.pdf"));
-//            out.write(file.getBytes());
-//            out.close();
-//            String testFile = "html/test.pdf";
-            converter = new Converter(file.getInputStream());
-//            converter = new Converter(testFile);
-            String outputFile =  "html/warning.html";
-            MarkupConvertOptions options = new MarkupConvertOptions();
-            options.setFixedLayout(true);
-            options.setPageNumber(3);
-            options.setPagesCount(100);
-            converter.convert(outputFile, options);
-            //converting html to bytes
-
-            File tempFile = new File("html/warning.html");
-            htmlToDb = new byte[(int) tempFile.length()];
-            FileInputStream fis = new FileInputStream(tempFile);
-            fis.read(htmlToDb);
-            //todo fix close
-            fis.close();
-
-            pdf.setContent(htmlToDb);
-
-
+            pdf.setContent(file.getBytes());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        if(pdf.getTag() == null) pdf.setTag(new ArrayList<>());
+        for (String tag : tags) {
+            if (tagService.tagExist(tag)) pdf.addTag(tagService.findByTag(tag));
+            else {
+                Tag tempTag = new Tag();
+                tempTag.setTag(tag);
+                pdf.addTag(tempTag);
+                tagService.saveTag(tempTag);
+            }
+        }
+
+        pdf.setUser(user);
         repository.save(pdf);
+    }
+
+
+    @Transactional
+    public void updatePdf(MultipartFile file, Long id) {
+        try {
+            repository.updateContent(file.getBytes(), id);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     @Transactional(readOnly = true)
     public PdfMaterial getDocumentById(Long id) {
-
         PdfMaterial pdf = repository.getonlypdfbyid(id).orElseThrow(() -> new RuntimeException("Not found"));
         return pdf;
     }
+
+    @Transactional(readOnly = true)
+    public List<PdfMaterial> getPdfs() {
+       return repository.findAll();
+    }
+
+
 
 
 }
