@@ -11,6 +11,6 @@ public interface ProjectStudentRepository extends JpaRepository<ProjectStudent, 
 
     List<ProjectStudent> findProjectStudentByUsers(Users user);
 
-    @Query("Select new ProjectStudent (p.id, p.title) from ProjectStudent p inner join Users u where u.id = :id ")
-    List<ProjectStudent> findprojectsbyuser(Long id);
+//    @Query("Select new ProjectStudent (p.id, p.title, p.description) from ProjectStudent p where p..id = :id ")
+//    List<ProjectStudent> findprojectsbyuser(Long id);
 }

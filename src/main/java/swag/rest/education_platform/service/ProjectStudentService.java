@@ -41,6 +41,13 @@ public class ProjectStudentService {
         return projectStudentRepository.findProjectStudentByUsers(user);//user.getProjects();
     }
 
+//    @Transactional(readOnly = true)
+//    public List<ProjectStudent> getProjectDetails(String username) {
+//        Users user = userService.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+//
+//        return projectStudentRepository.findProjectStudentByUsers(user.getId());
+//    }
+
     @Transactional
     public void createProject(String title, String description, String[] users) {
         List<Users> usersList = new ArrayList<>();

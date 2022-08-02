@@ -32,9 +32,9 @@ public class ProjectStudent {
     private String description;
 
 
-
-    public ProjectStudent(Long id, String title) {
+    public ProjectStudent(Long id, String title, String description) {
         this.id = id;
         this.title = title;
+        this.description = description;
     }
 }

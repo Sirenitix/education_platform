@@ -19,6 +19,7 @@ import swag.rest.education_platform.dto.UserDto;
 import swag.rest.education_platform.dto.RegisterUserDto;
 import swag.rest.education_platform.dto.UserReponseDto;
 import swag.rest.education_platform.entity.Avatar;
+import swag.rest.education_platform.entity.ProjectStudent;
 import swag.rest.education_platform.entity.UserFullDetails;
 import swag.rest.education_platform.entity.Users;
 import swag.rest.education_platform.exception.UserExistException;
@@ -190,7 +191,11 @@ public class AccountService {
     @Transactional(readOnly = true)
     public Users getUser(Long id) {
         Users user = userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("User has not been found"));
-        user.setProjects(studentService.getProjectByUsername(user.getUsername()));
+        List<ProjectStudent> projects = studentService.getProjectByUsername(user.getUsername());
+        for(ProjectStudent p : projects) {
+            p.setMessages(null);
+        }
+        user.setProjects(projects);
         return user;
     }
 
