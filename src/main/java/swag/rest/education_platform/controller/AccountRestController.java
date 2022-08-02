@@ -14,6 +14,7 @@ import swag.rest.education_platform.dto.UserFullDto;
 import swag.rest.education_platform.dto.UserReponseDto;
 import swag.rest.education_platform.entity.AdminCredentials;
 import swag.rest.education_platform.entity.Avatar;
+import swag.rest.education_platform.entity.ProjectStudent;
 import swag.rest.education_platform.entity.Users;
 import swag.rest.education_platform.service.AccountService;
 
@@ -40,13 +41,17 @@ public class AccountRestController {
     public UserFullDto getUsers(@PathVariable Long id) {
         Users user = service.getUser(id);
         UserFullDto dto = new UserFullDto();
+        List<ProjectStudent> projects = user.getProjects();
+        for(ProjectStudent p : projects) {
+            p.setMessages(null);
+        }
+        dto.setProjects(projects);
         dto.setCity(user.getFullDetails().getCity());
         dto.setFirstname(user.getFirstname());
         dto.setLastname(user.getLastname());
         dto.setSchool(user.getFullDetails().getSchool());
         dto.setRole(user.getFullDetails().getTitle());
         dto.setUsername(user.getUsername());
-        dto.setProjects(user.getProjects());
        return dto;
     }
 

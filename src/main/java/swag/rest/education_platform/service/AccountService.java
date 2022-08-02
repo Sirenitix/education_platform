@@ -192,9 +192,6 @@ public class AccountService {
     public Users getUser(Long id) {
         Users user = userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("User has not been found"));
         List<ProjectStudent> projects = studentService.getProjectByUsername(user.getUsername());
-        for(ProjectStudent p : projects) {
-            p.setMessages(null);
-        }
         user.setProjects(projects);
         return user;
     }
