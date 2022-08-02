@@ -43,33 +43,34 @@ public class Users implements UserDetails {
     }
     private String firstname;
     private String lastname;
+
 //relations with other entities
     @JsonIgnore
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user")
     private List<SciencePost> sciencePosts;
     @JsonIgnore
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user")
     private List<ReflectionPost> reflectionPosts;
 
 
     @JsonIgnore
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user")
     private List<SciencePostComment> sciencePostComments;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user")
     private List<ReflectionPostComment> reflectionPostComments;
 
 
-    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "user")
     private UserFullDetails fullDetails;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user")
     private List<VideoMaterial> videos;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user")
     private List<PdfMaterial> pdfs;
 
     @JsonIgnore
@@ -77,7 +78,7 @@ public class Users implements UserDetails {
     private List<ProjectStudent> projects;
 
     @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany
     private List<ProjectMessage> messages;
     //--------------------------------
 

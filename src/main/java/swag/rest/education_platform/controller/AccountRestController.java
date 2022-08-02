@@ -40,19 +40,20 @@ public class AccountRestController {
     @GetMapping("/users/{id}")
     public UserFullDto getUsers(@PathVariable Long id) {
         Users user = service.getUser(id);
-        UserFullDto dto = new UserFullDto();
+        UserFullDto userResponseDto = new UserFullDto();
         List<ProjectStudent> projects = user.getProjects();
         for(ProjectStudent p : projects) {
             p.setMessages(null);
         }
-        dto.setProjects(projects);
-        dto.setCity(user.getFullDetails().getCity());
-        dto.setFirstname(user.getFirstname());
-        dto.setLastname(user.getLastname());
-        dto.setSchool(user.getFullDetails().getSchool());
-        dto.setRole(user.getFullDetails().getTitle());
-        dto.setUsername(user.getUsername());
-       return dto;
+        userResponseDto.setProjects(projects);
+        userResponseDto.setCity(user.getFullDetails().getCity());
+        userResponseDto.setFirstname(user.getFirstname());
+        userResponseDto.setLastname(user.getLastname());
+        userResponseDto.setSchool(user.getFullDetails().getSchool());
+        userResponseDto.setRole(user.getFullDetails().getTitle());
+        userResponseDto.setUsername(user.getUsername());
+
+       return userResponseDto;
     }
 
 
