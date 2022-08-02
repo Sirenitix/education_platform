@@ -10,10 +10,10 @@ import java.util.List;
 @Setter
 public class UserFullDto {
     private String username;
+    private String password;
     private String firstname;
     private String lastname;
     private String school;
     private String city;
     private String role;
-    private List<ProjectStudent> projects;
 }

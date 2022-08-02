@@ -21,7 +21,6 @@ public class ProjectStudent {
     private String title;
 
     @ManyToMany
-    @JsonIgnore
     private List<Users> users;
 
     @OneToMany(mappedBy = "project")

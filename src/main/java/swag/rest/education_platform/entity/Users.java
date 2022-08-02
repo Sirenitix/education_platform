@@ -46,7 +46,7 @@ public class Users implements UserDetails {
 //relations with other entities
     @JsonIgnore
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<SciencePost> sciencePosts;
+    private List<Post> posts;
     @JsonIgnore
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<ReflectionPost> reflectionPosts;
@@ -54,7 +54,7 @@ public class Users implements UserDetails {
 
     @JsonIgnore
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<SciencePostComment> sciencePostComments;
+    private List<PostComment> postComments;
 
     @JsonIgnore
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
@@ -62,6 +62,7 @@ public class Users implements UserDetails {
 
 
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+    @JsonIgnore
     private UserFullDetails fullDetails;
 
     @JsonIgnore

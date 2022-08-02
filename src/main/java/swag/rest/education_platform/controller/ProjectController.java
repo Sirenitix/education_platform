@@ -4,9 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import swag.rest.education_platform.entity.ProjectMessage;
-import swag.rest.education_platform.entity.ProjectMessagesDto;
 import swag.rest.education_platform.entity.ProjectStudent;
+import swag.rest.education_platform.dto.UsersDto;
 import swag.rest.education_platform.service.ProjectMessageService;
 import swag.rest.education_platform.service.ProjectStudentService;
 
@@ -28,10 +27,10 @@ public class ProjectController {
     }
 
     @PostMapping("/projects")
-    public ResponseEntity<?> createProject(@RequestParam(name = "Project Title") String projectTitle,
-                                           @RequestParam(name = "Project Description") String projectDescription,
-                                           String[] users) {
-        projectStudentService.createProject(projectTitle, projectDescription, users);
+    public ResponseEntity<?> createProject(@RequestParam(name = "title") String projectTitle,
+                                           @RequestParam(name = "description") String projectDescription,
+                                           @RequestBody UsersDto usersDto) {
+        projectStudentService.createProject(projectTitle, projectDescription, usersDto.getUsers());
         return ResponseEntity.status(HttpStatus.OK).body("Project has been created");
 
     }
@@ -44,16 +43,14 @@ public class ProjectController {
 
     }
 
-    @PostMapping("project/addMessage")
-    public ResponseEntity<?> createMessage(@RequestParam Long id,
-                                           @RequestParam String title,
-                                           @RequestParam String content, Principal principal ) {
-        projectMessageService.addMessage(id,title,content, principal.getName());
+    @PostMapping("project/addPost")
+    public ResponseEntity<?> createPost(@RequestParam Long project_id, @RequestParam String content,@RequestParam String title, Principal principal ) {
+        projectMessageService.addMessage(project_id,content, principal.getName(), title);
         return ResponseEntity.status(HttpStatus.OK).body("Message has been sent");
     }
 
-    @GetMapping("project/{id}/messages")
-    public List<?> getMessage(@PathVariable Long id) {
+    @GetMapping("project/{id}/posts")
+    public List<?> getPost(@PathVariable Long id) {
 
         return projectMessageService.getMessages(id);
     }

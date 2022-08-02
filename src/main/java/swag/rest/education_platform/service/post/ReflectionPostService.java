@@ -24,6 +24,7 @@ import swag.rest.education_platform.service.UserService;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -32,9 +33,9 @@ import java.util.List;
 public class ReflectionPostService {
 
     private final ReflectionPostRepository repository;
-
     private  final TagService tagService;
     private final UserService userService;
+
     private final ReflectionPostCommentRepository commentRepository;
 
     @Transactional
@@ -48,7 +49,6 @@ public class ReflectionPostService {
         for(String tagString: dto.getTag()){
           if(tagService.tagExist(tagString)) {
               post.addTag(tagService.findByTag(tagString));
-
           }
           else {
             post.addTag(tagService.saveTag(new Tag(tagString)));
@@ -75,10 +75,39 @@ public class ReflectionPostService {
         repository.save(post);
     }
     @Transactional(readOnly = true)
-    public List<PostResponseDto> getPosts(int page) {
+    public List<PostResponseDto> getAllPosts(int page) {
 
         Pageable paging = PageRequest.of(page,50);
         List<ReflectionPost> pagePost =  repository.findAll(paging).getContent();
+        List<PostResponseDto> dto = new ArrayList<>();
+
+        for (ReflectionPost post : pagePost) {
+
+            if(post.getContent().length() >100) {
+                post.setContent(post.getContent().substring(0,99));
+            }
+            PostResponseDto response = new PostResponseDto();
+            response.setId(post.getId());
+            response.setContent(post.getContent());
+            response.setTitle(post.getTitle());
+            response.setUsername(post.getUser().getUsername());
+            response.setTag(post.getTag());
+            dto.add(response);
+
+
+        }
+        return dto;
+    }
+
+
+    //Current User
+
+    @Transactional(readOnly = true)
+    public List<PostResponseDto> getCurrentUserPosts(int page, String username) {
+
+        Pageable paging = PageRequest.of(page,50);
+        List<ReflectionPost> pagePost =  repository.findAll(paging).getContent();
+        pagePost = pagePost.stream().filter(s -> s.getUser().getUsername().equals(username)).collect(Collectors.toList());
         List<PostResponseDto> dto = new ArrayList<>();
 
         for (ReflectionPost post : pagePost) {

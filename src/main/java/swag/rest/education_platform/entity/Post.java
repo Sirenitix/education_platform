@@ -13,7 +13,7 @@ import java.util.List;
 @Table(name = "science_post")
 @Getter@Setter
 @NoArgsConstructor
-public class SciencePost {
+public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -30,8 +30,8 @@ public class SciencePost {
     private Long likes;
 
     @OneToMany(mappedBy = "post")
-    private List<SciencePostComment> comment;
-    public SciencePost(Long id, String content, String title, LocalDate postDate, Long likes) {
+    private List<PostComment> comment;
+    public Post(Long id, String content, String title, LocalDate postDate, Long likes) {
         this.id = id;
         this.content = content;
         this.title = title;

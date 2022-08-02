@@ -5,7 +5,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class SciencePostRequestDto {
+public class GeneralPostDto {
+
     private String title;
     private String content;
+    private Long likes;
+
 }

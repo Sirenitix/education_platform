@@ -4,16 +4,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import swag.rest.education_platform.service.post.SciencePostCommentService;
+import swag.rest.education_platform.service.post.CommentService;
 
 import java.security.Principal;
 
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000")
-@RequestMapping("/science-comment")
-public class ScienceCommentController {
-    private final SciencePostCommentService service;
+@RequestMapping("/post-comment")
+public class CommentController {
+    private final CommentService service;
     @PostMapping()
     public ResponseEntity<?> createComment(@RequestParam String content, @RequestParam Long postId, Principal principal ) {
         service.createComment(content,postId,principal.getName());

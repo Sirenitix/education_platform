@@ -5,12 +5,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import swag.rest.education_platform.entity.ReflectionPost;
-import swag.rest.education_platform.entity.SciencePost;
+import swag.rest.education_platform.entity.Post;
 import swag.rest.education_platform.entity.Users;
 import swag.rest.education_platform.service.post.ReflectionPostCommentService;
 import swag.rest.education_platform.service.post.ReflectionPostService;
-import swag.rest.education_platform.service.post.SciencePostCommentService;
-import swag.rest.education_platform.service.post.SciencePostService;
+import swag.rest.education_platform.service.post.CommentService;
+import swag.rest.education_platform.service.post.PostService;
 
 @Service
 @RequiredArgsConstructor
@@ -20,11 +20,11 @@ public class AdminServiceIml implements AdminService {
 
     private final ReflectionPostService reflectionPostService;
 
-    private final SciencePostService sciencePostService;
+    private final PostService sciencePostService;
 
     private final ReflectionPostCommentService reflectionPostCommentService;
 
-    private final SciencePostCommentService sciencePostCommentService;
+    private final CommentService postCommentService;
 
     @Override
     public void deleteUser(Long id) {
@@ -40,7 +40,7 @@ public class AdminServiceIml implements AdminService {
 
     @Override
     public void deleteSciencePostById(Long postId) {
-        SciencePost post = sciencePostService.findById(postId);
+        Post post = sciencePostService.findById(postId);
         sciencePostService.deletePost(post.getId());
     }
 
@@ -52,10 +52,10 @@ public class AdminServiceIml implements AdminService {
 
     @Override
     public void deleteScienceCommentById(Long scienceCommentId) {
-       if(!sciencePostCommentService.exist(scienceCommentId)) {
+       if(!postCommentService.exist(scienceCommentId)) {
            throw new RuntimeException("Comment not found");
        }
-        sciencePostCommentService.deleteComment(scienceCommentId);
+        postCommentService.deleteComment(scienceCommentId);
     }
 
     @Override

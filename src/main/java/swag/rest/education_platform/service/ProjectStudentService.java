@@ -49,7 +49,7 @@ public class ProjectStudentService {
 //    }
 
     @Transactional
-    public void createProject(String title, String description, String[] users) {
+    public void createProject(String title, String description, List<String> users) {
         List<Users> usersList = new ArrayList<>();
         for (String s : users) {
             usersList.add(userService.findByUsername(s).orElseThrow(() -> new UsernameNotFoundException("user not found")));
