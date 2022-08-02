@@ -44,9 +44,9 @@ public class ProjectController {
 
     }
 
-    @PostMapping("project/{id}/addMessage")
-    public ResponseEntity<?> createMessage(@PathVariable Long id,  Principal principal, @RequestParam String message) {
-        projectMessageService.addMessage(id,message, principal.getName());
+    @PostMapping("project/addMessage")
+    public ResponseEntity<?> createMessage(@RequestParam Long postId, @RequestParam String content, Principal principal ) {
+        projectMessageService.addMessage(postId,content, principal.getName());
         return ResponseEntity.status(HttpStatus.OK).body("Message has been sent");
     }
 
