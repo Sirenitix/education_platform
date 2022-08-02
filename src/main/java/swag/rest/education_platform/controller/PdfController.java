@@ -26,12 +26,12 @@ public class PdfController {
         private final PdfMaterialService service;
 
     @GetMapping(value = "/{id}")
-    public byte[] getPdf(@PathVariable Long id) {
+    public ResponseEntity getPdf(@PathVariable Long id) {
         PdfMaterial document = service.getDocumentById(id);
         HttpHeaders responseheaders = new HttpHeaders();
         responseheaders.setContentType(MediaType.APPLICATION_PDF);
         responseheaders.setContentDisposition(ContentDisposition.inline().build());
-        return document.getContent();//new ResponseEntity(document.getContent(),responseheaders,HttpStatus.OK);
+        return new ResponseEntity(document.getContent(),responseheaders,HttpStatus.OK);
     }
 
 //    @GetMapping()
