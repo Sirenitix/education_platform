@@ -16,7 +16,7 @@ import swag.rest.education_platform.dao.AvatarRepository;
 import swag.rest.education_platform.dao.UserFullDetailsRepository;
 import swag.rest.education_platform.dao.UserRepository;
 import swag.rest.education_platform.dto.UserDto;
-import swag.rest.education_platform.dto.UserFullDto;
+import swag.rest.education_platform.dto.RegisterUserDto;
 import swag.rest.education_platform.dto.UserReponseDto;
 import swag.rest.education_platform.entity.Avatar;
 import swag.rest.education_platform.entity.UserFullDetails;
@@ -43,6 +43,7 @@ public class AccountService {
     private final AvatarRepository avatarRepository;
     private final AuthenticationManager authenticationManager;
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    private final ProjectStudentService studentService;
 
     public String authenticate(UserDto userDto, HttpServletRequest request) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userDto.getUsername(), userDto.getPassword()));
@@ -64,7 +65,7 @@ public class AccountService {
 
     }
 
-    public void registerWithFullDetails(UserFullDto dto) {
+    public void registerWithFullDetails(RegisterUserDto dto) {
         if (userRepository.existsByUsername(dto.getUsername()))
             throw new UserExistException();
         Users user = new Users();
@@ -186,8 +187,10 @@ public class AccountService {
         return response;
     }
 
+    @Transactional(readOnly = true)
     public Users getUser(Long id) {
         Users user = userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("User has not been found"));
+        user.setProjects(studentService.getProjectByUsername(user.getUsername()));
         return user;
     }
 

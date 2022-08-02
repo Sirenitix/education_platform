@@ -9,6 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import swag.rest.education_platform.dto.UserDto;
+import swag.rest.education_platform.dto.RegisterUserDto;
 import swag.rest.education_platform.dto.UserFullDto;
 import swag.rest.education_platform.dto.UserReponseDto;
 import swag.rest.education_platform.entity.AdminCredentials;
@@ -45,6 +46,7 @@ public class AccountRestController {
         dto.setSchool(user.getFullDetails().getSchool());
         dto.setRole(user.getFullDetails().getTitle());
         dto.setUsername(user.getUsername());
+        dto.setProjects(user.getProjects());
        return dto;
     }
 
@@ -70,7 +72,7 @@ public class AccountRestController {
     }
 
     @PostMapping("/full-register")
-    public ResponseEntity<String> registerUserWithFullDetails(@RequestBody UserFullDto user) {
+    public ResponseEntity<String> registerUserWithFullDetails(@RequestBody RegisterUserDto user) {
         service.registerWithFullDetails(user);
         return ResponseEntity.status(HttpStatus.CREATED).body("User has been created");
     }
@@ -118,9 +120,9 @@ public class AccountRestController {
                                  @RequestParam(required = false) String role,
                                  @RequestParam(required = false) String school) {
         Set<Users> users = service.searchUser(firstName, lastName, role, school);
-        List<UserFullDto> dtos = new ArrayList<>();
+        List<RegisterUserDto> dtos = new ArrayList<>();
         for(Users user : users) {
-            UserFullDto dto = new UserFullDto();
+            RegisterUserDto dto = new RegisterUserDto();
             dto.setCity(user.getFullDetails().getCity());
             dto.setFirstname(user.getFirstname());
             dto.setLastname(user.getLastname());

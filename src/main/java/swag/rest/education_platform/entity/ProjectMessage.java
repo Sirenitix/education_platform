@@ -22,6 +22,7 @@ public class    ProjectMessage {
     @JoinColumn(name = "user_id")
     @JsonIgnore
     private Users user;
+    private String title;
     private LocalDate date;
     private String text;
     private String userfirstname;
