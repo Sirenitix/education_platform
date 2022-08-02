@@ -1,7 +1,5 @@
 package swag.rest.education_platform.controller;
 
-import com.groupdocs.conversion.Converter;
-import com.groupdocs.conversion.options.convert.MarkupConvertOptions;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
@@ -9,12 +7,6 @@ import org.springframework.web.multipart.MultipartFile;
 import swag.rest.education_platform.entity.PdfMaterial;
 import swag.rest.education_platform.service.PdfMaterialService;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.security.Principal;
 import java.util.List;
 

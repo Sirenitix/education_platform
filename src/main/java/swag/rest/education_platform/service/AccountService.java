@@ -1,7 +1,5 @@
 package swag.rest.education_platform.service;
 
-import com.dropbox.core.DbxException;
-import com.dropbox.core.v2.files.Metadata;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -10,7 +8,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +18,6 @@ import swag.rest.education_platform.dao.UserRepository;
 import swag.rest.education_platform.dto.UserDto;
 import swag.rest.education_platform.dto.UserFullDto;
 import swag.rest.education_platform.dto.UserReponseDto;
-import swag.rest.education_platform.dto.UserWithCred;
 import swag.rest.education_platform.entity.Avatar;
 import swag.rest.education_platform.entity.UserFullDetails;
 import swag.rest.education_platform.entity.Users;
@@ -47,7 +43,6 @@ public class AccountService {
     private final AvatarRepository avatarRepository;
     private final AuthenticationManager authenticationManager;
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-    private final DropBoxService dropbox;
 
     public String authenticate(UserDto userDto, HttpServletRequest request) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userDto.getUsername(), userDto.getPassword()));

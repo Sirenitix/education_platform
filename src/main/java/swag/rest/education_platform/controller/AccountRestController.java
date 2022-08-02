@@ -15,8 +15,6 @@ import swag.rest.education_platform.entity.AdminCredentials;
 import swag.rest.education_platform.entity.Avatar;
 import swag.rest.education_platform.entity.Users;
 import swag.rest.education_platform.service.AccountService;
-import swag.rest.education_platform.service.DropBoxService;
-import swag.rest.education_platform.service.ProjectStudentService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
