@@ -9,14 +9,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import swag.rest.education_platform.dto.UserDto;
-import swag.rest.education_platform.dto.RegisterUserDto;
 import swag.rest.education_platform.dto.UserFullDto;
 import swag.rest.education_platform.dto.UserReponseDto;
-import swag.rest.education_platform.entity.AdminCredentials;
-import swag.rest.education_platform.entity.Avatar;
-import swag.rest.education_platform.entity.ProjectStudent;
-import swag.rest.education_platform.entity.Users;
+import swag.rest.education_platform.entity.*;
 import swag.rest.education_platform.service.AccountService;
+import swag.rest.education_platform.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -30,6 +27,14 @@ import java.util.*;
 public class AccountRestController {
 
     private final AccountService service;
+    private final UserService userService;
+
+    @GetMapping("/admin_users")
+    public List<UserReponseDto> getAdminUsers() {
+        List<UserReponseDto> users = service.getAdminUsers();
+        return users;
+    }
+
 
     @GetMapping("/users")
     public List<UserReponseDto> getUsers() {
@@ -38,22 +43,9 @@ public class AccountRestController {
     }
 
     @GetMapping("/users/{id}")
-    public UserFullDto getUsers(@PathVariable Long id) {
+    public Users getUsers(@PathVariable Long id) {
         Users user = service.getUser(id);
-        UserFullDto userResponseDto = new UserFullDto();
-        List<ProjectStudent> projects = user.getProjects();
-        for(ProjectStudent p : projects) {
-            p.setMessages(null);
-        }
-        userResponseDto.setProjects(projects);
-        userResponseDto.setCity(user.getFullDetails().getCity());
-        userResponseDto.setFirstname(user.getFirstname());
-        userResponseDto.setLastname(user.getLastname());
-        userResponseDto.setSchool(user.getFullDetails().getSchool());
-        userResponseDto.setRole(user.getFullDetails().getTitle());
-        userResponseDto.setUsername(user.getUsername());
-
-       return userResponseDto;
+       return user;
     }
 
 
@@ -78,7 +70,7 @@ public class AccountRestController {
     }
 
     @PostMapping("/full-register")
-    public ResponseEntity<String> registerUserWithFullDetails(@RequestBody RegisterUserDto user) {
+    public ResponseEntity<String> registerUserWithFullDetails(@RequestBody UserFullDetails user) {
         service.registerWithFullDetails(user);
         return ResponseEntity.status(HttpStatus.CREATED).body("User has been created");
     }
@@ -104,7 +96,9 @@ public class AccountRestController {
     public Map<String, String> authenticateUser(@Valid @RequestBody UserDto user, HttpServletRequest request) {
         String jwt = service.authenticate(user, request);
         Map<String, String> token = new HashMap<>();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         token.put("token", jwt);
+        token.put("role", auth.getAuthorities().toString());
         return token;
     }
 
@@ -113,9 +107,6 @@ public class AccountRestController {
     @GetMapping("/admin")
     public String aboutAdmin() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        AdminCredentials adminCredentials = new AdminCredentials(
-                auth.getPrincipal().toString(),
-                auth.getAuthorities().toString().equals("[ROLE_ADMIN]"));
         return auth.getAuthorities().toString();
     }
 
@@ -126,9 +117,9 @@ public class AccountRestController {
                                  @RequestParam(required = false) String role,
                                  @RequestParam(required = false) String school) {
         Set<Users> users = service.searchUser(firstName, lastName, role, school);
-        List<RegisterUserDto> dtos = new ArrayList<>();
+        List<UserFullDto> dtos = new ArrayList<>();
         for(Users user : users) {
-            RegisterUserDto dto = new RegisterUserDto();
+            UserFullDto dto = new UserFullDto();
             dto.setCity(user.getFullDetails().getCity());
             dto.setFirstname(user.getFirstname());
             dto.setLastname(user.getLastname());

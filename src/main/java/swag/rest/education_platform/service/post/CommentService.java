@@ -5,26 +5,25 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import swag.rest.education_platform.dao.ReflectionPostCommentRepository;
-import swag.rest.education_platform.dao.SciencePostCommentRepository;
+import swag.rest.education_platform.dao.PostCommentRepository;
 import swag.rest.education_platform.dao.UserRepository;
-import swag.rest.education_platform.entity.*;
-
-import java.util.List;
+import swag.rest.education_platform.entity.Post;
+import swag.rest.education_platform.entity.PostComment;
+import swag.rest.education_platform.entity.Users;
 
 @Service
 @RequiredArgsConstructor
 @Getter
 @Setter
-public class SciencePostCommentService {
-    private final SciencePostCommentRepository repository;
+public class CommentService {
+    private final PostCommentRepository repository;
     private final UserRepository userRepository;
-    private final SciencePostService postService;
+    private final PostService postService;
 
     public void createComment(String content, Long postId, String username) {
         Users user =  userRepository.findByUsername(username).orElseThrow(()->new UsernameNotFoundException("User not found"));
-        SciencePost post = postService.findById(postId);
-        SciencePostComment comment = new SciencePostComment();
+        Post post = postService.findById(postId);
+        PostComment comment = new PostComment();
         comment.setContent(content);
         comment.setUser(user);
         comment.setPost(post);

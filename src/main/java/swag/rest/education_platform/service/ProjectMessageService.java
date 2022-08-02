@@ -38,7 +38,7 @@ public class ProjectMessageService {
         return messages;
     }
 
-    public void addMessage(Long project_id,String title, String text, String username) {
+    public void addMessage(Long project_id, String text, String username, String title) {
         ProjectStudent project = projectStudentService.getProjectById(project_id);
         Users user = userService.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
@@ -48,8 +48,8 @@ public class ProjectMessageService {
         message.setUserfirstname(user.getFirstname());
         message.setUserlastname(user.getLastname());
         message.setUser(user);
-        message.setTitle(title);
         message.setProject(project);
+        message.setTitle(title);
         repository.save(message);
     }
 }

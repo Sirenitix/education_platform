@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Table(name = "science_post_comment")
 @Getter@Setter
 @NoArgsConstructor
-public class SciencePostComment {
+public class PostComment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,12 +26,12 @@ public class SciencePostComment {
     @ManyToOne
     @JoinColumn(name = "parent_id")
     @JsonIgnore
-    private SciencePost post;
+    private Post post;
     private String ownername;
     private String ownerlastname;
     private Long ownerid;
 
-    public SciencePostComment(Long id, String content, String ownerName, String ownerLastname, Long ownerId) {
+    public PostComment(Long id, String content, String ownerName, String ownerLastname, Long ownerId) {
         this.id = id;
         this.content = content;
         this.ownername = ownerName;

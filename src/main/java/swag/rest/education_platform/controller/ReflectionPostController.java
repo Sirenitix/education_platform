@@ -42,10 +42,18 @@ public class ReflectionPostController {
         return ResponseEntity.status(HttpStatus.OK).body("Updated post");
     }
 
-    @GetMapping("/post")
-    public List<?> getPosts(@RequestParam(defaultValue = "1") int page) {
+    @GetMapping("/currentUser/posts")
+    public List<?> getAllPosts(@RequestParam(defaultValue = "0") int page, Principal principal) {
         //todo Content is also send, need to remove it from response
-        List<PostResponseDto> posts = service.getPosts(page);
+        List<PostResponseDto> posts = service.getCurrentUserPosts(page,principal.getName());
+
+        return posts;
+    }
+
+    @GetMapping("/all/posts")
+    public List<?> getUserPosts(@RequestParam(defaultValue = "0") int page) {
+        //todo Content is also send, need to remove it from response
+        List<PostResponseDto> posts = service.getAllPosts(page);
 
         return posts;
     }

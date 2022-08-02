@@ -26,6 +26,12 @@ public class UserFullDetails {
     private String filePath;
     private String title;
 
+    private String username;
+    private String password;
+    private String firstname;
+    private String lastname;
+    private String role;
+
     @OneToOne
     @JoinColumn(name = "user_id")
     @JsonIgnore

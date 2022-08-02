@@ -17,6 +17,7 @@ import swag.rest.education_platform.dao.UserFullDetailsRepository;
 import swag.rest.education_platform.dao.UserRepository;
 import swag.rest.education_platform.dto.UserDto;
 import swag.rest.education_platform.dto.RegisterUserDto;
+import swag.rest.education_platform.dto.UserFullDto;
 import swag.rest.education_platform.dto.UserReponseDto;
 import swag.rest.education_platform.entity.Avatar;
 import swag.rest.education_platform.entity.ProjectStudent;
@@ -66,7 +67,7 @@ public class AccountService {
 
     }
 
-    public void registerWithFullDetails(RegisterUserDto dto) {
+    public void registerWithFullDetails(UserFullDetails dto) {
         if (userRepository.existsByUsername(dto.getUsername()))
             throw new UserExistException();
         Users user = new Users();
@@ -170,11 +171,30 @@ public class AccountService {
     }
 
     @Transactional(readOnly = true)
-    public List<UserReponseDto> getUsers() {
+    public List<UserReponseDto> getAdminUsers() {
         List<UserReponseDto> response = new ArrayList<>();
         List<Users> users = userRepository.findAll();
         for (Users u : users) {
             if (!u.isEnabled()) {
+                UserReponseDto dto = new UserReponseDto();
+                dto.setId(u.getId());
+                dto.setFirstname(u.getFirstname());
+                dto.setLastname(u.getLastname());
+                dto.setUsername(u.getUsername());
+                dto.setEnabled(u.isEnabled());
+                dto.setImage(u.getFullDetails().getAvatar());
+                response.add(dto);
+            }
+        }
+        return response;
+    }
+
+    @Transactional(readOnly = true)
+    public List<UserReponseDto> getUsers() {
+        List<UserReponseDto> response = new ArrayList<>();
+        List<Users> users = userRepository.findAll();
+        for (Users u : users) {
+            if (u.isEnabled()) {
                 UserReponseDto dto = new UserReponseDto();
                 dto.setId(u.getId());
                 dto.setFirstname(u.getFirstname());
