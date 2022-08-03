@@ -66,8 +66,10 @@ public class ReflectionPostController {
     }
 
     @GetMapping("/search")
-    public Set<ReflectionPost> searchPost(@RequestParam(required = false, defaultValue = "") String title, @RequestParam(required = false,defaultValue = "") String content) {
-        Set<ReflectionPost> posts = service.searchPost(title,content);
+    public Set<ReflectionPost> searchPost(@RequestParam(required = false, defaultValue = "") String title,
+                                          @RequestParam(required = false,defaultValue = "") String content,
+                                          @RequestParam(required = false,defaultValue = "") String tag) {
+        Set<ReflectionPost> posts = service.searchPost(title,content,tag);
         return posts;
     }
 

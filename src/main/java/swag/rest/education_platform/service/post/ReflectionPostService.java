@@ -147,7 +147,7 @@ public class ReflectionPostService {
     }
 
     @Transactional(readOnly = true)
-    public Set<ReflectionPost> searchPost(String title, String content) {
+    public Set<ReflectionPost> searchPost(String title, String content, String tag) {
 
         Set<ReflectionPost> result = new HashSet<>();// = repository.findAllByTitleContaining(title);
         if(title.isEmpty() && content.isEmpty()) return result;
@@ -158,6 +158,10 @@ public class ReflectionPostService {
         }
         if(!content.equals("")) {
             result = result.stream().filter(u -> u.getContent().contains(content)).collect(Collectors.toSet());
+        }
+        if(!tag.equals("")) {
+            result = result.stream().filter(u->u.getTag() != null)
+                    .filter(u-> u.getTag().get(0).getTag().equals(tag)).collect(Collectors.toSet());
         }
         return result;
     }
