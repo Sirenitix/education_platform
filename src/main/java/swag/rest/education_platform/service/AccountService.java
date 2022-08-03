@@ -107,35 +107,12 @@ public class AccountService {
             throw new RuntimeException(e);
         }
         avatarRepository.save(avatar);
-//        String filePath = fullDetails.getFilePath();
-//        if (filePath == null || filePath.equals("")) filePath = UUID.randomUUID().toString()+".jpeg";
-
-//        try {
-//            dropbox.uploadFile(file, filePath);
-//            fullDetails.setFilePath(filePath);
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        } catch (DbxException e) {
-//            throw new RuntimeException(e);
-//        }
 
 
     }
 
     public Avatar getImage(Long id) {
         Users user = userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("User has not been found"));
-//        String filePath = user.getFullDetails().getFilePath();
-//        if(filePath == null) {return null;}
-//        return dropbox.getFileDetails(filePath);
-
-//        if (user.getFullDetails().getAvatar() == null) return null;
-//        Avatar avatar = user.getFullDetails().getAvatar();
-//        Avatar result = new Avatar();
-//        result.setId(avatar.getId());
-//        result.setType(avatar.getType());
-//        result.setName(avatar.getName());
-//        result.setPicByte(decompressByte(avatar.getPicByte()));
-
        return user.getFullDetails().getAvatar();
 
     }
@@ -245,7 +222,6 @@ public class AccountService {
 
     @Transactional(readOnly = true)
     public Set<Users> searchUser(String firstName, String lastName, String role, String school) {
-        ArrayList<String> filters = new ArrayList<>(Arrays.asList(firstName, lastName, role, school));
 
         Set<Users> users = new HashSet<>();
 
