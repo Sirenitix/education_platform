@@ -53,11 +53,9 @@ public class AccountRestController {
 
 
     @GetMapping("/current-user")
-    public CurrentUserDto currentUser(Principal principal) {
+    public UserFullDetails currentUser(Principal principal) {
         Users users = service.getCurrentUser(principal.getName());
-        CurrentUserDto currentUserDto = new CurrentUserDto();
-        currentUserDto.setUserFullDetails(users.getFullDetails());
-        return currentUserDto;
+        return users.getFullDetails();
     }
 
 
