@@ -205,13 +205,6 @@ public class AccountService {
     @Transactional(readOnly = true)
     public Users getCurrentUser(String username) {
         Users users = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(username + " - not found"));
-        UserReponseDto userReponseDto = new UserReponseDto();
-        userReponseDto.setId(users.getId());
-        userReponseDto.setFirstname(users.getFirstname());
-        userReponseDto.setLastname(users.getLastname());
-        userReponseDto.setEnabled(users.isEnabled());
-        userReponseDto.setUsername(users.getUsername());
-        userReponseDto.setImage(users.getFullDetails().getAvatar());
         return users;
     }
 

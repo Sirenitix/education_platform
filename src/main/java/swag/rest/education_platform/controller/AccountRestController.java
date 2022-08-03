@@ -56,7 +56,6 @@ public class AccountRestController {
     public CurrentUserDto currentUser(Principal principal) {
         Users users = service.getCurrentUser(principal.getName());
         CurrentUserDto currentUserDto = new CurrentUserDto();
-        currentUserDto.setImage(users.getFullDetails().getAvatar());
         currentUserDto.setUserFullDetails(users.getFullDetails());
         return currentUserDto;
     }

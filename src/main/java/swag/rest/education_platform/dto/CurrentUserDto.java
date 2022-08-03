@@ -10,8 +10,6 @@ import swag.rest.education_platform.entity.UserFullDetails;
 @Setter
 @NoArgsConstructor
 public class CurrentUserDto {
-
-    private Avatar image;
     private UserFullDetails userFullDetails;
 
 }

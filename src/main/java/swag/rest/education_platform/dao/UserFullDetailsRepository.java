@@ -13,5 +13,4 @@ public interface UserFullDetailsRepository extends JpaRepository<UserFullDetails
 
     Optional<UserFullDetails> findByUsername(String username);
     Optional<UserFullDetails> findById(Integer id);
-    Boolean existsByUsername(String username);
 }

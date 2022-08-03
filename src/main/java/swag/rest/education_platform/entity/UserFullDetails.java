@@ -21,7 +21,6 @@ public class UserFullDetails {
     private String city;
     private String achievements;
     @OneToOne(mappedBy = "userFullDetails")
-    @JsonIgnore
     private Avatar avatar;
     private String filePath;
     private String title;
@@ -30,7 +29,6 @@ public class UserFullDetails {
     private String password;
     private String firstname;
     private String lastname;
-    @JsonIgnore
     private String role;
 
     @OneToOne
