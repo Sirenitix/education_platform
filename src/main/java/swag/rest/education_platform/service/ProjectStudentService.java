@@ -16,6 +16,7 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,6 +40,14 @@ public class ProjectStudentService {
             p.setMessages(projectMessageRepository.findByProject(p));
         }
         return projectStudentRepository.findProjectStudentByUsers(user);//user.getProjects();
+    }
+
+    public Set<ProjectStudent> search(String title, String description) {
+
+        Set<ProjectStudent> result = projectStudentRepository.findAllByTitleContaining(title);
+        result.addAll(projectStudentRepository.findAllByDescriptionContaining(description));
+        return result;
+
     }
 
 //    @Transactional(readOnly = true)

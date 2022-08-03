@@ -11,6 +11,7 @@ import swag.rest.education_platform.service.ProjectStudentService;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequiredArgsConstructor
@@ -53,5 +54,11 @@ public class ProjectController {
     public List<?> getPost(@PathVariable Long id) {
 
         return projectMessageService.getMessages(id);
+    }
+
+    @GetMapping("project/search")
+    public Set<ProjectStudent> search(@RequestParam String title, @RequestParam String description) {
+
+        return  projectStudentService.search(title, description);
     }
 }

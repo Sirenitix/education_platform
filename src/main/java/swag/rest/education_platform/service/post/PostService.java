@@ -24,7 +24,9 @@ import swag.rest.education_platform.service.UserService;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -93,8 +95,16 @@ public class PostService {
         return repository.findById(id).orElseThrow(PostNotFoundException::new);
     }
 
-    public List<Post> searchPost(String query) {
-        List<Post> posts = repository.findAllByContentContaining(query);
+    public Set<Post> searchPost(String title, String content) {
+        Set<Post> posts = repository.findAllByContentContaining(content);
+        if(posts == null) {
+            posts = repository.findAllByTitleContaining(title);
+        }
+        else {
+            posts.addAll(repository.findAllByTitleContaining(title));
+        }
         return posts;
     }
+
+
 }

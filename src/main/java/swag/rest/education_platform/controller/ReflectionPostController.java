@@ -14,6 +14,7 @@ import swag.rest.education_platform.service.post.ReflectionPostService;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequiredArgsConstructor
@@ -65,9 +66,9 @@ public class ReflectionPostController {
     }
 
     @GetMapping("/search")
-    public List<DtoForPost> searchPost(@RequestParam String query) {
+    public List<DtoForPost> searchPost(@RequestParam(required = false) String title, @RequestParam(required = false) String content) {
         List<DtoForPost> response = new ArrayList<>();
-        List<ReflectionPost> posts = service.searchPost(query);
+        Set<ReflectionPost> posts = service.searchPost(title,content);
         for(ReflectionPost post : posts) {
             DtoForPost dtoForPost = new DtoForPost();
             dtoForPost.setId(post.getId());
