@@ -31,6 +31,12 @@ public class GlobalAdvice extends ResponseEntityExceptionHandler {
 
 
     @ResponseBody
+    @ExceptionHandler(UserExistException.class)
+    public ResponseEntity<String> userException(UserExistException ex) {
+        return ResponseEntity.status(HttpStatus.IM_USED).body("User already exist");
+    }
+
+    @ResponseBody
     @ExceptionHandler(UsernameNotFoundException.class)
     public ResponseEntity<String> usernameNotFoundException(UsernameNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
