@@ -24,6 +24,7 @@ public class Tag {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonIgnore
     private Long id;
+    @Column(unique = true)
     private String tag;
 
     public Tag(String tag) {

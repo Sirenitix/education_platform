@@ -2,16 +2,19 @@ package swag.rest.education_platform.dto;
 
 import lombok.Getter;
 import lombok.Setter;
-import swag.rest.education_platform.entity.ProjectStudent;
 
-import java.util.List;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 
 @Getter
 @Setter
 public class UserFullDto {
+    @Email()
     private String username;
     private String password;
+    @NotEmpty
     private String firstname;
+    @NotEmpty
     private String lastname;
     private String school;
     private String city;

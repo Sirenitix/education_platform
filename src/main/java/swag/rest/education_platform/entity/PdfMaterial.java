@@ -29,7 +29,7 @@ public class PdfMaterial {
 
     private LocalDate date;
     private String type;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name ="uploaded_by")
     @JsonIgnore
     private Users user;
