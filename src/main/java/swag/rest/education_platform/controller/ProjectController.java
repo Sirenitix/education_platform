@@ -57,7 +57,7 @@ public class ProjectController {
     }
 
     @GetMapping("project/search")
-    public Set<ProjectStudent> search(@RequestParam String title, @RequestParam String description) {
+    public Set<ProjectStudent> search(@RequestParam(required = false, defaultValue = "")String title, @RequestParam(required = false,defaultValue = "") String description) {
 
         return  projectStudentService.search(title, description);
     }

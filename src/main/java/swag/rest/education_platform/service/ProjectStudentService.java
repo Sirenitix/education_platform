@@ -8,15 +8,13 @@ import swag.rest.education_platform.dao.ProjectMessageRepository;
 import swag.rest.education_platform.dao.ProjectStudentRepository;
 import swag.rest.education_platform.dao.TagRepository;
 import swag.rest.education_platform.entity.ProjectStudent;
+import swag.rest.education_platform.entity.ReflectionPost;
 import swag.rest.education_platform.entity.Users;
 import swag.rest.education_platform.exception.ProjectStudentNotFound;
 import swag.rest.education_platform.exception.UserNotInProjectException;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -44,8 +42,17 @@ public class ProjectStudentService {
 
     public Set<ProjectStudent> search(String title, String description) {
 
-        Set<ProjectStudent> result = projectStudentRepository.findAllByTitleContaining(title);
-        result.addAll(projectStudentRepository.findAllByDescriptionContaining(description));
+
+        Set<ProjectStudent> result = new HashSet<>();// = repository.findAllByTitleContaining(title);
+        if(title.isEmpty() && description.isEmpty()) return result;
+
+        List<ProjectStudent> findAll = repository.findAll();
+        if(title != null)  {
+            result = findAll.stream().filter(u -> u.getTitle().contains(title)).collect(Collectors.toSet());
+        }
+        if(description != null) {
+            result = findAll.stream().filter(u -> u.getDescription().contains(description)).collect(Collectors.toSet());
+        }
         return result;
 
     }
