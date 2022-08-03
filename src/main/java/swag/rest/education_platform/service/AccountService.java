@@ -70,7 +70,7 @@ public class AccountService {
 
     }
 
-    public void registerWithFullDetails(UserFullDetails dto) {
+    public void registerWithFullDetails(RegisterUserDto dto) {
         if (userRepository.existsByUsername(dto.getUsername()))
             throw new UserExistException();
         Users user = new Users();
@@ -86,7 +86,7 @@ public class AccountService {
         fullDetails.setSchool(dto.getSchool());
         fullDetails.setUser(user);
         fullDetails.setCity(dto.getCity());
-        fullDetails.setTitle(dto.getRole());
+        fullDetails.setTitle(dto.getTitle());
         userFullDetailsRepository.save(fullDetails);
 
     }
