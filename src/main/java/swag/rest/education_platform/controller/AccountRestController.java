@@ -56,10 +56,6 @@ public class AccountRestController {
         Users users = service.getCurrentUser(principal.getName());
         UserReponseDto userReponseDto = new UserReponseDto();
         modelMapper.map(users,userReponseDto);
-//        userReponseDto.setId(users.getId());
-//        userReponseDto.setFirstname(users.getFirstname());
-//        userReponseDto.setLastname(users.getLastname());
-//        userReponseDto.setUsername(users.getUsername());
         userReponseDto.setImage(users.getFullDetails().getAvatar());
 
         return userReponseDto;
@@ -130,6 +126,7 @@ public class AccountRestController {
         List<UserFullDto> dtos = new ArrayList<>();
         for(Users user : users) {
             UserFullDto dto = new UserFullDto();
+            dto.setId(user.getId());
             dto.setCity(user.getFullDetails().getCity());
             dto.setFirstname(user.getFirstname());
             dto.setLastname(user.getLastname());
