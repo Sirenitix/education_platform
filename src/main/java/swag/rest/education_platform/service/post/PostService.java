@@ -17,6 +17,7 @@ import swag.rest.education_platform.dto.PostResponseWithoutTag;
 import swag.rest.education_platform.dto.PostRequestDto;
 import swag.rest.education_platform.entity.Post;
 import swag.rest.education_platform.entity.PostComment;
+import swag.rest.education_platform.entity.ReflectionPost;
 import swag.rest.education_platform.entity.Users;
 import swag.rest.education_platform.exception.PostException;
 import swag.rest.education_platform.exception.PostNotFoundException;
@@ -96,14 +97,17 @@ public class PostService {
     }
 
     public Set<Post> searchPost(String title, String content) {
-        Set<Post> posts = repository.findAllByContentContaining(content);
-        if(posts == null) {
-            posts = repository.findAllByTitleContaining(title);
+        Set<Post> result = new HashSet<>();// = repository.findAllByTitleContaining(title);
+        if(title.isEmpty() && content.isEmpty()) return result;
+
+        result = new HashSet<>(repository.findAll());
+        if(!title.equals(""))  {
+            result = result.stream().filter(u -> u.getTitle().contains(title)).collect(Collectors.toSet());
         }
-        else {
-            posts.addAll(repository.findAllByTitleContaining(title));
+        if(!content.equals("")) {
+            result = result.stream().filter(u -> u.getContent().contains(content)).collect(Collectors.toSet());
         }
-        return posts;
+        return result;
     }
 
 

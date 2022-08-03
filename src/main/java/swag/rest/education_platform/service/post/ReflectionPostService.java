@@ -13,6 +13,7 @@ import swag.rest.education_platform.dao.PostResponseDto;
 import swag.rest.education_platform.dao.ReflectionPostCommentRepository;
 import swag.rest.education_platform.dao.ReflectionPostRepository;
 import swag.rest.education_platform.dto.ReflextionPostCreateDto;
+import swag.rest.education_platform.entity.Post;
 import swag.rest.education_platform.entity.ReflectionPost;
 import swag.rest.education_platform.entity.Tag;
 import swag.rest.education_platform.entity.Users;
@@ -151,12 +152,12 @@ public class ReflectionPostService {
         Set<ReflectionPost> result = new HashSet<>();// = repository.findAllByTitleContaining(title);
         if(title.isEmpty() && content.isEmpty()) return result;
 
-        List<ReflectionPost> findAll = repository.findAll();
-        if(title != null)  {
-           result = findAll.stream().filter(u -> u.getTitle().contains(title)).collect(Collectors.toSet());
+        result = new HashSet<>(repository.findAll());
+        if(!title.equals(""))  {
+            result = result.stream().filter(u -> u.getTitle().contains(title)).collect(Collectors.toSet());
         }
-        if(content != null) {
-            result = findAll.stream().filter(u -> u.getContent().contains(content)).collect(Collectors.toSet());
+        if(!content.equals("")) {
+            result = result.stream().filter(u -> u.getContent().contains(content)).collect(Collectors.toSet());
         }
         return result;
     }
