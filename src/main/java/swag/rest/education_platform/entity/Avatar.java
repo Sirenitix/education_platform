@@ -17,6 +17,7 @@ public class Avatar {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private Long id;
     private String name;
     private String type;
