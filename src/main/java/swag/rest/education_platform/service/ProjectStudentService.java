@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import swag.rest.education_platform.dao.ProjectMessageRepository;
 import swag.rest.education_platform.dao.ProjectStudentRepository;
 import swag.rest.education_platform.dao.TagRepository;
+import swag.rest.education_platform.entity.Post;
 import swag.rest.education_platform.entity.ProjectStudent;
 import swag.rest.education_platform.entity.ReflectionPost;
 import swag.rest.education_platform.entity.Users;
@@ -41,17 +42,15 @@ public class ProjectStudentService {
     }
 
     public Set<ProjectStudent> search(String title, String description) {
-
-
         Set<ProjectStudent> result = new HashSet<>();// = repository.findAllByTitleContaining(title);
         if(title.isEmpty() && description.isEmpty()) return result;
 
-        List<ProjectStudent> findAll = repository.findAll();
-        if(title != null)  {
-            result = findAll.stream().filter(u -> u.getTitle().contains(title)).collect(Collectors.toSet());
+        result = new HashSet<>(repository.findAll());
+        if(!title.equals(""))  {
+            result = result.stream().filter(u -> u.getTitle().contains(title)).collect(Collectors.toSet());
         }
-        if(description != null) {
-            result = findAll.stream().filter(u -> u.getDescription().contains(description)).collect(Collectors.toSet());
+        if(!description.equals("")) {
+            result = result.stream().filter(u -> u.getDescription().contains(description)).collect(Collectors.toSet());
         }
         return result;
 

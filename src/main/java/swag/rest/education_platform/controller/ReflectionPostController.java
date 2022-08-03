@@ -66,18 +66,9 @@ public class ReflectionPostController {
     }
 
     @GetMapping("/search")
-    public List<DtoForPost> searchPost(@RequestParam(required = false, defaultValue = "") String title, @RequestParam(required = false,defaultValue = "") String content) {
-        List<DtoForPost> response = new ArrayList<>();
+    public Set<ReflectionPost> searchPost(@RequestParam(required = false, defaultValue = "") String title, @RequestParam(required = false,defaultValue = "") String content) {
         Set<ReflectionPost> posts = service.searchPost(title,content);
-        for(ReflectionPost post : posts) {
-            DtoForPost dtoForPost = new DtoForPost();
-            dtoForPost.setId(post.getId());
-            dtoForPost.setOwnerId(post.getUser().getId());
-            dtoForPost.setOwnerName(post.getUser().getFirstname());
-            dtoForPost.setOwnerLastname(post.getUser().getLastname());
-            response.add(dtoForPost);
-        }
-        return response;
+        return posts;
     }
 
 }

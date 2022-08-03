@@ -59,17 +59,8 @@ public class PostController {
     }
 
     @GetMapping("/search")
-    public List<DtoForPost> search(@RequestParam String title, @RequestParam String content) {
-        List<DtoForPost> response = new ArrayList<>();
+    public Set<Post> search(@RequestParam(required = false, defaultValue = "") String title, @RequestParam(required = false,defaultValue = "") String content) {
         Set<Post> posts = service.searchPost(title,content);
-        for (Post post : posts) {
-            DtoForPost dtoForPost = new DtoForPost();
-            dtoForPost.setId(post.getId());
-            dtoForPost.setOwnerId(post.getUser().getId());
-            dtoForPost.setOwnerName(post.getUser().getFirstname());
-            dtoForPost.setOwnerLastname(post.getUser().getLastname());
-            response.add(dtoForPost);
-        }
-        return response;
+        return posts;
     }
 }
