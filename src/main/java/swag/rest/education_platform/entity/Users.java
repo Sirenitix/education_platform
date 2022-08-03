@@ -89,17 +89,18 @@ public class Users implements UserDetails {
         authorities.add(new SimpleGrantedAuthority(role));
         return authorities;
     }
-
+    @JsonIgnore
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
+    @JsonIgnore
 
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
-
+    @JsonIgnore
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
