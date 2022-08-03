@@ -9,6 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import swag.rest.education_platform.dto.CurrentUserDto;
 import swag.rest.education_platform.dto.UserDto;
 import swag.rest.education_platform.dto.UserFullDto;
 import swag.rest.education_platform.dto.UserReponseDto;
@@ -52,13 +53,12 @@ public class AccountRestController {
 
 
     @GetMapping("/current-user")
-    public UserReponseDto currentUser(Principal principal) {
+    public CurrentUserDto currentUser(Principal principal) {
         Users users = service.getCurrentUser(principal.getName());
-        UserReponseDto userReponseDto = new UserReponseDto();
-        modelMapper.map(users,userReponseDto);
-        userReponseDto.setImage(users.getFullDetails().getAvatar());
-
-        return userReponseDto;
+        CurrentUserDto currentUserDto = new CurrentUserDto();
+        currentUserDto.setImage(users.getFullDetails().getAvatar());
+        currentUserDto.setUserFullDetails(users.getFullDetails());
+        return currentUserDto;
     }
 
 

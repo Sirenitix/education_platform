@@ -48,6 +48,8 @@ public class AccountService {
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
     private final ProjectStudentService studentService;
 
+
+
     public String authenticate(UserDto userDto, HttpServletRequest request) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userDto.getUsername(), userDto.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);

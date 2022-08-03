@@ -16,7 +16,6 @@ public class UserFullDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonIgnore
     private Long id;
     private String school;
     private String city;
@@ -26,11 +25,12 @@ public class UserFullDetails {
     private Avatar avatar;
     private String filePath;
     private String title;
-
     private String username;
+    @JsonIgnore
     private String password;
     private String firstname;
     private String lastname;
+    @JsonIgnore
     private String role;
 
     @OneToOne
