@@ -3,6 +3,7 @@ package swag.rest.education_platform.dao;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import swag.rest.education_platform.entity.ProjectStudent;
 import swag.rest.education_platform.entity.Users;
@@ -25,12 +26,16 @@ public interface UserRepository extends JpaRepository<Users, Long> {
     @Query(value = "update users set enabled = true where id = ?1", nativeQuery = true)
     void setEnableTrue(Long b);
 
-    Set<Users> findAllByFirstnameContaining(String firstname);
-    Set<Users> findAllByLastnameContaining(String firstname);
-    Set<Users> findAllByRoleContaining(String firstname);
+    Set<Users> findAllByFirstnameContaining(@Param("firstname") String firstname);
+    Set<Users> findAllByLastnameContaining(@Param("lastname") String lastname);
+    Set<Users> findAllByRoleContaining(@Param("role") String role);
 
-    @Query("select f.user from Users inner join fetch UserFullDetails f where f.school like %:school%")
-    Set<Users> findAllBySchool(String school);
+    @Query("select u from Users u inner join fetch u.fullDetails f where f.school like %:school%")
+    Set<Users> findAllBySchool(@Param("school") String school);
+
+    @Query("select u from Users u inner join fetch u.fullDetails f where u.firstname like %:firstname% and " +
+            "u.lastname like %:lastname% and u.role like  %:role% and f.school like %:school%" )
+    Set<Users> fullSearch(String firstname, String lastname, String role, String school);
 
 //    @Query("Select u from Users u left join fetch u.fullDetails")
 //    List<Users> findAllUsers();

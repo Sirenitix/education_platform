@@ -237,6 +237,7 @@ public class AccountService {
         userRepository.setEnableTrue(id);
     }
 
+    @Transactional(readOnly = true)
     public Set<Users> searchUser(String firstName, String lastName, String role, String school) {
         ArrayList<String> filters = new ArrayList<>(Arrays.asList(firstName, lastName, role, school));
 
@@ -261,12 +262,13 @@ public class AccountService {
             }
         }
         if (school != null) {
-            if (users.isEmpty()) users.addAll(userRepository.findAllBySchool(firstName));
+            if (users.isEmpty()) users.addAll(userRepository.findAllBySchool(school));
             else {
                 users = users.stream().filter(u -> u.getFullDetails().getSchool().contains(school)).collect(Collectors.toSet());
             }
 
         }
+
         return users;
 
 

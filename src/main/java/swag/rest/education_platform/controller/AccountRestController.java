@@ -63,11 +63,11 @@ public class AccountRestController {
         return ResponseEntity.status(HttpStatus.OK).body("User activated");
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<String> save(@RequestBody UserDto user) {
-        service.register(user);
-        return ResponseEntity.status(HttpStatus.CREATED).body("User has been created");
-    }
+//    @PostMapping("/register")
+//    public ResponseEntity<String> save(@RequestBody UserDto user) {
+//        service.register(user);
+//        return ResponseEntity.status(HttpStatus.CREATED).body("User has been created");
+//    }
 
     @PostMapping("/full-register")
     public ResponseEntity<String> registerUserWithFullDetails(@RequestBody UserFullDetails user) {
