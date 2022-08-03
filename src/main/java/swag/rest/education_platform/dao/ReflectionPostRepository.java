@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import swag.rest.education_platform.entity.ReflectionPost;
 import swag.rest.education_platform.entity.Tag;
 
@@ -25,5 +26,8 @@ public interface ReflectionPostRepository extends JpaRepository<ReflectionPost,L
 
     Page<ReflectionPost> findByTag(Tag tag, Pageable pageable);
 
-    List<ReflectionPost> findAllByContentContaining(String query);
+    Set<ReflectionPost> findAllByTitleContaining(@Param("title") String title);
+
+    @Query("select p from ReflectionPost p where p.content like %:content%")
+    Set<ReflectionPost> customFindAllByContentContaining(@Param("content")String content);
 }
