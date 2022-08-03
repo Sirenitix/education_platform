@@ -13,6 +13,7 @@ import swag.rest.education_platform.service.post.PostService;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 
 @RestController
@@ -58,9 +59,9 @@ public class PostController {
     }
 
     @GetMapping("/search")
-    public List<DtoForPost> searchPost(@RequestParam String query) {
+    public List<DtoForPost> search(@RequestParam String title, @RequestParam String content) {
         List<DtoForPost> response = new ArrayList<>();
-        List<Post> posts = service.searchPost(query);
+        Set<Post> posts = service.searchPost(title,content);
         for (Post post : posts) {
             DtoForPost dtoForPost = new DtoForPost();
             dtoForPost.setId(post.getId());

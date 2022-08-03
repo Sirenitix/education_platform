@@ -23,7 +23,9 @@ import swag.rest.education_platform.service.UserService;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -142,8 +144,10 @@ public class ReflectionPostService {
         return repository.findByTag(tag, paging);
     }
 
-    public List<ReflectionPost> searchPost(String query) {
-        List<ReflectionPost> posts = repository.findAllByContentContaining(query);
-        return posts;
+    @Transactional(readOnly = true)
+    public Set<ReflectionPost> searchPost(String title, String content) {
+        Set<ReflectionPost> result = new HashSet<>();// = repository.findAllByTitleContaining(title);
+        result.addAll(repository.customFindAllByContentContaining(content));
+        return result;
     }
 }

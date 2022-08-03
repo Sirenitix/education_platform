@@ -8,6 +8,7 @@ import swag.rest.education_platform.entity.Post;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public interface PostRepository extends JpaRepository<Post,Long> {
     @Query("select p from Post p left join fetch p.comment where p.id = :id")
@@ -17,6 +18,6 @@ public interface PostRepository extends JpaRepository<Post,Long> {
 
 
     Optional<Post> findById(Long id);
-    List<Post> findAllByContentContaining(String query);
-
+    Set<Post> findAllByContentContaining(String content);
+    Set<Post> findAllByTitleContaining(String title);
 }
