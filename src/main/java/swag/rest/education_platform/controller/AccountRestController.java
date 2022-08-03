@@ -3,6 +3,7 @@ package swag.rest.education_platform.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,6 +29,7 @@ public class AccountRestController {
 
     private final AccountService service;
     private final UserService userService;
+    private final ModelMapper modelMapper;
 
     @GetMapping("/admin_users")
     public List<UserReponseDto> getAdminUsers() {
@@ -51,8 +53,16 @@ public class AccountRestController {
 
     @GetMapping("/current-user")
     public UserReponseDto currentUser(Principal principal) {
-        UserReponseDto users = service.getCurrentUser(principal.getName());
-        return users;
+        Users users = service.getCurrentUser(principal.getName());
+        UserReponseDto userReponseDto = new UserReponseDto();
+        modelMapper.map(users,userReponseDto);
+//        userReponseDto.setId(users.getId());
+//        userReponseDto.setFirstname(users.getFirstname());
+//        userReponseDto.setLastname(users.getLastname());
+//        userReponseDto.setUsername(users.getUsername());
+        userReponseDto.setImage(users.getFullDetails().getAvatar());
+
+        return userReponseDto;
     }
 
 
@@ -87,7 +97,7 @@ public class AccountRestController {
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.setContentType(MediaType.IMAGE_JPEG);
         responseHeaders.setContentDisposition(ContentDisposition.attachment().build());
-        return avatar.getPicByte();
+        return avatar.getImage();
 
     }
 

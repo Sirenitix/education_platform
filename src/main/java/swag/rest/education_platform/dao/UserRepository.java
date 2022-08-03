@@ -33,9 +33,6 @@ public interface UserRepository extends JpaRepository<Users, Long> {
     @Query("select u from Users u inner join fetch u.fullDetails f where f.school like %:school%")
     Set<Users> findAllBySchool(@Param("school") String school);
 
-    @Query("select u from Users u inner join fetch u.fullDetails f where u.firstname like %:firstname% and " +
-            "u.lastname like %:lastname% and u.role like  %:role% and f.school like %:school%" )
-    Set<Users> fullSearch(String firstname, String lastname, String role, String school);
 
 //    @Query("Select u from Users u left join fetch u.fullDetails")
 //    List<Users> findAllUsers();

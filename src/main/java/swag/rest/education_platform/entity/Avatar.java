@@ -20,10 +20,11 @@ public class Avatar {
     private Long id;
     private String name;
     private String type;
-    private byte[] picByte;
+    private byte[] image;
 
     @OneToOne
     @JoinColumn(name = "profile")
+    @JsonIgnore
     private UserFullDetails userFullDetails;
 
 }

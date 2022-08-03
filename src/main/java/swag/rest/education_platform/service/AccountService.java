@@ -1,5 +1,6 @@
 package swag.rest.education_platform.service;
 
+import com.google.common.io.Files;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -92,11 +93,16 @@ public class AccountService {
     public void updateProfileImage(MultipartFile file, String username) {
         Users user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User has not been found"));
         UserFullDetails fullDetails = user.getFullDetails();
-       Avatar avatar = new Avatar();
-       avatar.setUserFullDetails(fullDetails);
-       avatar.setName(file.getOriginalFilename());
+        Avatar avatar = user.getFullDetails().getAvatar();
+        if(user.getFullDetails().getAvatar() == null) {
+            avatar = new Avatar();
+            avatar.setUserFullDetails(fullDetails);
+        }
+        String extension = Files.getFileExtension(file.getOriginalFilename());
+       avatar.setName(user.getId() + "_avatar." + extension);
+       avatar.setType(file.getContentType());
         try {
-            avatar.setPicByte(file.getBytes());
+            avatar.setImage(file.getBytes());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -218,7 +224,7 @@ public class AccountService {
 
 
     @Transactional(readOnly = true)
-    public UserReponseDto getCurrentUser(String username) {
+    public Users getCurrentUser(String username) {
         Users users = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(username + " - not found"));
         UserReponseDto userReponseDto = new UserReponseDto();
         userReponseDto.setId(users.getId());
@@ -227,7 +233,7 @@ public class AccountService {
         userReponseDto.setEnabled(users.isEnabled());
         userReponseDto.setUsername(users.getUsername());
         userReponseDto.setImage(users.getFullDetails().getAvatar());
-        return userReponseDto;
+        return users;
     }
 
     @Transactional

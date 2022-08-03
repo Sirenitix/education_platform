@@ -1,5 +1,8 @@
 package swag.rest.education_platform.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,16 +17,8 @@ public class UserReponseDto {
     private String username;
     private String firstname;
     private String lastname;
+    @JsonIgnore
     private Boolean enabled;
     private Avatar image;
-
-    public UserReponseDto(Long id, String username, String firstname, String lastname, Boolean enabled) {
-        this.id = id;
-        this.username = username;
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.enabled = enabled;
-    }
-
 
 }
