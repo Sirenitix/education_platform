@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
 public class ReflectionPostService {
 
     private final ReflectionPostRepository repository;
-    private  final TagService tagService;
+    private final TagService tagService;
     private final UserService userService;
 
     private final ReflectionPostCommentRepository commentRepository;
@@ -48,13 +48,12 @@ public class ReflectionPostService {
         post.setTitle(dto.getTitle());
         post.setContent(dto.getContent());
         post.setPostDate(LocalDate.now());
-        for(String tagString: dto.getTag()){
-          if(tagService.tagExist(tagString)) {
-              post.addTag(tagService.findByTag(tagString));
-          }
-          else {
-            post.addTag(tagService.saveTag(new Tag(tagString)));
-          }
+        for (String tagString : dto.getTag()) {
+            if (tagService.tagExist(tagString)) {
+                post.addTag(tagService.findByTag(tagString));
+            } else {
+                post.addTag(tagService.saveTag(new Tag(tagString)));
+            }
         }
         post.setUser(user);
         repository.save(post);
@@ -66,27 +65,29 @@ public class ReflectionPostService {
         ReflectionPost post = repository.findById(id).get();
         return post;
     }
+
     @Transactional
     public void updatePost(ReflextionPostCreateDto dto, Long post_id, String username) {
-        Long user_id = userService.findByUsername(username).orElseThrow(()-> new UsernameNotFoundException("User not found")).getId();
+        Long user_id = userService.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found")).getId();
         ReflectionPost post = repository.findById(post_id).orElseThrow(() -> new PostNotFoundException());
-        if(!post.getUser().getId().equals(user_id))
+        if (!post.getUser().getId().equals(user_id))
             throw new PostException("You are not owner of this post");
         post.setTitle(dto.getTitle());
         post.setContent(dto.getContent());
         repository.save(post);
     }
+
     @Transactional(readOnly = true)
     public List<PostResponseDto> getAllPosts(int page) {
 
-        Pageable paging = PageRequest.of(page,50);
-        List<ReflectionPost> pagePost =  repository.findAll(paging).getContent();
+        Pageable paging = PageRequest.of(page, 50);
+        List<ReflectionPost> pagePost = repository.findAll(paging).getContent();
         List<PostResponseDto> dto = new ArrayList<>();
 
         for (ReflectionPost post : pagePost) {
 
-            if(post.getContent().length() >100) {
-                post.setContent(post.getContent().substring(0,99));
+            if (post.getContent().length() > 100) {
+                post.setContent(post.getContent().substring(0, 99));
             }
             PostResponseDto response = new PostResponseDto();
             response.setId(post.getId());
@@ -107,15 +108,15 @@ public class ReflectionPostService {
     @Transactional(readOnly = true)
     public List<PostResponseDto> getCurrentUserPosts(int page, String username) {
 
-        Pageable paging = PageRequest.of(page,50);
-        List<ReflectionPost> pagePost =  repository.findAll(paging).getContent();
+        Pageable paging = PageRequest.of(page, 50);
+        List<ReflectionPost> pagePost = repository.findAll(paging).getContent();
         pagePost = pagePost.stream().filter(s -> s.getUser().getUsername().equals(username)).collect(Collectors.toList());
         List<PostResponseDto> dto = new ArrayList<>();
 
         for (ReflectionPost post : pagePost) {
 
-            if(post.getContent().length() >100) {
-                post.setContent(post.getContent().substring(0,99));
+            if (post.getContent().length() > 100) {
+                post.setContent(post.getContent().substring(0, 99));
             }
             PostResponseDto response = new PostResponseDto();
             response.setId(post.getId());
@@ -139,15 +140,24 @@ public class ReflectionPostService {
     }
 
     public Page<ReflectionPost> findByTag(Integer offset, Integer limit, Tag tag) {
-        Pageable paging = PageRequest.of(offset,limit);
+        Pageable paging = PageRequest.of(offset, limit);
 
         return repository.findByTag(tag, paging);
     }
 
     @Transactional(readOnly = true)
     public Set<ReflectionPost> searchPost(String title, String content) {
+
         Set<ReflectionPost> result = new HashSet<>();// = repository.findAllByTitleContaining(title);
-        result.addAll(repository.customFindAllByContentContaining(content));
+        if(title.isEmpty() && content.isEmpty()) return result;
+
+        List<ReflectionPost> findAll = repository.findAll();
+        if(title != null)  {
+           result = findAll.stream().filter(u -> u.getTitle().contains(title)).collect(Collectors.toSet());
+        }
+        if(content != null) {
+            result = findAll.stream().filter(u -> u.getContent().contains(content)).collect(Collectors.toSet());
+        }
         return result;
     }
 }

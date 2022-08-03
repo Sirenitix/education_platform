@@ -66,7 +66,7 @@ public class ReflectionPostController {
     }
 
     @GetMapping("/search")
-    public List<DtoForPost> searchPost(@RequestParam(required = false) String title, @RequestParam(required = false) String content) {
+    public List<DtoForPost> searchPost(@RequestParam(required = false, defaultValue = "") String title, @RequestParam(required = false,defaultValue = "") String content) {
         List<DtoForPost> response = new ArrayList<>();
         Set<ReflectionPost> posts = service.searchPost(title,content);
         for(ReflectionPost post : posts) {
