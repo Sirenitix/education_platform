@@ -2,7 +2,6 @@ package swag.rest.education_platform.controller;
 
 
 import io.swagger.v3.oas.annotations.Operation;
-import jdk.vm.ci.code.Register;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.*;
@@ -10,8 +9,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import swag.rest.education_platform.dto.*;
-import swag.rest.education_platform.entity.*;
+import swag.rest.education_platform.dto.RegisterUserDto;
+import swag.rest.education_platform.dto.UserDto;
+import swag.rest.education_platform.dto.UserFullDto;
+import swag.rest.education_platform.dto.UserReponseDto;
+import swag.rest.education_platform.entity.Avatar;
+import swag.rest.education_platform.entity.UserFullDetails;
+import swag.rest.education_platform.entity.Users;
 import swag.rest.education_platform.service.AccountService;
 import swag.rest.education_platform.service.UserService;
 
