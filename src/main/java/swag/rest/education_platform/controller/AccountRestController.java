@@ -3,7 +3,6 @@ package swag.rest.education_platform.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.http.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,7 +16,6 @@ import swag.rest.education_platform.entity.Avatar;
 import swag.rest.education_platform.entity.UserFullDetails;
 import swag.rest.education_platform.entity.Users;
 import swag.rest.education_platform.service.AccountService;
-import swag.rest.education_platform.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -31,8 +29,6 @@ import java.util.*;
 public class AccountRestController {
 
     private final AccountService service;
-    private final UserService userService;
-    private final ModelMapper modelMapper;
 
     @GetMapping("/admin_users")
     public List<UserReponseDto> getAdminUsers() {

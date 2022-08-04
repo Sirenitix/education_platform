@@ -9,11 +9,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import swag.rest.education_platform.dao.PostResponseDto;
+import swag.rest.education_platform.dto.PostResponseDto;
 import swag.rest.education_platform.dao.ReflectionPostCommentRepository;
 import swag.rest.education_platform.dao.ReflectionPostRepository;
 import swag.rest.education_platform.dto.ReflextionPostCreateDto;
-import swag.rest.education_platform.entity.Post;
 import swag.rest.education_platform.entity.ReflectionPost;
 import swag.rest.education_platform.entity.Tag;
 import swag.rest.education_platform.entity.Users;
@@ -70,7 +69,7 @@ public class ReflectionPostService {
     @Transactional
     public void updatePost(ReflextionPostCreateDto dto, Long post_id, String username) {
         Long user_id = userService.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found")).getId();
-        ReflectionPost post = repository.findById(post_id).orElseThrow(() -> new PostNotFoundException());
+        ReflectionPost post = repository.findById(post_id).orElseThrow(PostNotFoundException::new);
         if (!post.getUser().getId().equals(user_id))
             throw new PostException("You are not owner of this post");
         post.setTitle(dto.getTitle());
@@ -137,7 +136,7 @@ public class ReflectionPostService {
     }
 
     public ReflectionPost findById(Long id) {
-        return repository.findById(id).orElseThrow(() -> new PostNotFoundException());
+        return repository.findById(id).orElseThrow(PostNotFoundException::new);
     }
 
     public Page<ReflectionPost> findByTag(Integer offset, Integer limit, Tag tag) {
