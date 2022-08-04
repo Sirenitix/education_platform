@@ -149,7 +149,7 @@ public class ReflectionPostService {
     public Set<ReflectionPost> searchPost(String title, String content, String tag) {
 
         Set<ReflectionPost> result = new HashSet<>();// = repository.findAllByTitleContaining(title);
-        if(title.isEmpty() && content.isEmpty()) return result;
+        if(title.isEmpty() && content.isEmpty() && tag.isEmpty()) return result;
 
         result = new HashSet<>(repository.findAll());
         if(!title.equals(""))  {
