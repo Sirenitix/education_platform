@@ -26,7 +26,7 @@ public class    ProjectMessage {
     private String title;
     private LocalDate date;
 
-    private String content;
+    private String text;
     private String userfirstname;
     private String userlastname;
 
@@ -35,10 +35,10 @@ public class    ProjectMessage {
     @JsonIgnore
     private ProjectStudent project;
 
-    public ProjectMessage(Long id, LocalDate date, String content, String userfirstname, String userlastname) {
+    public ProjectMessage(Long id, LocalDate date, String text, String userfirstname, String userlastname) {
         this.id = id;
         this.date = date;
-        this.content = content;
+        this.text = text;
         this.userfirstname = userfirstname;
         this.userlastname = userlastname;
     }

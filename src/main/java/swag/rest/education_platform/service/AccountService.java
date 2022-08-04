@@ -87,6 +87,10 @@ public class AccountService {
         fullDetails.setUser(user);
         fullDetails.setCity(dto.getCity());
         fullDetails.setTitle(dto.getTitle());
+        fullDetails.setFirstname(dto.getFirstname());
+        fullDetails.setLastname(dto.getLastname());
+        fullDetails.setUsername(user.getUsername());
+        fullDetails.setRole(user.getRole());
         userFullDetailsRepository.save(fullDetails);
 
     }

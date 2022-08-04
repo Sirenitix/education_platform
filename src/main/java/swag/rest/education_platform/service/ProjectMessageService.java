@@ -5,11 +5,14 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import swag.rest.education_platform.dao.ProjectMessageRepository;
 import swag.rest.education_platform.entity.ProjectMessage;
+import swag.rest.education_platform.entity.ProjectMessagesDto;
 import swag.rest.education_platform.entity.ProjectStudent;
 import swag.rest.education_platform.entity.Users;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -41,7 +44,7 @@ public class ProjectMessageService {
 
         ProjectMessage message = new ProjectMessage();
         message.setDate(LocalDate.now());
-        message.setContent(text);
+        message.setText(text);
         message.setUserfirstname(user.getFirstname());
         message.setUserlastname(user.getLastname());
         message.setUser(user);

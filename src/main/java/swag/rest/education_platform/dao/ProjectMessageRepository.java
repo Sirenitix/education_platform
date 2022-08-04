@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface ProjectMessageRepository extends JpaRepository<ProjectMessage, Long> {
 
-    @Query("select new ProjectMessage(p.id, p.date, p.content, p.userfirstname, p.userlastname) from ProjectMessage p where p.project= :project")
+    @Query("select new ProjectMessage(p.id, p.date, p.text, p.userfirstname, p.userlastname) from ProjectMessage p where p.project= :project")
     List<ProjectMessage> findByProject(ProjectStudent project);
 }
