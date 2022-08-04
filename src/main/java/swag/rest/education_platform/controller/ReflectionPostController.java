@@ -5,14 +5,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import swag.rest.education_platform.dao.PostResponseDto;
-import swag.rest.education_platform.dto.DtoForPost;
+import swag.rest.education_platform.dto.PostResponseDto;
 import swag.rest.education_platform.dto.ReflextionPostCreateDto;
 import swag.rest.education_platform.entity.ReflectionPost;
 import swag.rest.education_platform.service.post.ReflectionPostService;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -66,8 +64,10 @@ public class ReflectionPostController {
     }
 
     @GetMapping("/search")
-    public Set<ReflectionPost> searchPost(@RequestParam(required = false, defaultValue = "") String title, @RequestParam(required = false,defaultValue = "") String content) {
-        Set<ReflectionPost> posts = service.searchPost(title,content);
+    public Set<ReflectionPost> searchPost(@RequestParam(required = false, defaultValue = "") String title,
+                                          @RequestParam(required = false,defaultValue = "") String content,
+                                          @RequestParam(required = false,defaultValue = "") String tag) {
+        Set<ReflectionPost> posts = service.searchPost(title,content,tag);
         return posts;
     }
 

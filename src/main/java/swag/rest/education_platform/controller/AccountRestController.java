@@ -3,7 +3,6 @@ package swag.rest.education_platform.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.http.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,7 +16,6 @@ import swag.rest.education_platform.entity.Avatar;
 import swag.rest.education_platform.entity.UserFullDetails;
 import swag.rest.education_platform.entity.Users;
 import swag.rest.education_platform.service.AccountService;
-import swag.rest.education_platform.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -31,8 +29,6 @@ import java.util.*;
 public class AccountRestController {
 
     private final AccountService service;
-    private final UserService userService;
-    private final ModelMapper modelMapper;
 
     @GetMapping("/admin_users")
     public List<UserReponseDto> getAdminUsers() {
@@ -50,7 +46,7 @@ public class AccountRestController {
     @GetMapping("/users/{id}")
     public Users getUsers(@PathVariable Long id) {
         Users user = service.getUser(id);
-       return user;
+        return user;
     }
 
 
@@ -61,18 +57,11 @@ public class AccountRestController {
     }
 
 
-
     @PostMapping("/activate-user/{id}")
     public ResponseEntity<?> currentUser(@PathVariable("id") Long id) {
         service.setEnableTrue(id);
         return ResponseEntity.status(HttpStatus.OK).body("User activated");
     }
-
-//    @PostMapping("/register")
-//    public ResponseEntity<String> save(@RequestBody UserDto user) {
-//        service.register(user);
-//        return ResponseEntity.status(HttpStatus.CREATED).body("User has been created");
-//    }
 
     @PostMapping("/full-register")
     public ResponseEntity<String> registerUserWithFullDetails(@RequestBody RegisterUserDto user) {
@@ -118,12 +107,12 @@ public class AccountRestController {
 
     @GetMapping("/search")
     public List<?> searchUser(@RequestParam(required = false) String firstName,
-                                 @RequestParam(required = false) String lastName,
-                                 @RequestParam(required = false) String role,
-                                 @RequestParam(required = false) String school) {
+                              @RequestParam(required = false) String lastName,
+                              @RequestParam(required = false) String role,
+                              @RequestParam(required = false) String school) {
         Set<Users> users = service.searchUser(firstName, lastName, role, school);
         List<UserFullDto> dtos = new ArrayList<>();
-        for(Users user : users) {
+        for (Users user : users) {
             UserFullDto dto = new UserFullDto();
             dto.setId(user.getId());
             dto.setCity(user.getFullDetails().getCity());

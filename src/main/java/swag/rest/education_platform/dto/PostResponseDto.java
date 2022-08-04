@@ -1,4 +1,4 @@
-package swag.rest.education_platform.dao;
+package swag.rest.education_platform.dto;
 
 import lombok.Getter;
 import lombok.Setter;
