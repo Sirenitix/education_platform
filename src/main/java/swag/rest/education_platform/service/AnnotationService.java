@@ -30,7 +30,7 @@ public class AnnotationService {
     @Transactional(readOnly = true)
     public List<Annotation> getGlobalAnnotation(Long pdfId) {
         PdfMaterial pdfMaterial = pdfService.getPdf(pdfId);
-        return repository.findAllByPdf(pdfMaterial);
+        return repository.findAllByPdfAndUser(pdfMaterial,null);
     }
 
 

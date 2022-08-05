@@ -70,7 +70,7 @@ public class PdfMaterialService {
 
     @Transactional(readOnly = true)
     public List<PdfMaterial> getPdfs() {
-       return repository.findAll();
+       return repository.getPdfsWithoutContent();
     }
 
     @Transactional(readOnly = true)
