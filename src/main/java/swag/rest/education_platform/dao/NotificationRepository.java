@@ -9,4 +9,5 @@ import java.util.List;
 public interface NotificationRepository extends JpaRepository<ClientNotification, Long> {
     List<ClientNotification> findAllByUserId(Long id, Pageable page);
     List<ClientNotification> findAllByNewTrue(Long id, Pageable page);
+    boolean existsByIdAndNewTrue(Long id);
 }

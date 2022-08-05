@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import swag.rest.education_platform.entity.ClientNotification;
 import swag.rest.education_platform.service.NotificationService;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -27,7 +28,9 @@ public class NotificationController {
         return notifications;
     }
 
-//    @GetMapping("/check")
-
+    @GetMapping("/check")
+    public boolean checkForNotification(Principal principal) {
+        return service.checkForNotifications(principal.getName());
+    }
 
 }
