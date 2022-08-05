@@ -36,6 +36,7 @@ public class NotificationService {
     public void addNotification(Long id, String text) {
         ClientNotification notification = new ClientNotification();
         notification.setId(id);
+        notification.setNew(true);
         notification.setText(text);
     }
 
