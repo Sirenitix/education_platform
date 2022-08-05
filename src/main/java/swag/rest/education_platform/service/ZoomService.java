@@ -54,7 +54,8 @@ public class ZoomService {
         for(String u : users.getUsers()) {
 //            emailSenderService.sendEmailWithAttachment(u, result.getJoinUrl());
             Users user = userService.findByUsername(u).orElseThrow(() -> new UsernameNotFoundException("User not found"));
-          notificationService.addNotification(user.getId(), "Zoom meeting url : " + result.getJoinUrl());
+          notificationService.addNotification(user.getId(), " Dear " +  user.getFirstname() + ", \nYou have been invited to the following meeting: " +
+                  "Zoom meeting url : " + result.getJoinUrl());
         }
 
         return result.getJoinUrl();
