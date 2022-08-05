@@ -11,5 +11,5 @@ public interface NotificationRepository extends JpaRepository<ClientNotification
     List<ClientNotification> findAllByUserId(Long id, Pageable page);
 
     @Query ("select n from ClientNotification n where n.id = :id and n.unRead = true ")
-    Boolean checkForNewNotifications(Long id);
+    List<ClientNotification> checkForNewNotifications(Long id);
 }

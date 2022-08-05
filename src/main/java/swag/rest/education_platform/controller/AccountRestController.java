@@ -8,10 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import swag.rest.education_platform.dto.RegisterUserDto;
-import swag.rest.education_platform.dto.UserDto;
-import swag.rest.education_platform.dto.UserFullDto;
-import swag.rest.education_platform.dto.UserReponseDto;
+import swag.rest.education_platform.dto.*;
 import swag.rest.education_platform.entity.Avatar;
 import swag.rest.education_platform.entity.UserFullDetails;
 import swag.rest.education_platform.entity.Users;
@@ -135,6 +132,8 @@ public class AccountRestController {
 
 
     }
+
+
 
 
 }

@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
 @Service
 @RequiredArgsConstructor
 public class ZoomService {
-    private static final String api = "https://api.zoom.us/v2/users/" +"lJgQjvcCRCOPK65monqlSw"+"/meetings";
+    private static final String api = "https://api.zoom.us/v2/users/" + "lJgQjvcCRCOPK65monqlSw" + "/meetings";
     private static final String token = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOm51bGwsImlzcyI6IlZuRjRHQk5yVFBpWU1RMzNHaVBYMWciLCJleHAiOjE2OTcxMzM2MDAsImlhdCI6MTY1OTUyNDU2OX0.h30gVtc5JbhzePXgwKWx8Ank9wcO2tFzDOgtqK8JJJg";
     //todo hide the token
     private final EmailSenderService emailSenderService;
@@ -29,9 +29,10 @@ public class ZoomService {
     private final NotificationService notificationService;
 
 
-    public String createMeeting(String time, UsersDto users) {
+    public String createMeeting(String time, String currentUser, UsersDto users) {
+        users.getUsers().add(currentUser);
         ZoomDto zoom = new ZoomDto();
-        if(!dateMatch(time)) throw new RuntimeException("Incorrect Time format");
+//        if(!dateMatch(time)) throw new RuntimeException("Incorrect Time format");
         zoom.setPassword("protect");
         zoom.setHost_email("rakhim.lugma@gmail.com");
         zoom.setType(2);
@@ -46,6 +47,7 @@ public class ZoomService {
         headers.add("content-type", "application/json");
         HttpEntity<ZoomDto> http = new HttpEntity<>(zoom, headers);
         ResponseEntity<String> response = template.exchange(api, HttpMethod.POST, http, String.class);
+        System.out.println(response.getStatusCode());
         ObjectMapper mapper = new ObjectMapper();
         ZoomResponse result;
         try {
@@ -54,11 +56,13 @@ public class ZoomService {
                 JsonProcessingException e) {
             throw new RuntimeException("Meeting has not been created");
         }
-        for(String u : users.getUsers()) {
+
+        for (String u : users.getUsers()) {
 //            emailSenderService.sendEmailWithAttachment(u, result.getJoinUrl());
-            Users user = userService.findByUsername(u).orElseThrow(() -> new UsernameNotFoundException("User not found"));
-          notificationService.addNotification(user.getId(), " Dear " +  user.getFirstname() + ", \nYou have been invited to the following meeting: " +
-                  "Zoom meeting url : " + result.getJoinUrl());
+            Users user = userService.findByUsername(u).orElse(null);
+            if(user == null) continue;
+            notificationService.addNotification(user.getId(), " Dear " + user.getFirstname() + ", \nYou have been invited to the following meeting: " +
+                    "Zoom meeting url : " + result.getJoinUrl());
         }
 
         return result.getJoinUrl();
@@ -66,7 +70,7 @@ public class ZoomService {
 
     public boolean dateMatch(String date) {
         Pattern pattern = Pattern.compile("^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}$");
-            //todo make util class and make patter static
+        //todo make util class and make patter static
         return pattern.matcher(date).matches();
     }
 

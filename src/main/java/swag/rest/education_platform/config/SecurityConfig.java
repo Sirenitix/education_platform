@@ -62,6 +62,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests().antMatchers("/pdf/**").permitAll()
                 .and()
+                .authorizeRequests().antMatchers("/zoom/*").permitAll()
+                .and()
                 .authorizeRequests().antMatchers("/resources/**").permitAll()
                 .and()
                 .authorizeRequests().antMatchers("/admin").permitAll()
@@ -80,6 +82,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/swagger-ui/**", "/v3/api-docs/**","/swagger-resources/**","/auth","/v2/api-docs/**", "/h2-console/**", "/full-register");
+        web.ignoring().antMatchers("/swagger-ui/**","/v3/api-docs/**","/swagger-resources/**","/auth","/v2/api-docs/**", "/h2-console/**", "/full-register");
     }
 }
