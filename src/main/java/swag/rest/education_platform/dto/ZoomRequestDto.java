@@ -19,6 +19,7 @@ public class ZoomRequestDto {
     private String start_time;
     @JsonIgnore
     private String timezone;
+    @JsonIgnore
     private ZoomSettings settings;
     private List<String> users;
 }
