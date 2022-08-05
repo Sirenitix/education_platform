@@ -73,6 +73,10 @@ public class PdfMaterialService {
        return repository.findAll();
     }
 
+    @Transactional(readOnly = true)
+    public PdfMaterial getPdf(Long id) {
+        return repository.getPdfWithoutContent(id).orElseThrow(() -> new RuntimeException("Pdf not found"));
+    }
 
 
 

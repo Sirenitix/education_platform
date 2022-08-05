@@ -17,6 +17,7 @@ public interface PdfMaterialRepository extends JpaRepository<PdfMaterial, Long> 
     @Query("update PdfMaterial p set p.content = :content where p.id = :id ")
     void updateContent(byte[] content, Long id);
 
-
+    @Query("select new PdfMaterial(p.id, p.title) from PdfMaterial p where p.id = :id")
+    Optional<PdfMaterial> getPdfWithoutContent(Long id);
 
 }

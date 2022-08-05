@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import swag.rest.education_platform.entity.annotation.Annotation;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -55,6 +56,10 @@ public class Users implements UserDetails {
     @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<PostComment> postComments;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    private List<Annotation> annotations;
 
     @JsonIgnore
     @OneToMany(mappedBy = "user")

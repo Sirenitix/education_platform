@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import swag.rest.education_platform.entity.annotation.Annotation;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -37,6 +38,10 @@ public class PdfMaterial {
     @JsonIgnore
     private byte[] content;
 
+    @OneToMany(mappedBy = "pdf")
+    @JsonIgnore
+    private List<Annotation> annotations;
+
     public PdfMaterial(byte[] content) {
         this.content = content;
     }
@@ -45,7 +50,7 @@ public class PdfMaterial {
         this.tag.add(tag);
     }
 
-    public PdfMaterial(Long id, String title, List<Tag> tag) {
+    public PdfMaterial(Long id, String title) {
         this.id = id;
         this.title = title;
         this.tag = tag;

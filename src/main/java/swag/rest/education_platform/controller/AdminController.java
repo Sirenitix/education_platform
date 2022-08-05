@@ -6,7 +6,7 @@ import swag.rest.education_platform.service.AdminService;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 public class AdminController {
 
     private final AdminService adminService;
