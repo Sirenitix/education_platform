@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import swag.rest.education_platform.controller.ZoomResponse;
+import swag.rest.education_platform.controller.ZoomSettings;
 import swag.rest.education_platform.dto.UsersDto;
 import swag.rest.education_platform.dto.ZoomDto;
 import swag.rest.education_platform.email_client.service.EmailSenderService;
@@ -29,25 +30,21 @@ public class ZoomService {
     private final NotificationService notificationService;
 
 
-    public String createMeeting(String time, String currentUser, UsersDto users) {
+    public String createMeeting(ZoomDto zoom, String currentUser, UsersDto users) {
         users.getUsers().add(currentUser);
-        ZoomDto zoom = new ZoomDto();
 //        if(!dateMatch(time)) throw new RuntimeException("Incorrect Time format");
         zoom.setPassword("protect");
-        zoom.setHost_email("rakhim.lugma@gmail.com");
         zoom.setType(2);
-        zoom.setAgenda("here we gooooo");
-        zoom.setTopic("Test 2");
         zoom.setTimezone("Asia/Almaty");
-        zoom.setStart_time("2022-08-08T00:00:00");
-
+//        zoom.setStart_time("2022-08-08T00:00:00");
+        ZoomSettings settings = new ZoomSettings();
+        zoom.setSettings(settings);
         RestTemplate template = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "Bearer " + token);
         headers.add("content-type", "application/json");
         HttpEntity<ZoomDto> http = new HttpEntity<>(zoom, headers);
         ResponseEntity<String> response = template.exchange(api, HttpMethod.POST, http, String.class);
-        System.out.println(response.getStatusCode());
         ObjectMapper mapper = new ObjectMapper();
         ZoomResponse result;
         try {
