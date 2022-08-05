@@ -23,13 +23,16 @@ public class NotificationService {
     public List<ClientNotification> getAllNotifications(Long id, Integer page) {
         Pageable paging = PageRequest.of(page, 10);
         List<ClientNotification> notifications = repository.findAllByUserId(id,paging);
+        for(ClientNotification notification : notifications) {
+            notification.setNew(false);
+        }
         return notifications;
     }
-    public List<ClientNotification> getNewNotifications(Long id, Integer page) {
-        Pageable paging = PageRequest.of(page, 10);
-        List<ClientNotification> notifications = repository.findAllByNewTrue(id,paging);
-        return notifications;
-    }
+//    public List<ClientNotification> getNewNotifications(Long id, Integer page) {
+//        Pageable paging = PageRequest.of(page, 10);
+//        List<ClientNotification> notifications = repository.findAllByNewTrue(id,paging);
+//        return notifications;
+//    }
     public void addNotification(Long id, String text) {
         ClientNotification notification = new ClientNotification();
         notification.setId(id);
