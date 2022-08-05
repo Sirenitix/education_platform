@@ -22,8 +22,10 @@ public class UserPdfLibrary {
     @JsonIgnore
     private Users user;
 
-    @ManyToOne
-    private PdfMaterial pdf;
+    @OneToMany(mappedBy = "library")
+    private List<PdfMaterial> pdf;
+
+
 
 
 

@@ -81,14 +81,35 @@ public class PdfMaterialService {
     }
 
     @Transactional
-    public void addToList(Long id, String username) {
+    public void addToList(Long pdfId, String username) {
         Users user = userService.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Not found"));
-        PdfMaterial pdf = repository.getPdfWithoutContent(id).orElseThrow(() -> new RuntimeException("Pdf not found"));
-        if(pdfLibraryRepository.existsByPdfAndUser(pdf,user)) throw new RuntimeException("PDF already added");
-        UserPdfLibrary library = new UserPdfLibrary();
-        library.setPdf(pdf);
-        library.setUser(user);
-        pdfLibraryRepository.save(library);
+        PdfMaterial pdf = repository.getPdfWithoutContent(pdfId).orElseThrow(() -> new RuntimeException("Pdf not found"));
+        UserPdfLibrary libraries = user.getLibraries();
+        System.out.println(libraries);
+        if(libraries == null) {
+            libraries = new UserPdfLibrary();
+            libraries.setPdf(new ArrayList<>());
+            libraries.setUser(user);
+            System.out.println("LOL");
+        }
+
+        List<PdfMaterial> librariesPdf = libraries.getPdf();
+        librariesPdf.add(pdf);
+        pdfLibraryRepository.save(libraries);
+    }
+
+    @Transactional
+    public void removeFromList(Long pdfId,String username) {
+        Users user = userService.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Not found"));
+        PdfMaterial pdf = repository.getPdfWithoutContent(pdfId).orElseThrow(() -> new RuntimeException("Pdf not found"));
+//        pdfLibraryRepository.deleteByPdfAndUser(pdf,user);
+    }
+
+    @Transactional(readOnly = true)
+    public List<PdfMaterial> getLibrary(String username) {
+        Users user = userService.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Not found"));
+        List<UserPdfLibrary> library = pdfLibraryRepository.findAllByUser(user);
+        return null; //todo fix
     }
 
 

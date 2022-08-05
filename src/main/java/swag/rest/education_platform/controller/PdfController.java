@@ -5,9 +5,11 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import swag.rest.education_platform.entity.PdfMaterial;
+import swag.rest.education_platform.entity.UserPdfLibrary;
 import swag.rest.education_platform.service.PdfMaterialService;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -26,40 +28,27 @@ public class PdfController {
         return new ResponseEntity(document.getContent(),responseheaders,HttpStatus.OK);
     }
 
-    @PostMapping("/add-to-list")
+    @PostMapping("/library")
     public ResponseEntity addToList(@RequestParam Long id, Principal principal){
         service.addToList(id,principal.getName());
         return ResponseEntity.ok().build();
     }
 
-//    @GetMapping()
-//    public List<PdfMaterial> getPdfs() {
-//        return service.getPdfs();
-//    }
+    @DeleteMapping("/library")
+    public ResponseEntity deleteFromList(@RequestParam Long id, Principal principal){
+        service.removeFromList(id,principal.getName());
+        return ResponseEntity.ok().build();
+    }
 
-//    @GetMapping(value = "/html/{id}")
-//    public byte[] getHtml(@PathVariable Long id) throws IOException {
-////
-//        PdfMaterial document = service.getDocumentById(id);
-//        HttpHeaders responseHeaders = new HttpHeaders();
-//        responseHeaders.setContentType(MediaType.APPLICATION_PDF);
-//        responseHeaders.setContentDisposition(ContentDisposition.inline().build());
-//        OutputStream out = Files.newOutputStream(Paths.get("tmp/out.pdf"));
-//        out.write(document.getContent());
-//        out.close();
-//        Converter converter = new Converter("tmp/out.pdf");
-//        MarkupConvertOptions options = new MarkupConvertOptions();
-//        options.setFixedLayout(true);
-//        options.setPageNumber(1);
-//        String outputFile =  "tmp/warning.html";
-//        converter.convert(outputFile, options);
-//        File file = new File("tmp/warning.html");
-//        byte[] bytes = new byte[(int) file.length()];
-//        try(FileInputStream fis = new FileInputStream(file)){
-//            fis.read(bytes);
-//        }
-//        return bytes;
-//    }
+    @GetMapping("/library")
+    public List<String> getLibrary(Principal principal) {
+        List<String> result = new ArrayList<>();
+       for(PdfMaterial p : service.getLibrary(principal.getName())) {
+           result.add(p.getTitle());
+       }
+        return result;
+    }
+
 
 
     @PostMapping
@@ -80,6 +69,7 @@ public class PdfController {
         List<PdfMaterial> pdfs = service.getPdfs();
         return pdfs;
     }
+
 
 
 

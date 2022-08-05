@@ -5,7 +5,11 @@ import swag.rest.education_platform.entity.PdfMaterial;
 import swag.rest.education_platform.entity.UserPdfLibrary;
 import swag.rest.education_platform.entity.Users;
 
+import java.util.List;
+
 public interface UserPdfLibraryRepository extends JpaRepository<UserPdfLibrary, Long> {
 
-    Boolean existsByPdfAndUser(PdfMaterial pdf, Users user);
+    Boolean existsByUser(Users user);
+    List<UserPdfLibrary> findAllByUser(Users user);
+    void deleteByUser(Users user);
 }

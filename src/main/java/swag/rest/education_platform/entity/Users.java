@@ -62,7 +62,7 @@ public class Users implements UserDetails {
     private List<Annotation> annotations;
 
     @JsonIgnore
-    @OneToOne
+    @OneToOne(mappedBy = "user")
     private UserPdfLibrary libraries;
 
 
