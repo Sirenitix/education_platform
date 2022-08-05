@@ -6,8 +6,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import swag.rest.education_platform.dao.PdfMaterialRepository;
+import swag.rest.education_platform.dao.UserPdfLibraryRepository;
 import swag.rest.education_platform.entity.PdfMaterial;
 import swag.rest.education_platform.entity.Tag;
+import swag.rest.education_platform.entity.UserPdfLibrary;
 import swag.rest.education_platform.entity.Users;
 
 import java.io.IOException;
@@ -23,7 +25,7 @@ public class PdfMaterialService {
     private final PdfMaterialRepository repository;
     private final UserService userService;
     private final TagService tagService;
-
+    private final UserPdfLibraryRepository pdfLibraryRepository;
     @Transactional
     public void saveDocument(MultipartFile file, String username, String[] tags) {
         Users user = userService.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
@@ -76,6 +78,17 @@ public class PdfMaterialService {
     @Transactional(readOnly = true)
     public PdfMaterial getPdf(Long id) {
         return repository.getPdfWithoutContent(id).orElseThrow(() -> new RuntimeException("Pdf not found"));
+    }
+
+    @Transactional
+    public void addToList(Long id, String username) {
+        Users user = userService.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Not found"));
+        PdfMaterial pdf = repository.getPdfWithoutContent(id).orElseThrow(() -> new RuntimeException("Pdf not found"));
+        if(pdfLibraryRepository.existsByPdfAndUser(pdf,user)) throw new RuntimeException("PDF already added");
+        UserPdfLibrary library = new UserPdfLibrary();
+        library.setPdf(pdf);
+        library.setUser(user);
+        pdfLibraryRepository.save(library);
     }
 
 

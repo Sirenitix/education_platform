@@ -26,6 +26,12 @@ public class PdfController {
         return new ResponseEntity(document.getContent(),responseheaders,HttpStatus.OK);
     }
 
+    @PostMapping("/add-to-list")
+    public ResponseEntity addToList(@RequestParam Long id, Principal principal){
+        service.addToList(id,principal.getName());
+        return ResponseEntity.ok().build();
+    }
+
 //    @GetMapping()
 //    public List<PdfMaterial> getPdfs() {
 //        return service.getPdfs();
