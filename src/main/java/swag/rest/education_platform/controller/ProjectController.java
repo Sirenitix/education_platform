@@ -30,8 +30,9 @@ public class ProjectController {
     @PostMapping("/projects")
     public ResponseEntity<?> createProject(@RequestParam(name = "title") String projectTitle,
                                            @RequestParam(name = "description") String projectDescription,
-                                           @RequestBody UsersDto usersDto) {
-        projectStudentService.createProject(projectTitle, projectDescription, usersDto.getUsers());
+                                           @RequestBody UsersDto usersDto,
+                                           Principal principal) {
+        projectStudentService.createProject(projectTitle, projectDescription, usersDto.getUsers(), principal.getName());
         return ResponseEntity.status(HttpStatus.OK).body("Project has been created");
 
     }

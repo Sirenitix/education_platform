@@ -64,7 +64,8 @@ public class ProjectStudentService {
 //    }
 
     @Transactional
-    public void createProject(String title, String description, List<String> users) {
+    public void createProject(String title, String description, List<String> users, String host) {
+        users.add(host); // adding the host to the project
         List<Users> usersList = new ArrayList<>();
         for (String s : users) {
             usersList.add(userService.findByUsername(s).orElseThrow(() -> new UsernameNotFoundException("user not found")));
