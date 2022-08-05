@@ -15,9 +15,19 @@ import java.util.List;
 public class NotificationController {
     private final NotificationService service;
 
-    @PostMapping()
+    @GetMapping("/all")
     public List<?> getNotifications(@RequestParam Long user_id, @RequestParam Integer page) {
-        List<ClientNotification> notifications = service.getNotifications(user_id, page);
+        List<ClientNotification> notifications = service.getNewNotifications(user_id, page);
         return notifications;
     }
+
+    @GetMapping("/new")
+    public List<?> getAllNotifications(@RequestParam Long user_id, @RequestParam Integer page) {
+        List<ClientNotification> notifications = service.getAllNotifications(user_id, page);
+        return notifications;
+    }
+
+//    @GetMapping("/check")
+
+
 }

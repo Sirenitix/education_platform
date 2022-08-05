@@ -18,9 +18,14 @@ public class NotificationService {
     private final NotificationRepository repository;
    //todo
 
-    public List<ClientNotification> getNotifications(Long id, Integer page) {
+    public List<ClientNotification> getAllNotifications(Long id, Integer page) {
         Pageable paging = PageRequest.of(page, 10);
         List<ClientNotification> notifications = repository.findAllByUserId(id,paging);
+        return notifications;
+    }
+    public List<ClientNotification> getNewNotifications(Long id, Integer page) {
+        Pageable paging = PageRequest.of(page, 10);
+        List<ClientNotification> notifications = repository.findAllByNewTrue(id,paging);
         return notifications;
     }
     public void addNotification(Long id, String text) {

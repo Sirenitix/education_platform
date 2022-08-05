@@ -7,6 +7,6 @@ import swag.rest.education_platform.entity.ClientNotification;
 import java.util.List;
 
 public interface NotificationRepository extends JpaRepository<ClientNotification, Long> {
-    List<ClientNotification> findAllByUserId(Long id, Pageable pageable);
-
+    List<ClientNotification> findAllByUserId(Long id, Pageable page);
+    List<ClientNotification> findAllByNewTrue(Long id, Pageable page);
 }
