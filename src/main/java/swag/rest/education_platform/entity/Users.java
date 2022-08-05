@@ -62,6 +62,11 @@ public class Users implements UserDetails {
     private List<Annotation> annotations;
 
     @JsonIgnore
+    @OneToOne
+    private UserPdfLibrary libraries;
+
+
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<ReflectionPostComment> reflectionPostComments;
 

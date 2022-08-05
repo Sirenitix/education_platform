@@ -42,6 +42,10 @@ public class PdfMaterial {
     @JsonIgnore
     private List<Annotation> annotations;
 
+    @OneToMany(mappedBy = "pdf")
+    @JsonIgnore
+    private List<UserPdfLibrary> library;
+
     public PdfMaterial(byte[] content) {
         this.content = content;
     }
