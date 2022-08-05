@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import swag.rest.education_platform.dto.UsersDto;
 import swag.rest.education_platform.dto.ZoomDto;
+import swag.rest.education_platform.dto.ZoomRequestDto;
 import swag.rest.education_platform.service.ZoomService;
 
 import java.security.Principal;
@@ -19,8 +20,8 @@ public class ZoomController {
     private final ZoomService service;
 
     @PostMapping("/create-meeting")
-    public ResponseEntity<String> createMeeting(@RequestParam ZoomDto zoom, @RequestBody UsersDto users, Principal principal) {
-        String meeting = service.createMeeting(zoom, principal.getName(),users);
+    public ResponseEntity<String> createMeeting(@RequestBody ZoomRequestDto zoom, Principal principal) {
+        String meeting = service.createMeeting(zoom, principal.getName());
         return ResponseEntity.status(HttpStatus.CREATED).body("Meeting has been created by URL : " + meeting);
     }
 }

@@ -14,9 +14,11 @@ import swag.rest.education_platform.controller.ZoomResponse;
 import swag.rest.education_platform.controller.ZoomSettings;
 import swag.rest.education_platform.dto.UsersDto;
 import swag.rest.education_platform.dto.ZoomDto;
+import swag.rest.education_platform.dto.ZoomRequestDto;
 import swag.rest.education_platform.email_client.service.EmailSenderService;
 import swag.rest.education_platform.entity.Users;
 
+import java.util.List;
 import java.util.regex.Pattern;
 
 @Service
@@ -30,12 +32,17 @@ public class ZoomService {
     private final NotificationService notificationService;
 
 
-    public String createMeeting(ZoomDto zoom, String currentUser, UsersDto users) {
-        users.getUsers().add(currentUser);
+    public String createMeeting(ZoomRequestDto requestDto, String currentUser) {
+        List<String> users = requestDto.getUsers();
+        users.add(currentUser);
+        ZoomDto zoom = new ZoomDto();
 //        if(!dateMatch(time)) throw new RuntimeException("Incorrect Time format");
         zoom.setPassword("protect");
         zoom.setType(2);
         zoom.setTimezone("Asia/Almaty");
+        zoom.setStart_time(requestDto.getStart_time());
+        zoom.setAgenda(requestDto.getAgenda());
+        zoom.setTopic(requestDto.getTopic());
 //        zoom.setStart_time("2022-08-08T00:00:00");
         ZoomSettings settings = new ZoomSettings();
         zoom.setSettings(settings);
@@ -54,7 +61,7 @@ public class ZoomService {
             throw new RuntimeException("Meeting has not been created");
         }
 
-        for (String u : users.getUsers()) {
+        for (String u : users) {
 //            emailSenderService.sendEmailWithAttachment(u, result.getJoinUrl());
             Users user = userService.findByUsername(u).orElse(null);
             if(user == null) continue;
