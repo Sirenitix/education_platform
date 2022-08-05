@@ -21,9 +21,11 @@ public class NotificationService {
    //todo
 
 
-    public List<ClientNotification> getAllNotifications(Long id, Integer page) {
+    public List<ClientNotification> getAllNotifications(String username, Integer page) {
+        Users user = userService.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Not found"));
+
         Pageable paging = PageRequest.of(page, 10);
-        List<ClientNotification> notifications = repository.findAllByUserId(id,paging);
+        List<ClientNotification> notifications = repository.findAllByUserId(user.getId(),paging);
         for(ClientNotification notification : notifications) {
             notification.setUnRead(false);
             repository.save(notification);

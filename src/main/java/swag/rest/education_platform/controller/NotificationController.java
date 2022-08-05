@@ -23,8 +23,8 @@ public class NotificationController {
 //    }
 
     @GetMapping
-    public List<?> getAllNotifications(@RequestParam Long user_id, @RequestParam Integer page) {
-        List<ClientNotification> notifications = service.getAllNotifications(user_id, page);
+    public List<?> getAllNotifications(Principal principal, @RequestParam Integer page) {
+        List<ClientNotification> notifications = service.getAllNotifications(principal.getName(), page);
         return notifications;
     }
 
