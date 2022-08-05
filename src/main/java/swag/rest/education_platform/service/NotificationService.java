@@ -10,7 +10,6 @@ import swag.rest.education_platform.entity.ClientNotification;
 import swag.rest.education_platform.entity.Users;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,7 +23,7 @@ public class NotificationService {
         Pageable paging = PageRequest.of(page, 10);
         List<ClientNotification> notifications = repository.findAllByUserId(id,paging);
         for(ClientNotification notification : notifications) {
-            notification.setNew(false);
+            notification.setUnRead(false);
         }
         return notifications;
     }
@@ -36,13 +35,13 @@ public class NotificationService {
     public void addNotification(Long id, String text) {
         ClientNotification notification = new ClientNotification();
         notification.setId(id);
-        notification.setNew(true);
+        notification.setUnRead(true);
         notification.setText(text);
     }
 
     public boolean checkForNotifications(String username) {
         Users user = userService.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
-        return repository.existsByIdAndNewTrue(user.getId());
+        return repository.checkForNewNotifications (user.getId());
 
     }
 }

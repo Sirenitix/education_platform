@@ -16,13 +16,13 @@ import java.util.List;
 public class NotificationController {
     private final NotificationService service;
 
-    @GetMapping("/all")
-    public List<?> getNotifications(@RequestParam Long user_id, @RequestParam Integer page) {
-        List<ClientNotification> notifications = service.getNewNotifications(user_id, page);
-        return notifications;
-    }
+//    @GetMapping("/all")
+//    public List<?> getNotifications(@RequestParam Long user_id, @RequestParam Integer page) {
+//        List<ClientNotification> notifications = service.getNewNotifications(user_id, page);
+//        return notifications;
+//    }
 
-    @GetMapping("/new")
+    @GetMapping
     public List<?> getAllNotifications(@RequestParam Long user_id, @RequestParam Integer page) {
         List<ClientNotification> notifications = service.getAllNotifications(user_id, page);
         return notifications;

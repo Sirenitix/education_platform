@@ -16,6 +16,8 @@ import swag.rest.education_platform.dto.ZoomDto;
 import swag.rest.education_platform.email_client.service.EmailSenderService;
 import swag.rest.education_platform.entity.Users;
 
+import java.util.regex.Pattern;
+
 @Service
 @RequiredArgsConstructor
 public class ZoomService {
@@ -29,6 +31,7 @@ public class ZoomService {
 
     public String createMeeting(String time, UsersDto users) {
         ZoomDto zoom = new ZoomDto();
+        if(!dateMatch(time)) throw new RuntimeException("Incorrect Time format");
         zoom.setPassword("protect");
         zoom.setHost_email("rakhim.lugma@gmail.com");
         zoom.setType(2);
@@ -49,7 +52,7 @@ public class ZoomService {
             result = mapper.readValue(response.getBody(), ZoomResponse.class);
         } catch (
                 JsonProcessingException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Meeting has not been created");
         }
         for(String u : users.getUsers()) {
 //            emailSenderService.sendEmailWithAttachment(u, result.getJoinUrl());
@@ -59,6 +62,12 @@ public class ZoomService {
         }
 
         return result.getJoinUrl();
+    }
+
+    public boolean dateMatch(String date) {
+        Pattern pattern = Pattern.compile("^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}$");
+            //todo make util class and make patter static
+        return pattern.matcher(date).matches();
     }
 
 

@@ -89,8 +89,8 @@ public class AccountService {
         fullDetails.setTitle(dto.getTitle());
         fullDetails.setFirstname(dto.getFirstname());
         fullDetails.setLastname(dto.getLastname());
-        fullDetails.setUsername(user.getUsername());
-        fullDetails.setRole(user.getRole());
+        fullDetails.setUsername(dto.getUsername());
+        fullDetails.setRole(dto.getTitle());
         userFullDetailsRepository.save(fullDetails);
 
     }
@@ -207,9 +207,9 @@ public class AccountService {
 
 
     @Transactional(readOnly = true)
-    public Users getCurrentUser(String username) {
+    public UserFullDetails getCurrentUser(String username) {
         Users users = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(username + " - not found"));
-        return users;
+        return users.getFullDetails();
     }
 
     @Transactional

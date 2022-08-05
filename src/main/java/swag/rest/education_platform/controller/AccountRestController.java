@@ -52,7 +52,7 @@ public class AccountRestController {
 
     @GetMapping("/current-user")
     public UserFullDto currentUser(Principal principal) {
-        UserFullDetails userFullDetails = service.getCurrentUser(principal.getName()).getFullDetails();
+        UserFullDetails userFullDetails = service.getCurrentUser(principal.getName());
         UserFullDto userFullDto = new UserFullDto();
         userFullDto.setLastname(userFullDetails.getLastname());
         userFullDto.setCity(userFullDetails.getCity());
@@ -60,6 +60,7 @@ public class AccountRestController {
         userFullDto.setSchool(userFullDetails.getSchool());
         userFullDto.setFirstname(userFullDetails.getFirstname());
         userFullDto.setUsername(userFullDetails.getUsername());
+        userFullDto.setId(userFullDetails.getUser().getId());
         return userFullDto;
     }
 
