@@ -99,7 +99,7 @@ public class PdfMaterialService {
     @Transactional(readOnly = true)
     public List<PdfMaterial> getLibrary(String username) {
         Users user = userService.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Not found"));
-        user.getLibraries().getPdf().get(0).getTitle();
+        if(user.getLibraries().getPdf().size() == 0 ) return null;
         return user.getLibraries().getPdf();
 
 
