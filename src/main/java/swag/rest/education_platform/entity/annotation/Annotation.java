@@ -16,6 +16,7 @@ public class Annotation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long annotationId;
+    @Column(columnDefinition = "varchar (1000)")
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)

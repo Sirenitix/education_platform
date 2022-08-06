@@ -19,7 +19,7 @@ public class GlobalAnnotationController {
     private final AnnotationService service;
 
     @PostMapping
-    public void addAnnotation(@RequestParam String annotation, @RequestParam Long pdfId) {
+    public void addAnnotation(@RequestBody String annotation, @RequestParam Long pdfId) {
         service.addGlobalAnnotation(pdfId,annotation);
     }
     @GetMapping("{pdfId}")
