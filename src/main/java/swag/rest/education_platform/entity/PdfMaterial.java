@@ -9,10 +9,7 @@ import swag.rest.education_platform.entity.annotation.Annotation;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Getter
@@ -58,5 +55,18 @@ public class PdfMaterial {
     public PdfMaterial(Long id, String title) {
         this.id = id;
         this.title = title;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PdfMaterial that = (PdfMaterial) o;
+        return Objects.equals(title, that.title);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(title);
     }
 }
