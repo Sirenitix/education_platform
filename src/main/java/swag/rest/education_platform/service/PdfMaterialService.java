@@ -85,31 +85,24 @@ public class PdfMaterialService {
         Users user = userService.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Not found"));
         PdfMaterial pdf = repository.getPdfWithoutContent(pdfId).orElseThrow(() -> new RuntimeException("Pdf not found"));
         UserPdfLibrary libraries = user.getLibraries();
-        System.out.println(libraries);
-        if(libraries == null) {
-            libraries = new UserPdfLibrary();
-            libraries.setPdf(new ArrayList<>());
-            libraries.setUser(user);
-            System.out.println("LOL");
-        }
-
-        List<PdfMaterial> librariesPdf = libraries.getPdf();
-        librariesPdf.add(pdf);
-        pdfLibraryRepository.save(libraries);
+        libraries.addPdf(pdf);
     }
 
     @Transactional
     public void removeFromList(Long pdfId,String username) {
         Users user = userService.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Not found"));
         PdfMaterial pdf = repository.getPdfWithoutContent(pdfId).orElseThrow(() -> new RuntimeException("Pdf not found"));
-//        pdfLibraryRepository.deleteByPdfAndUser(pdf,user);
+        UserPdfLibrary library = user.getLibraries();
+        library.removePdf(pdf);
     }
 
     @Transactional(readOnly = true)
     public List<PdfMaterial> getLibrary(String username) {
         Users user = userService.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Not found"));
-        List<UserPdfLibrary> library = pdfLibraryRepository.findAllByUser(user);
-        return null; //todo fix
+        user.getLibraries().getPdf().get(0).getTitle();
+        return user.getLibraries().getPdf();
+
+
     }
 
 

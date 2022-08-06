@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -22,12 +23,18 @@ public class UserPdfLibrary {
     @JsonIgnore
     private Users user;
 
-    @OneToMany(mappedBy = "library")
+    @ManyToMany
     private List<PdfMaterial> pdf;
 
+    public void addPdf(PdfMaterial pdf) {
+        if(this.pdf == null) this.pdf = new ArrayList<>();
+        this.pdf.add(pdf);
+    }
 
-
-
+    public void removePdf(PdfMaterial pdf) {
+        if(this.pdf == null) return;
+        this.pdf.remove(pdf);
+    }
 
 
 

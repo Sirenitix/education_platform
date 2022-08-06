@@ -41,12 +41,9 @@ public class PdfController {
     }
 
     @GetMapping("/library")
-    public List<String> getLibrary(Principal principal) {
-        List<String> result = new ArrayList<>();
-       for(PdfMaterial p : service.getLibrary(principal.getName())) {
-           result.add(p.getTitle());
-       }
-        return result;
+    public List<PdfMaterial> getLibrary(Principal principal) {
+
+        return service.getLibrary(principal.getName());
     }
 
 

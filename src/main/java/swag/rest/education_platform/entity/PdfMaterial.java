@@ -38,13 +38,14 @@ public class PdfMaterial {
     @JsonIgnore
     private byte[] content;
 
+
     @OneToMany(mappedBy = "pdf")
     @JsonIgnore
     private List<Annotation> annotations;
 
-    @ManyToOne
+    @ManyToMany
     @JsonIgnore
-    private UserPdfLibrary library;
+    private List<UserPdfLibrary> library;
 
     public PdfMaterial(byte[] content) {
         this.content = content;
@@ -57,6 +58,5 @@ public class PdfMaterial {
     public PdfMaterial(Long id, String title) {
         this.id = id;
         this.title = title;
-        this.tag = tag;
     }
 }

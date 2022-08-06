@@ -15,15 +15,13 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import swag.rest.education_platform.dao.AvatarRepository;
 import swag.rest.education_platform.dao.UserFullDetailsRepository;
+import swag.rest.education_platform.dao.UserPdfLibraryRepository;
 import swag.rest.education_platform.dao.UserRepository;
 import swag.rest.education_platform.dto.UserDto;
 import swag.rest.education_platform.dto.RegisterUserDto;
 import swag.rest.education_platform.dto.UserFullDto;
 import swag.rest.education_platform.dto.UserReponseDto;
-import swag.rest.education_platform.entity.Avatar;
-import swag.rest.education_platform.entity.ProjectStudent;
-import swag.rest.education_platform.entity.UserFullDetails;
-import swag.rest.education_platform.entity.Users;
+import swag.rest.education_platform.entity.*;
 import swag.rest.education_platform.exception.UserExistException;
 import swag.rest.education_platform.jwt.JwtUtil;
 
@@ -47,6 +45,7 @@ public class AccountService {
     private final AuthenticationManager authenticationManager;
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
     private final ProjectStudentService studentService;
+    private final UserPdfLibraryRepository libraryRepository;
 
 
 
@@ -70,6 +69,7 @@ public class AccountService {
 
     }
 
+    @Transactional
     public void registerWithFullDetails(RegisterUserDto dto) {
         if (userRepository.existsByUsername(dto.getUsername()))
             throw new UserExistException();
@@ -81,7 +81,10 @@ public class AccountService {
         user.setRole("ROLE_USER");
         user.setFirstname(dto.getFirstname());
         user.setLastname(dto.getLastname());
-        userRepository.save(user);
+        UserPdfLibrary library = new UserPdfLibrary();
+        library.setPdf(new ArrayList<>());
+        library.setUser(user);
+        user.setLibraries(library);
         UserFullDetails fullDetails = new UserFullDetails();
         fullDetails.setSchool(dto.getSchool());
         fullDetails.setUser(user);
@@ -91,8 +94,9 @@ public class AccountService {
         fullDetails.setLastname(dto.getLastname());
         fullDetails.setUsername(dto.getUsername());
         fullDetails.setRole(user.getRole());
+        userRepository.save(user);
         userFullDetailsRepository.save(fullDetails);
-
+        libraryRepository.save(library);
     }
 
     @Transactional
