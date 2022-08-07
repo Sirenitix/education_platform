@@ -26,9 +26,10 @@ public interface UserRepository extends JpaRepository<Users, Long> {
     @Query(value = "update users set enabled = true where id = ?1", nativeQuery = true)
     void setEnableTrue(Long b);
 
-    Set<Users> findAllByFirstnameContaining(@Param("firstname") String firstname);
-    Set<Users> findAllByLastnameContaining(@Param("lastname") String lastname);
-    Set<Users> findAllByRoleContaining(@Param("role") String role);
+//    @Query("select u from Users u inner join fetch u.fullDetails f where f.firstname like upper('%:firstname%') ")
+    Set<Users> findAllByFirstnameContainingIgnoreCase(@Param("firstname") String firstname);
+    Set<Users> findAllByLastnameContainingIgnoreCase(@Param("lastname") String lastname);
+    Set<Users> findAllByRoleContainingIgnoreCase(@Param("role") String role);
 
     @Query("select u from Users u inner join fetch u.fullDetails f where f.school like %:school%")
     Set<Users> findAllBySchool(@Param("school") String school);
