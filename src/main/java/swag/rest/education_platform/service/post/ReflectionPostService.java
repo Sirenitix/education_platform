@@ -157,7 +157,7 @@ public class ReflectionPostService {
             result = result.stream().filter(u -> u.getTitle().contains(title)).collect(Collectors.toSet());
         }
         if(!content.equals("")) {
-            result = result.stream().filter(u -> u.getContent().contains(content)).collect(Collectors.toSet());
+            result = result.stream().filter(u -> u.getContent().toUpperCase().contains(content.toUpperCase())).collect(Collectors.toSet());
         }
         if(!tag.equals("")) {
             result = result.stream().filter(u->u.getTag() != null)
