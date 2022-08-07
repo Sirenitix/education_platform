@@ -86,9 +86,10 @@ public class ReflectionPostService {
 
         for (ReflectionPost post : pagePost) {
 
-            if (post.getContent().length() > 100) {
-                post.setContent(post.getContent().substring(0, 99));
-            }
+//            if (post.getContent().length() > 100) {
+//                post.setContent(post.getContent().substring(0, 99));
+//            }
+            //todo the above is not synced with front
             PostResponseDto response = new PostResponseDto();
             response.setId(post.getId());
             response.setContent(post.getContent());

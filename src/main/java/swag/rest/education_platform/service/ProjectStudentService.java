@@ -66,12 +66,12 @@ public class ProjectStudentService {
     @Transactional
     public void createProject(String title, String description, List<String> users, String host) {
         users.add(host); // adding the host to the project
-        List<Users> usersList = new ArrayList<>();
+        Set<Users> usersList = new HashSet<>();
         for (String s : users) {
             usersList.add(userService.findByUsername(s).orElseThrow(() -> new UsernameNotFoundException("user not found")));
         }
         ProjectStudent project = new ProjectStudent();
-        project.setUsers(usersList);
+        project.setUsers(new ArrayList<>(usersList));
         project.setTitle(title);
         project.setDescription(description);
         repository.save(project);

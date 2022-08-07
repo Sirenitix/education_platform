@@ -18,7 +18,9 @@ import swag.rest.education_platform.dto.ZoomRequestDto;
 import swag.rest.education_platform.email_client.service.EmailSenderService;
 import swag.rest.education_platform.entity.Users;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 @Service
@@ -33,7 +35,7 @@ public class ZoomService {
 
 
     public String createMeeting(ZoomRequestDto requestDto, String currentUser) {
-        List<String> users = requestDto.getUsers();
+        Set<String> users = new HashSet<>(requestDto.getUsers());
         users.add(currentUser);
         ZoomDto zoom = new ZoomDto();
 //        if(!dateMatch(time)) throw new RuntimeException("Incorrect Time format");
@@ -65,8 +67,8 @@ public class ZoomService {
 //            emailSenderService.sendEmailWithAttachment(u, result.getJoinUrl());
             Users user = userService.findByUsername(u).orElse(null);
             if(user == null) continue;
-            notificationService.addNotification(user.getId(), " Dear " + user.getFirstname() + ", \nYou have been invited to the following meeting: " +
-                    "Zoom meeting url : " + result.getJoinUrl());
+            notificationService.addNotification(user.getId(), "You have been invited to the following meeting: " +
+                     result.getJoinUrl() + "\n at : " + result.getStartTime());
         }
 
         return result.getJoinUrl();
