@@ -37,6 +37,7 @@ public class ProjectStudentService {
         List<ProjectStudent> projects = projectStudentRepository.findProjectStudentByUsers(user);
         for (ProjectStudent p : projects) {
             p.setMessages(projectMessageRepository.findByProject(p));
+
         }
         return projectStudentRepository.findProjectStudentByUsers(user);//user.getProjects();
     }
