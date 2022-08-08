@@ -53,7 +53,7 @@ public class ReflectionPostController {
     public List<?> getUserPosts(@RequestParam(defaultValue = "0") int page) {
         //todo Content is also send, need to remove it from response
         List<PostResponseDto> posts = service.getAllPosts(page);
-
+        System.out.println(posts.get(0).getContent());
         return posts;
     }
 

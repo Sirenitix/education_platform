@@ -53,13 +53,11 @@ public class ProjectController {
 
     @GetMapping("project/{id}/posts")
     public List<?> getPost(@PathVariable Long id) {
-
         return projectMessageService.getMessages(id);
     }
 
     @GetMapping("project/search")
     public Set<ProjectStudent> search(@RequestParam(required = false, defaultValue = "")String title, @RequestParam(required = false,defaultValue = "") String description) {
-
         return  projectStudentService.search(title, description);
     }
 }

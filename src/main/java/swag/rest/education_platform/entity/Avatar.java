@@ -23,7 +23,7 @@ public class Avatar {
     private String type;
     private byte[] image;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "profile")
     @JsonIgnore
     private UserFullDetails userFullDetails;

@@ -86,9 +86,10 @@ public class ReflectionPostService {
 
         for (ReflectionPost post : pagePost) {
 
-            if (post.getContent().length() > 100) {
-                post.setContent(post.getContent().substring(0, 99));
-            }
+//            if (post.getContent().length() > 100) {
+//                post.setContent(post.getContent().substring(0, 99));
+//            }
+            //todo the above is not synced with front
             PostResponseDto response = new PostResponseDto();
             response.setId(post.getId());
             response.setContent(post.getContent());
@@ -156,7 +157,7 @@ public class ReflectionPostService {
             result = result.stream().filter(u -> u.getTitle().contains(title)).collect(Collectors.toSet());
         }
         if(!content.equals("")) {
-            result = result.stream().filter(u -> u.getContent().contains(content)).collect(Collectors.toSet());
+            result = result.stream().filter(u -> u.getContent().toUpperCase().contains(content.toUpperCase())).collect(Collectors.toSet());
         }
         if(!tag.equals("")) {
             result = result.stream().filter(u->u.getTag() != null)

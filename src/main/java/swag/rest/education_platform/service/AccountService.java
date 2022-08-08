@@ -229,24 +229,24 @@ public class AccountService {
         Set<Users> users = new HashSet<>();
 
         if (firstName != null) {
-            users.addAll(userRepository.findAllByFirstnameContaining(firstName));
+            users.addAll(userRepository.findAllByFirstnameContainingIgnoreCase(firstName));
         }
-        if (lastName != null) {
+        if (!lastName.isEmpty()) {
             if (users.isEmpty())
-                users.addAll(userRepository.findAllByLastnameContaining(lastName));
+                users.addAll(userRepository.findAllByLastnameContainingIgnoreCase(lastName));
             else {
                 users = users.stream().filter(u -> u.getLastname().contains(lastName)).collect(Collectors.toSet());
             }
 
         }
-        if (role != null) {
-            if (users.isEmpty()) users.addAll(userRepository.findAllByRoleContaining(role));
+        if (!role.isEmpty()) {
+            if (users.isEmpty()) users.addAll(userRepository.findAllByRoleContainingIgnoreCase(role));
             else {
                 users = users.stream().filter(u -> u.getRole().contains(role)).collect(Collectors.toSet());
 
             }
         }
-        if (school != null) {
+        if (!school.isEmpty()) {
             if (users.isEmpty()) users.addAll(userRepository.findAllBySchool(school));
             else {
                 users = users.stream().filter(u -> u.getFullDetails().getSchool().contains(school)).collect(Collectors.toSet());
