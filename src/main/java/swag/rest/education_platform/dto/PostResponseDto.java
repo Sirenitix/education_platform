@@ -18,4 +18,6 @@ public class PostResponseDto {
     private List<Tag> tag;
     private List<ReflectionPostComment> comments;
     private Long likes;
+    String fileLink;
+    String imageLink;
 }

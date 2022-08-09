@@ -1,6 +1,7 @@
 package swag.rest.education_platform.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import swag.rest.education_platform.dto.DtoForPost;
@@ -12,10 +13,11 @@ import swag.rest.education_platform.service.post.PostService;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
-
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000")
@@ -38,20 +40,21 @@ public class PostController {
 //Hey
     @GetMapping("/postFile/{id}")
     public ResponseEntity getPostFileById(@PathVariable Long id) {
-        Post post = service.getPostByIdWithComment(id);
+        Post post = service.getPostById(id);
+        log.info(Arrays.toString(post.getFile()) + " - file");
         HttpHeaders responseheaders = new HttpHeaders();
         responseheaders.setContentType(MediaType.APPLICATION_PDF);
         responseheaders.setContentDisposition(ContentDisposition.inline().build());
-        return ResponseEntity.status(HttpStatus.OK).body(post.getFile());
+        return new ResponseEntity(post.getFile(),responseheaders,HttpStatus.OK);
     }
 
     @GetMapping("/postImage/{id}")
     public ResponseEntity getPostIamgeById(@PathVariable Long id) {
-        Post post = service.getPostByIdWithComment(id);
+        Post post = service.getPostById(id);
         HttpHeaders responseheaders = new HttpHeaders();
-        responseheaders.setContentType(MediaType.APPLICATION_PDF);
+        responseheaders.setContentType(MediaType.IMAGE_JPEG);
         responseheaders.setContentDisposition(ContentDisposition.inline().build());
-        return ResponseEntity.status(HttpStatus.OK).body(post.getImage());
+        return new ResponseEntity(post.getImage(),responseheaders,HttpStatus.OK);
     }
 
     //hey

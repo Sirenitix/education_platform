@@ -33,6 +33,10 @@ public class ReflectionPost {
     @JsonIgnore
     private byte[] image;
 
+    String fileLink;
+
+    String imageLink;
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_creator_id")
     @JsonIgnore

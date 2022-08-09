@@ -72,6 +72,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests().antMatchers("/schoolTags").permitAll()
                 .and()
+                .authorizeRequests().antMatchers("/general/postFile/*").permitAll()
+                .and()
+                .authorizeRequests().antMatchers("/general/postImage/*").permitAll()
+                .and()
                 .authorizeRequests().anyRequest().authenticated()
                 .and()
 

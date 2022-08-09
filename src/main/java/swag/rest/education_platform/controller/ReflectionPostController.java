@@ -2,17 +2,18 @@ package swag.rest.education_platform.controller;
 
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import swag.rest.education_platform.dto.PostResponseDto;
 import swag.rest.education_platform.dto.ReflextionPostCreateDto;
+import swag.rest.education_platform.entity.Post;
 import swag.rest.education_platform.entity.ReflectionPost;
 import swag.rest.education_platform.service.post.ReflectionPostService;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -24,8 +25,9 @@ public class ReflectionPostController {
 
     private final ReflectionPostService service;
 
-    @PostMapping("/post")
-    public ResponseEntity<String> createPost(@RequestBody ReflextionPostCreateDto dto, Principal principal) throws IOException {
+    @RequestMapping(path = "/post", method = RequestMethod.POST,
+            consumes = {"multipart/form-data"})
+    public ResponseEntity<String> createPost(@ModelAttribute ReflextionPostCreateDto dto, Principal principal) throws IOException {
         service.createPost(dto, principal.getName() );
         return ResponseEntity.status(HttpStatus.CREATED).body("Post has been saved");
     }
@@ -78,5 +80,24 @@ public class ReflectionPostController {
         Set<ReflectionPost> posts = service.searchPost(title,content,tag);
         return posts;
     }
+
+    @GetMapping("/refPostFile/{id}")
+    public ResponseEntity getRefPostFileById(@PathVariable Long id) {
+        ReflectionPost post = service.findById(id);
+        HttpHeaders responseheaders = new HttpHeaders();
+        responseheaders.setContentType(MediaType.APPLICATION_PDF);
+        responseheaders.setContentDisposition(ContentDisposition.inline().build());
+        return new ResponseEntity(post.getFile(),responseheaders,HttpStatus.OK);
+    }
+
+    @GetMapping("/refPostImage/{id}")
+    public ResponseEntity getRefPostIamgeById(@PathVariable Long id) {
+        ReflectionPost post = service.findById(id);
+        HttpHeaders responseheaders = new HttpHeaders();
+        responseheaders.setContentType(MediaType.IMAGE_JPEG);
+        responseheaders.setContentDisposition(ContentDisposition.inline().build());
+        return new ResponseEntity(post.getImage(),responseheaders,HttpStatus.OK);
+    }
+
 
 }

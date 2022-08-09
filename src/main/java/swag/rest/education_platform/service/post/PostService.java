@@ -3,6 +3,7 @@ package swag.rest.education_platform.service.post;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -21,6 +22,7 @@ import swag.rest.education_platform.service.UserService;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -29,10 +31,11 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Getter
+@Slf4j
 @Setter
 public class PostService {
     private final PostRepository repository;
-    String baseUrl = "http://159.89.104.8:8022";
+    String baseUrl = "http://159.89.104.8:8022/general";
 
     private final UserService userService;
     private final PostCommentRepository commentRepository;
@@ -62,6 +65,12 @@ public class PostService {
     }
 
     @Transactional(readOnly = true)
+    public Post getPostById(Long id) {
+        Post post = repository.findById(id).orElseThrow(PostNotFoundException::new);
+        return post;
+    }
+
+    @Transactional(readOnly = true)
     public List<Post> getAllPosts(int page) {
         Pageable paging = PageRequest.of(page, 50);
         List<Post> pagePost = repository.findAll(paging).getContent();
@@ -75,6 +84,8 @@ public class PostService {
         Pageable paging = PageRequest.of(page, 50);
         List<Post> pagePost = repository.findAll(paging).getContent();
         pagePost = pagePost.stream().filter(s -> s.getUser().getUsername().equals(username)).collect(Collectors.toList());
+        pagePost.forEach((post) -> post.setFileLink(baseUrl + "/postFile/" + post.getId()));
+        pagePost.forEach((post) -> post.setImageLink(baseUrl + "/postImage/" + post.getId()));
         return pagePost;
     }
 
@@ -83,6 +94,8 @@ public class PostService {
         Pageable paging = PageRequest.of(page, 50);
         List<Post> pagePost = repository.findAll(paging).getContent();
         pagePost = pagePost.stream().filter(s -> s.getUser().getUsername().equals(username) && s.getUser().getFullDetails().getSchool().equals(school)).collect(Collectors.toList());
+        pagePost.forEach((post) -> post.setFileLink(baseUrl + "/postFile/" + post.getId()));
+        pagePost.forEach((post) -> post.setImageLink(baseUrl + "/postImage/" + post.getId()));
         return pagePost;
     }
 

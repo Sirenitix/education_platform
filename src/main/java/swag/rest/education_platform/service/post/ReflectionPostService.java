@@ -37,6 +37,8 @@ import java.util.stream.Collectors;
 public class ReflectionPostService {
 
     private final ReflectionPostRepository repository;
+
+    String baseUrl = "http://159.89.104.8:8022/reflection";
     private final TagService tagService;
     private final UserService userService;
 
@@ -60,6 +62,7 @@ public class ReflectionPostService {
             }
         }
         post.setUser(user);
+
         repository.save(post);
     }
 
@@ -86,6 +89,8 @@ public class ReflectionPostService {
 
         Pageable paging = PageRequest.of(page, 50);
         List<ReflectionPost> pagePost = repository.findAll(paging).getContent();
+        pagePost.forEach((post) -> post.setFileLink(baseUrl + "/postFile/" + post.getId()));
+        pagePost.forEach((post) -> post.setImageLink(baseUrl + "/postImage/" + post.getId()));
         List<PostResponseDto> dto = new ArrayList<>();
 
         for (ReflectionPost post : pagePost) {
@@ -102,6 +107,8 @@ public class ReflectionPostService {
             response.setTag(post.getTag());
             response.setComments(post.getComment());
             response.setLikes(post.getLikes());
+            response.setImageLink(post.getImageLink());
+            response.setFileLink(post.getFileLink());
             dto.add(response);
 
 
@@ -115,6 +122,8 @@ public class ReflectionPostService {
 
         Pageable paging = PageRequest.of(page, 50);
         List<ReflectionPost> pagePost = repository.findAll(paging).getContent();
+        pagePost.forEach((post) -> post.setFileLink(baseUrl + "/postFile/" + post.getId()));
+        pagePost.forEach((post) -> post.setImageLink(baseUrl + "/postImage/" + post.getId()));
         List<PostResponseDto> dto = new ArrayList<>();
 
         for (ReflectionPost post : pagePost) {
@@ -128,6 +137,8 @@ public class ReflectionPostService {
                 response.setTag(post.getTag());
                 response.setComments(post.getComment());
                 response.setLikes(post.getLikes());
+                response.setImageLink(post.getImageLink());
+                response.setFileLink(post.getFileLink());
                 dto.add(response);
             }
 
@@ -144,6 +155,8 @@ public class ReflectionPostService {
         Pageable paging = PageRequest.of(page, 50);
         List<ReflectionPost> pagePost = repository.findAll(paging).getContent();
         pagePost = pagePost.stream().filter(s -> s.getUser().getUsername().equals(username)).collect(Collectors.toList());
+        pagePost.forEach((post) -> post.setFileLink(baseUrl + "/postFile/" + post.getId()));
+        pagePost.forEach((post) -> post.setImageLink(baseUrl + "/postImage/" + post.getId()));
         List<PostResponseDto> dto = new ArrayList<>();
 
         for (ReflectionPost post : pagePost) {
@@ -157,6 +170,8 @@ public class ReflectionPostService {
             response.setTitle(post.getTitle());
             response.setUsername(post.getUser().getUsername());
             response.setTag(post.getTag());
+            response.setImageLink(post.getImageLink());
+            response.setFileLink(post.getFileLink());
             dto.add(response);
 
 
@@ -169,6 +184,7 @@ public class ReflectionPostService {
     }
 
     public ReflectionPost findById(Long id) {
+
         return repository.findById(id).orElseThrow(PostNotFoundException::new);
     }
 

@@ -71,10 +71,10 @@ public class AccountService {
 
     @Transactional
     public void registerWithFullDetails(RegisterUserDto dto) {
-        if (userRepository.existsByUsername(dto.getUsername()))
+        if (userRepository.existsByUsername(dto.getEmail()))
             throw new UserExistException();
         Users user = new Users();
-        user.setUsername(dto.getUsername());
+        user.setUsername(dto.getEmail());
         user.setPassword(encoder.encode(dto.getPassword()));
         user.setEnabled(false);
         //todo role is selected at registration
@@ -92,7 +92,7 @@ public class AccountService {
         fullDetails.setTitle(dto.getTitle());
         fullDetails.setFirstname(dto.getFirstname());
         fullDetails.setLastname(dto.getLastname());
-        fullDetails.setEmail(dto.getUsername());
+        fullDetails.setEmail(dto.getEmail());
         fullDetails.setRole(user.getRole());
         userRepository.save(user);
         userFullDetailsRepository.save(fullDetails);
