@@ -10,6 +10,7 @@ import swag.rest.education_platform.dto.PostRequestDto;
 import swag.rest.education_platform.entity.Post;
 import swag.rest.education_platform.service.post.PostService;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,7 @@ import java.util.Set;
 public class PostController {
         private final PostService service;
     @PostMapping("/post")
-    public ResponseEntity<String> createPost(@RequestBody PostRequestDto dto, Principal principal) {
+    public ResponseEntity<String> createPost(@RequestBody PostRequestDto dto, Principal principal) throws IOException {
         service.createPost(dto, principal.getName() );
         return ResponseEntity.status(HttpStatus.OK).body("Post has been saved");
     }

@@ -27,6 +27,16 @@ public class Post {
     @JsonIgnore
     private Users user;
 
+
+    @Lob
+    @JsonIgnore
+    private byte[] file;
+
+    @Lob
+    @JsonIgnore
+    private byte[] image;
+
+
     private Long likes;
 
     @OneToMany(mappedBy = "post")

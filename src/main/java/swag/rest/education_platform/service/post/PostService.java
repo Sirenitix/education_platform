@@ -19,6 +19,7 @@ import swag.rest.education_platform.exception.PostException;
 import swag.rest.education_platform.exception.PostNotFoundException;
 import swag.rest.education_platform.service.UserService;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
@@ -35,7 +36,7 @@ public class PostService {
     private final PostCommentRepository commentRepository;
 
     @Transactional
-    public void createPost(PostRequestDto dto,String username) {
+    public void createPost(PostRequestDto dto,String username) throws IOException {
         Users user = userService.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("user not found"));
         Post post = new Post();
         post.setLikes(0L);
@@ -43,7 +44,8 @@ public class PostService {
         post.setContent(dto.getContent());
         post.setPostDate(LocalDate.now());
         post.setUser(user);
-
+        post.setImage(dto.getImage().getBytes());
+        post.setFile(dto.getFile().getBytes());
         repository.save(post);
     }
 
