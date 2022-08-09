@@ -32,7 +32,8 @@ import java.util.stream.Collectors;
 @Setter
 public class PostService {
     private final PostRepository repository;
-    String baseUrl = "159.89.104.8:8022";
+    String baseUrl = "http://159.89.104.8:8022";
+
     private final UserService userService;
     private final PostCommentRepository commentRepository;
 
@@ -65,7 +66,7 @@ public class PostService {
         Pageable paging = PageRequest.of(page, 50);
         List<Post> pagePost = repository.findAll(paging).getContent();
         pagePost.forEach((post) -> post.setFileLink(baseUrl + "/postFile/" + post.getId()));
-        pagePost.forEach((post) -> post.setFileLink(baseUrl + "/postImage/" + post.getId()));
+        pagePost.forEach((post) -> post.setImageLink(baseUrl + "/postImage/" + post.getId()));
         return pagePost;
     }
 
