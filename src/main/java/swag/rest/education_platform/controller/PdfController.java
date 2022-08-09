@@ -46,7 +46,10 @@ public class PdfController {
         return service.getLibrary(principal.getName());
     }
 
-
+    @GetMapping("/getPdfListByTagName/{tagName}")
+    public List<PdfMaterial> getLibrary(Principal principal,@PathVariable String tagName) {
+        return service.getLibraryByTag(principal.getName(),tagName);
+    }
 
     @PostMapping
     public ResponseEntity<String> uploadPdf(@RequestParam MultipartFile file, Principal principal, @RequestParam String[] tags) {

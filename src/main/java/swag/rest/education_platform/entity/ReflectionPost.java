@@ -18,11 +18,20 @@ import java.util.List;
 public class ReflectionPost {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private Long id;
     @Lob
     private String content;
     private String title;
     private LocalDate postDate;
+
+    @Lob
+    @JsonIgnore
+    private byte[] file;
+
+    @Lob
+    @JsonIgnore
+    private byte[] image;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_creator_id")

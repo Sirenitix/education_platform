@@ -56,7 +56,7 @@ public class AccountRestController {
         userFullDto.setRole(userFullDetails.getRole());
         userFullDto.setSchool(userFullDetails.getSchool());
         userFullDto.setFirstname(userFullDetails.getFirstname());
-        userFullDto.setUsername(userFullDetails.getUsername());
+        userFullDto.setEmail(userFullDetails.getUsername());
         userFullDto.setId(userFullDetails.getUser().getId());
         userFullDto.setTitle(userFullDetails.getTitle());
         return userFullDto;
@@ -126,7 +126,7 @@ public class AccountRestController {
             dto.setLastname(user.getLastname());
             dto.setSchool(user.getFullDetails().getSchool());
             dto.setRole(user.getFullDetails().getTitle());
-            dto.setUsername(user.getUsername());
+            dto.setEmail(user.getUsername());
             dtos.add(dto);
         }
         return dtos;

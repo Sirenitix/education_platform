@@ -2,6 +2,7 @@ package swag.rest.education_platform.dto;
 
 import lombok.Getter;
 import lombok.Setter;
+import swag.rest.education_platform.entity.ReflectionPostComment;
 import swag.rest.education_platform.entity.Tag;
 
 import java.util.List;
@@ -15,4 +16,6 @@ public class PostResponseDto {
     private String username;
     private String content;
     private List<Tag> tag;
+    private List<ReflectionPostComment> comments;
+    private Long likes;
 }

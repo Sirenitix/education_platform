@@ -5,11 +5,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import swag.rest.education_platform.dto.PostResponseDto;
 import swag.rest.education_platform.dto.ReflextionPostCreateDto;
 import swag.rest.education_platform.entity.ReflectionPost;
 import swag.rest.education_platform.service.post.ReflectionPostService;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 import java.util.Set;
@@ -23,7 +25,7 @@ public class ReflectionPostController {
     private final ReflectionPostService service;
 
     @PostMapping("/post")
-    public ResponseEntity<String> createPost(@RequestBody ReflextionPostCreateDto dto, Principal principal ) {
+    public ResponseEntity<String> createPost(@RequestBody ReflextionPostCreateDto dto, Principal principal) throws IOException {
         service.createPost(dto, principal.getName() );
         return ResponseEntity.status(HttpStatus.CREATED).body("Post has been saved");
     }
@@ -49,11 +51,17 @@ public class ReflectionPostController {
         return posts;
     }
 
+    @GetMapping("/all/postsBySchool/{school}")
+    public List<?> getUserPostsBySchool(@RequestParam(defaultValue = "0") int page, @PathVariable String school) {
+        //todo Content is also send, need to remove it from response
+        List<PostResponseDto> posts = service.getAllPostsBySchool(page, school);
+        return posts;
+    }
+
     @GetMapping("/all/posts")
     public List<?> getUserPosts(@RequestParam(defaultValue = "0") int page) {
         //todo Content is also send, need to remove it from response
         List<PostResponseDto> posts = service.getAllPosts(page);
-        System.out.println(posts.get(0).getContent());
         return posts;
     }
 

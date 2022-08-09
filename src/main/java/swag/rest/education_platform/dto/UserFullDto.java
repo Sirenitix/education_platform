@@ -11,7 +11,7 @@ import javax.validation.constraints.NotEmpty;
 public class UserFullDto {
     private Long id;
     @Email()
-    private String username;
+    private String email;
     private String password;
     @NotEmpty
     private String firstname;

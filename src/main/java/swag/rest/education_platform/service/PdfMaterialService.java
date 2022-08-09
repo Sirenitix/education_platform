@@ -101,10 +101,15 @@ public class PdfMaterialService {
         Users user = userService.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Not found"));
         if(user.getLibraries().getPdf().size() == 0 ) return null;
         return user.getLibraries().getPdf();
-
-
     }
 
+    @Transactional(readOnly = true)
+    public List<PdfMaterial> getLibraryByTag(String username, String tagName) {
+        Users user = userService.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Not found"));
+        if(user.getLibraries().getPdf().size() == 0 ) return null;
+        Tag tag = tagService.findByTag(tagName);
+        return user.getLibraries().getPdf().stream().filter((s) -> s.getTag().contains(tag)).collect(Collectors.toList());
+    }
 
 
 }

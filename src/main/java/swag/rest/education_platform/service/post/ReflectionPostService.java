@@ -14,6 +14,7 @@ import swag.rest.education_platform.dao.ReflectionPostCommentRepository;
 import swag.rest.education_platform.dao.ReflectionPostRepository;
 import swag.rest.education_platform.dto.ReflextionPostCreateDto;
 import swag.rest.education_platform.entity.ReflectionPost;
+import swag.rest.education_platform.entity.SchoolEnum;
 import swag.rest.education_platform.entity.Tag;
 import swag.rest.education_platform.entity.Users;
 import swag.rest.education_platform.exception.PostException;
@@ -21,6 +22,7 @@ import swag.rest.education_platform.exception.PostNotFoundException;
 import swag.rest.education_platform.service.TagService;
 import swag.rest.education_platform.service.UserService;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -41,13 +43,15 @@ public class ReflectionPostService {
     private final ReflectionPostCommentRepository commentRepository;
 
     @Transactional
-    public void createPost(ReflextionPostCreateDto dto, String username) {
+    public void createPost(ReflextionPostCreateDto dto, String username) throws IOException {
         Users user = userService.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("user not found"));
 
         ReflectionPost post = new ReflectionPost();
         post.setTitle(dto.getTitle());
         post.setContent(dto.getContent());
         post.setPostDate(LocalDate.now());
+        post.setFile(dto.getFile().getBytes());
+        post.setImage(dto.getImage().getBytes());
         for (String tagString : dto.getTag()) {
             if (tagService.tagExist(tagString)) {
                 post.addTag(tagService.findByTag(tagString));
@@ -96,8 +100,36 @@ public class ReflectionPostService {
             response.setTitle(post.getTitle());
             response.setUsername(post.getUser().getUsername());
             response.setTag(post.getTag());
+            response.setComments(post.getComment());
+            response.setLikes(post.getLikes());
             dto.add(response);
 
+
+        }
+        return dto;
+    }
+
+
+    @Transactional(readOnly = true)
+    public List<PostResponseDto> getAllPostsBySchool(int page, String school) {
+
+        Pageable paging = PageRequest.of(page, 50);
+        List<ReflectionPost> pagePost = repository.findAll(paging).getContent();
+        List<PostResponseDto> dto = new ArrayList<>();
+
+        for (ReflectionPost post : pagePost) {
+            if(SchoolEnum.valueOf(school).equals(SchoolEnum.valueOf(post.getUser().getFullDetails().getSchool()))) {
+                //todo the above is not synced with front
+                PostResponseDto response = new PostResponseDto();
+                response.setId(post.getId());
+                response.setContent(post.getContent());
+                response.setTitle(post.getTitle());
+                response.setUsername(post.getUser().getUsername());
+                response.setTag(post.getTag());
+                response.setComments(post.getComment());
+                response.setLikes(post.getLikes());
+                dto.add(response);
+            }
 
         }
         return dto;

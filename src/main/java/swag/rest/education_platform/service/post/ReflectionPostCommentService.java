@@ -27,6 +27,9 @@ public class ReflectionPostCommentService {
         comment.setContent(content);
         comment.setUser(user);
         comment.setPost(post);
+        comment.setOwnerid(user.getId());
+        comment.setFirstname(user.getFirstname());
+        comment.setLastname(user.getLastname());
         repository.save(comment);
     }
 

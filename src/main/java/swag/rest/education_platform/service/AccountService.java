@@ -50,18 +50,18 @@ public class AccountService {
 
 
     public String authenticate(UserDto userDto, HttpServletRequest request) {
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userDto.getUsername(), userDto.getPassword()));
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userDto.getEmail(), userDto.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        Users user = userRepository.findByUsername(userDto.getUsername()).get();
-        String jwt = JwtUtil.createAccessToken(userDto.getUsername(), request.getRequestURL().toString(), user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()));
+        Users user = userRepository.findByUsername(userDto.getEmail()).get();
+        String jwt = JwtUtil.createAccessToken(userDto.getEmail(), request.getRequestURL().toString(), user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()));
         return jwt;
     }
 
     public void register(UserDto userDto) {
-        if (userRepository.existsByUsername(userDto.getUsername()))
+        if (userRepository.existsByUsername(userDto.getEmail()))
             throw new UserExistException();
         Users user = new Users();
-        user.setUsername(userDto.getUsername());
+        user.setUsername(userDto.getEmail());
         user.setPassword(encoder.encode(userDto.getPassword()));
         user.setEnabled(true);
         user.setRole("ROLE_USER");
