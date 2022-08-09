@@ -5,9 +5,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import swag.rest.education_platform.entity.ReflectionPost;
+import swag.rest.education_platform.entity.SchoolEnum;
 import swag.rest.education_platform.entity.Tag;
 import swag.rest.education_platform.service.TagService;
 import swag.rest.education_platform.service.post.ReflectionPostService;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -36,6 +40,11 @@ public class TagController {
         return projectStudents.toList();
     }
 
-
+    @GetMapping("/schoolTags")
+    public List<String> getSchoolTags() {
+        List<String> tags = new ArrayList<>();
+         Arrays.asList(SchoolEnum.values()).forEach(s -> tags.add(s.name()));
+         return tags;
+    }
 
 }

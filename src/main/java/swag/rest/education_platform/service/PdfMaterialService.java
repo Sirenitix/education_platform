@@ -13,6 +13,7 @@ import swag.rest.education_platform.entity.UserPdfLibrary;
 import swag.rest.education_platform.entity.Users;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,7 @@ public class PdfMaterialService {
         PdfMaterial pdf = new PdfMaterial();
         pdf.setTitle(file.getOriginalFilename());
         pdf.setType(file.getContentType());
-        pdf.setDate(LocalDate.now());
+        pdf.setDate(String.valueOf(LocalDate.now()));
         try {
             pdf.setContent(file.getBytes());
         } catch (IOException e) {
@@ -72,7 +73,7 @@ public class PdfMaterialService {
 
     @Transactional(readOnly = true)
     public List<PdfMaterial> getPdfs() {
-       return repository.getPdfsWithoutContent();
+       return repository.findAll();
     }
 
     @Transactional(readOnly = true)
@@ -105,10 +106,9 @@ public class PdfMaterialService {
 
     @Transactional(readOnly = true)
     public List<PdfMaterial> getLibraryByTag(String username, String tagName) {
-        Users user = userService.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Not found"));
-        if(user.getLibraries().getPdf().size() == 0 ) return null;
+        List<PdfMaterial> tags = repository.findAll();
         Tag tag = tagService.findByTag(tagName);
-        return user.getLibraries().getPdf().stream().filter((s) -> s.getTag().contains(tag)).collect(Collectors.toList());
+        return tags.stream().filter((s) -> s.getTag().contains(tag)).collect(Collectors.toList());
     }
 
 

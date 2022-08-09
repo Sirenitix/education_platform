@@ -92,7 +92,7 @@ public class AccountService {
         fullDetails.setTitle(dto.getTitle());
         fullDetails.setFirstname(dto.getFirstname());
         fullDetails.setLastname(dto.getLastname());
-        fullDetails.setUsername(dto.getUsername());
+        fullDetails.setEmail(dto.getUsername());
         fullDetails.setRole(user.getRole());
         userRepository.save(user);
         userFullDetailsRepository.save(fullDetails);

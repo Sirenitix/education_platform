@@ -56,7 +56,7 @@ public class AccountRestController {
         userFullDto.setRole(userFullDetails.getRole());
         userFullDto.setSchool(userFullDetails.getSchool());
         userFullDto.setFirstname(userFullDetails.getFirstname());
-        userFullDto.setEmail(userFullDetails.getUsername());
+        userFullDto.setEmail(userFullDetails.getEmail());
         userFullDto.setId(userFullDetails.getUser().getId());
         userFullDto.setTitle(userFullDetails.getTitle());
         return userFullDto;

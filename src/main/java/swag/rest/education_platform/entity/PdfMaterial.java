@@ -8,7 +8,8 @@ import lombok.Setter;
 import swag.rest.education_platform.entity.annotation.Annotation;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+
+import java.sql.Date;
 import java.util.*;
 
 @Entity
@@ -25,7 +26,7 @@ public class PdfMaterial {
     @ManyToMany
     private List<Tag> tag;
 
-    private LocalDate date;
+    private String date;
     private String type;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name ="uploaded_by")
@@ -55,6 +56,13 @@ public class PdfMaterial {
     public PdfMaterial(Long id, String title) {
         this.id = id;
         this.title = title;
+    }
+
+    public PdfMaterial(Long id, String title, List<Tag> tag, String date) {
+        this.id = id;
+        this.title = title;
+        this.tag = tag;
+        this.date = date;
     }
 
     @Override

@@ -23,8 +23,10 @@ import java.util.Set;
 @RequestMapping("/general")
 public class PostController {
         private final PostService service;
-    @PostMapping("/post")
-    public ResponseEntity<String> createPost(@RequestBody PostRequestDto dto, Principal principal) throws IOException {
+
+    @RequestMapping(path = "/post", method = RequestMethod.POST,
+            consumes = {"multipart/form-data"})
+    public ResponseEntity<String> createPost(@ModelAttribute PostRequestDto dto, Principal principal) throws IOException {
         service.createPost(dto, principal.getName() );
         return ResponseEntity.status(HttpStatus.OK).body("Post has been saved");
     }
@@ -49,6 +51,11 @@ public class PostController {
     @GetMapping("/getUserPosts")
     public ResponseEntity<?> getUserPosts(@RequestParam(defaultValue = "0") int page, Principal principal) {
         return ResponseEntity.status(HttpStatus.OK).body(service.getUserPosts(page, principal.getName()));
+    }
+
+    @GetMapping("/getUserPosts/{school}")
+    public ResponseEntity<?> getUserPostsBySchool(@RequestParam(defaultValue = "0") int page, Principal principal, @PathVariable String school) {
+        return ResponseEntity.status(HttpStatus.OK).body(service.getUserPostsBySchool(page, principal.getName(), school));
     }
 
 

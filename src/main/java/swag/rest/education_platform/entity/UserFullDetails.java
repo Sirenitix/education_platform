@@ -24,7 +24,7 @@ public class UserFullDetails {
     private Avatar avatar;
     private String filePath;
     private String title;
-    private String username;
+    private String email;
     @JsonIgnore
     private String password;
     private String firstname;

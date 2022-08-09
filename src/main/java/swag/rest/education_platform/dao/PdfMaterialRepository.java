@@ -20,7 +20,7 @@ public interface PdfMaterialRepository extends JpaRepository<PdfMaterial, Long> 
     @Query("select new PdfMaterial(p.id, p.title) from PdfMaterial p where p.id = :id")
     Optional<PdfMaterial> getPdfWithoutContent(Long id);
 
-    @Query("select new PdfMaterial(p.id, p.title) from PdfMaterial p")
-    List<PdfMaterial> getPdfsWithoutContent();
+
+    List<PdfMaterial> findAll();
 
 }

@@ -11,6 +11,6 @@ import java.util.Set;
 
 public interface UserFullDetailsRepository extends JpaRepository<UserFullDetails, Long> {
 
-    Optional<UserFullDetails> findByUsername(String username);
+    Optional<UserFullDetails> findByEmail(String email);
     Optional<UserFullDetails> findById(Integer id);
 }

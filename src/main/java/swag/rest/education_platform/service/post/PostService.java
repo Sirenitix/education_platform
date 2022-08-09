@@ -73,6 +73,14 @@ public class PostService {
         return pagePost;
     }
 
+    @Transactional(readOnly = true)
+    public List<Post> getUserPostsBySchool(int page, String username, String school) {
+        Pageable paging = PageRequest.of(page, 50);
+        List<Post> pagePost = repository.findAll(paging).getContent();
+        pagePost = pagePost.stream().filter(s -> s.getUser().getUsername().equals(username) && s.getUser().getFullDetails().getSchool().equals(school)).collect(Collectors.toList());
+        return pagePost;
+    }
+
     @Transactional
     public void updatePost(GeneralPostDto dto, Long post_id, String username) {
         Long user_id = userService.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found")).getId();

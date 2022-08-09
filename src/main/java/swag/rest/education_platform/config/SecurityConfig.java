@@ -70,6 +70,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests().antMatchers("/activate-user/*").hasRole("ADMIN")
                 .and()
+                .authorizeRequests().antMatchers("/schoolTags").permitAll()
+                .and()
                 .authorizeRequests().anyRequest().authenticated()
                 .and()
 
