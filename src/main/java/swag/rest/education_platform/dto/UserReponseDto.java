@@ -15,7 +15,7 @@ import swag.rest.education_platform.entity.UserFullDetails;
 @NoArgsConstructor
 public class UserReponseDto {
     private Long id;
-    private String username;
+    private String email;
     private String firstname;
     private String lastname;
     @JsonIgnore

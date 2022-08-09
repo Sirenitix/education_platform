@@ -27,6 +27,10 @@ public class Post {
     @JsonIgnore
     private Users user;
 
+    String fileLink;
+
+    String imageLink;
+
 
     @Lob
     @JsonIgnore

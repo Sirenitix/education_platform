@@ -32,12 +32,14 @@ import java.util.stream.Collectors;
 @Setter
 public class PostService {
     private final PostRepository repository;
+    String baseUrl = "159.89.104.8:8022";
     private final UserService userService;
     private final PostCommentRepository commentRepository;
 
     @Transactional
     public void createPost(PostRequestDto dto,String username) throws IOException {
         Users user = userService.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("user not found"));
+
         Post post = new Post();
         post.setLikes(0L);
         post.setTitle(dto.getTitle());
@@ -62,6 +64,8 @@ public class PostService {
     public List<Post> getAllPosts(int page) {
         Pageable paging = PageRequest.of(page, 50);
         List<Post> pagePost = repository.findAll(paging).getContent();
+        pagePost.forEach((post) -> post.setFileLink(baseUrl + "/postFile/" + post.getId()));
+        pagePost.forEach((post) -> post.setFileLink(baseUrl + "/postImage/" + post.getId()));
         return pagePost;
     }
 

@@ -1,8 +1,7 @@
 package swag.rest.education_platform.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import swag.rest.education_platform.dto.DtoForPost;
 import swag.rest.education_platform.dto.GeneralPostDto;
@@ -33,8 +32,30 @@ public class PostController {
     @GetMapping("/post/{id}")
     public ResponseEntity<Post> getPostById(@PathVariable Long id) {
         Post post = service.getPostByIdWithComment(id);
+
         return ResponseEntity.status(HttpStatus.OK).body(post);
     }
+//Hey
+    @GetMapping("/postFile/{id}")
+    public ResponseEntity getPostFileById(@PathVariable Long id) {
+        Post post = service.getPostByIdWithComment(id);
+        HttpHeaders responseheaders = new HttpHeaders();
+        responseheaders.setContentType(MediaType.APPLICATION_PDF);
+        responseheaders.setContentDisposition(ContentDisposition.inline().build());
+        return ResponseEntity.status(HttpStatus.OK).body(post.getFile());
+    }
+
+    @GetMapping("/postImage/{id}")
+    public ResponseEntity getPostIamgeById(@PathVariable Long id) {
+        Post post = service.getPostByIdWithComment(id);
+        HttpHeaders responseheaders = new HttpHeaders();
+        responseheaders.setContentType(MediaType.APPLICATION_PDF);
+        responseheaders.setContentDisposition(ContentDisposition.inline().build());
+        return ResponseEntity.status(HttpStatus.OK).body(post.getImage());
+    }
+
+    //hey
+
     @PostMapping("/post/{post_id}")
     public ResponseEntity<String> updatePostById(@PathVariable Long post_id,
                                                  @RequestBody GeneralPostDto dto, Principal principal) {

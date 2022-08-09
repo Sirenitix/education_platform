@@ -173,7 +173,7 @@ public class AccountService {
                 dto.setId(u.getId());
                 dto.setFirstname(u.getFirstname());
                 dto.setLastname(u.getLastname());
-                dto.setUsername(u.getUsername());
+                dto.setEmail(u.getUsername());
                 dto.setEnabled(u.isEnabled());
                 dto.setImage(u.getFullDetails().getAvatar());
                 response.add(dto);
@@ -192,7 +192,7 @@ public class AccountService {
                 dto.setId(u.getId());
                 dto.setFirstname(u.getFirstname());
                 dto.setLastname(u.getLastname());
-                dto.setUsername(u.getUsername());
+                dto.setEmail(u.getUsername());
                 dto.setEnabled(u.isEnabled());
                 dto.setImage(u.getFullDetails().getAvatar());
                 response.add(dto);
