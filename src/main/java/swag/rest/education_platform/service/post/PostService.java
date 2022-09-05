@@ -78,13 +78,13 @@ public class PostService {
         Pageable paging = PageRequest.of(page, 50);
         List<Post> pagePost = repository.findAll(paging).getContent();
         pagePost.forEach((post) -> {
-            if (post.getFile().length > 0 && post.getFile() != null) {
+            if (post.getFile() != null) {
                 post.setFileLink(baseUrl + "/postFile/" + post.getId());
             }
         });
         pagePost.forEach((post) ->
         {
-            if (post.getFile().length > 0 && post.getFile() != null) {
+            if (post.getFile() != null) {
                 post.setImageLink(baseUrl + "/postImage/" + post.getId());
             }
         });
@@ -97,13 +97,13 @@ public class PostService {
         List<Post> pagePost = repository.findAll(paging).getContent();
         pagePost = pagePost.stream().filter(s -> s.getUser().getUsername().equals(username)).collect(Collectors.toList());
         pagePost.forEach((post) -> {
-            if (post.getFile().length > 0 && post.getFile() != null) {
+            if (post.getFile() != null) {
                 post.setFileLink(baseUrl + "/postFile/" + post.getId());
             }
         });
         pagePost.forEach((post) ->
         {
-            if (post.getFile().length > 0 && post.getFile() != null) {
+            if (post.getFile() != null) {
                 post.setImageLink(baseUrl + "/postImage/" + post.getId());
             }
         });
@@ -116,13 +116,13 @@ public class PostService {
         List<Post> pagePost = repository.findAll(paging).getContent();
         pagePost = pagePost.stream().filter(s -> s.getUser().getUsername().equals(username) && s.getUser().getFullDetails().getSchool().equals(school)).collect(Collectors.toList());
         pagePost.forEach((post) -> {
-            if (post.getFile().length > 0 && post.getFile() != null) {
+            if (post.getFile() != null) {
                 post.setFileLink(baseUrl + "/postFile/" + post.getId());
             }
         });
         pagePost.forEach((post) ->
         {
-            if (post.getFile().length > 0 && post.getFile() != null) {
+            if (post.getFile() != null) {
                 post.setImageLink(baseUrl + "/postImage/" + post.getId());
             }
         });
