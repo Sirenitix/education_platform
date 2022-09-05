@@ -50,8 +50,12 @@ public class PostService {
         post.setContent(dto.getContent());
         post.setPostDate(LocalDate.now());
         post.setUser(user);
-        post.setImage(dto.getImage().getBytes());
-        post.setFile(dto.getFile().getBytes());
+        if(!dto.getFile().isEmpty()){
+            post.setFile(dto.getFile().getBytes());
+        }
+        if(!dto.getImage().isEmpty()){
+            post.setImage(dto.getImage().getBytes());
+        }
         repository.save(post);
     }
 
@@ -60,7 +64,6 @@ public class PostService {
         Post post = repository.findById(id).orElseThrow(PostNotFoundException::new);
         List<PostComment> comments = commentRepository.findAllById(id);
         post.setComment(comments);
-
         return post;
     }
 
@@ -74,8 +77,17 @@ public class PostService {
     public List<Post> getAllPosts(int page) {
         Pageable paging = PageRequest.of(page, 50);
         List<Post> pagePost = repository.findAll(paging).getContent();
-        pagePost.forEach((post) -> post.setFileLink(baseUrl + "/postFile/" + post.getId()));
-        pagePost.forEach((post) -> post.setImageLink(baseUrl + "/postImage/" + post.getId()));
+        pagePost.forEach((post) -> {
+            if (post.getFile().length > 0 && post.getFile() != null) {
+                post.setFileLink(baseUrl + "/postFile/" + post.getId());
+            }
+        });
+        pagePost.forEach((post) ->
+        {
+            if (post.getFile().length > 0 && post.getFile() != null) {
+                post.setImageLink(baseUrl + "/postImage/" + post.getId());
+            }
+        });
         return pagePost;
     }
 
@@ -84,8 +96,17 @@ public class PostService {
         Pageable paging = PageRequest.of(page, 50);
         List<Post> pagePost = repository.findAll(paging).getContent();
         pagePost = pagePost.stream().filter(s -> s.getUser().getUsername().equals(username)).collect(Collectors.toList());
-        pagePost.forEach((post) -> post.setFileLink(baseUrl + "/postFile/" + post.getId()));
-        pagePost.forEach((post) -> post.setImageLink(baseUrl + "/postImage/" + post.getId()));
+        pagePost.forEach((post) -> {
+            if (post.getFile().length > 0 && post.getFile() != null) {
+                post.setFileLink(baseUrl + "/postFile/" + post.getId());
+            }
+        });
+        pagePost.forEach((post) ->
+        {
+            if (post.getFile().length > 0 && post.getFile() != null) {
+                post.setImageLink(baseUrl + "/postImage/" + post.getId());
+            }
+        });
         return pagePost;
     }
 
@@ -94,8 +115,17 @@ public class PostService {
         Pageable paging = PageRequest.of(page, 50);
         List<Post> pagePost = repository.findAll(paging).getContent();
         pagePost = pagePost.stream().filter(s -> s.getUser().getUsername().equals(username) && s.getUser().getFullDetails().getSchool().equals(school)).collect(Collectors.toList());
-        pagePost.forEach((post) -> post.setFileLink(baseUrl + "/postFile/" + post.getId()));
-        pagePost.forEach((post) -> post.setImageLink(baseUrl + "/postImage/" + post.getId()));
+        pagePost.forEach((post) -> {
+            if (post.getFile().length > 0 && post.getFile() != null) {
+                post.setFileLink(baseUrl + "/postFile/" + post.getId());
+            }
+        });
+        pagePost.forEach((post) ->
+        {
+            if (post.getFile().length > 0 && post.getFile() != null) {
+                post.setImageLink(baseUrl + "/postImage/" + post.getId());
+            }
+        });
         return pagePost;
     }
 
