@@ -52,10 +52,10 @@ public class ReflectionPostService {
         post.setTitle(dto.getTitle());
         post.setContent(dto.getContent());
         post.setPostDate(LocalDate.now());
-        if(!dto.getFile().isEmpty()){
+        if(dto.getFile() != null){
             post.setFile(dto.getFile().getBytes());
         }
-        if(!dto.getImage().isEmpty()){
+        if(dto.getImage() != null){
             post.setImage(dto.getImage().getBytes());
         }
         for (String tagString : dto.getTag()) {

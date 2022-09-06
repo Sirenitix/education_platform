@@ -50,10 +50,10 @@ public class PostService {
         post.setContent(dto.getContent());
         post.setPostDate(LocalDate.now());
         post.setUser(user);
-        if(!dto.getFile().isEmpty()){
+        if(dto.getFile() != null){
             post.setFile(dto.getFile().getBytes());
         }
-        if(!dto.getImage().isEmpty()){
+        if(dto.getImage() != null){
             post.setImage(dto.getImage().getBytes());
         }
         repository.save(post);
