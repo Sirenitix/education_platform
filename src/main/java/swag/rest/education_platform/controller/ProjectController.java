@@ -1,18 +1,24 @@
 package swag.rest.education_platform.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
+import swag.rest.education_platform.dto.ProjectPostDto;
+import swag.rest.education_platform.entity.Post;
+import swag.rest.education_platform.entity.ProjectMessage;
 import swag.rest.education_platform.entity.ProjectStudent;
 import swag.rest.education_platform.dto.UsersDto;
 import swag.rest.education_platform.service.ProjectMessageService;
 import swag.rest.education_platform.service.ProjectStudentService;
 
+import java.io.IOException;
 import java.security.Principal;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
@@ -46,8 +52,8 @@ public class ProjectController {
     }
 
     @PostMapping("project/addPost")
-    public ResponseEntity<?> createPost(@RequestParam Long project_id, @RequestParam String text,@RequestParam String title, Principal principal ) {
-        projectMessageService.addMessage(project_id, text, principal.getName(), title);
+    public ResponseEntity<?> createPost(@ModelAttribute ProjectPostDto projectPostDto, Principal principal ) throws IOException {
+        projectMessageService.addMessage(projectPostDto, principal.getName());
         return ResponseEntity.status(HttpStatus.OK).body("Message has been sent");
     }
 
@@ -60,4 +66,24 @@ public class ProjectController {
     public Set<ProjectStudent> search(@RequestParam(required = false, defaultValue = "")String title, @RequestParam(required = false,defaultValue = "") String description) {
         return  projectStudentService.search(title, description);
     }
+
+    @GetMapping("/project/projectPostFile/{project_id}/{message_id}")
+    public ResponseEntity<?> getPostFileById(@PathVariable Long project_id, @PathVariable Long message_id) {
+        ProjectMessage projectMessage = projectMessageService.getMessage(project_id, message_id);
+        log.info(Arrays.toString(projectMessage.getFile()) + " - file");
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.setContentType(MediaType.APPLICATION_PDF);
+        responseHeaders.setContentDisposition(ContentDisposition.inline().build());
+        return new ResponseEntity<>(projectMessage.getFile(), responseHeaders, HttpStatus.OK);
+    }
+
+    @GetMapping("/project/projectPostImage/{project_id}/{message_id}")
+    public ResponseEntity<?> getPostImageById(@PathVariable Long project_id, @PathVariable Long message_id) {
+        ProjectMessage projectMessage = projectMessageService.getMessage(project_id, message_id);
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.setContentType(MediaType.IMAGE_JPEG);
+        responseHeaders.setContentDisposition(ContentDisposition.inline().build());
+        return new ResponseEntity<>(projectMessage.getImage(), responseHeaders, HttpStatus.OK);
+    }
+
 }

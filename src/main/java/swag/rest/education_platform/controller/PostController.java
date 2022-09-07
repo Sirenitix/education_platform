@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
-import swag.rest.education_platform.dto.DtoForPost;
 import swag.rest.education_platform.dto.GeneralPostDto;
 import swag.rest.education_platform.dto.PostRequestDto;
 import swag.rest.education_platform.entity.Post;
@@ -12,9 +11,7 @@ import swag.rest.education_platform.service.post.PostService;
 
 import java.io.IOException;
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Set;
 
 @Slf4j
@@ -28,7 +25,7 @@ public class PostController {
     @RequestMapping(path = "/post", method = RequestMethod.POST,
             consumes = {"multipart/form-data"})
     public ResponseEntity<String> createPost(@ModelAttribute PostRequestDto dto, Principal principal) throws IOException {
-        service.createPost(dto, principal.getName() );
+        service.createPost(dto, principal.getName());
         return ResponseEntity.status(HttpStatus.OK).body("Post has been saved");
     }
     @GetMapping("/post/{id}")
@@ -49,7 +46,7 @@ public class PostController {
     }
 
     @GetMapping("/postImage/{id}")
-    public ResponseEntity getPostIamgeById(@PathVariable Long id) {
+    public ResponseEntity getPostImageById(@PathVariable Long id) {
         Post post = service.getPostById(id);
         HttpHeaders responseheaders = new HttpHeaders();
         responseheaders.setContentType(MediaType.IMAGE_JPEG);

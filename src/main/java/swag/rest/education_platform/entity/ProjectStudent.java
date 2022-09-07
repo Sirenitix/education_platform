@@ -23,11 +23,14 @@ public class ProjectStudent {
     @ManyToMany
     private List<Users> users;
 
-    @OneToMany(mappedBy = "project")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "project")
     private List<ProjectMessage> messages;
     private Long userid;
     private String userfirstname;
     private String userlastname;
+
+
+
     private String description;
 
 

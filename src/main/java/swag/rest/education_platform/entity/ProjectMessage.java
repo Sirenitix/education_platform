@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor
-public class    ProjectMessage {
+public class ProjectMessage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,6 +29,18 @@ public class    ProjectMessage {
     private String text;
     private String userfirstname;
     private String userlastname;
+
+    String fileLink;
+
+    String imageLink;
+
+    @Lob
+    @JsonIgnore
+    private byte[] file;
+
+    @Lob
+    @JsonIgnore
+    private byte[] image;
 
     @ManyToOne
     @JoinColumn(name = "project_id")

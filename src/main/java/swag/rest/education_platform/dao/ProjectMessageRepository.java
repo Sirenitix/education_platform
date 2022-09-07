@@ -11,4 +11,6 @@ public interface ProjectMessageRepository extends JpaRepository<ProjectMessage, 
 
     @Query("select new ProjectMessage(p.id, p.date, p.text, p.userfirstname, p.userlastname) from ProjectMessage p where p.project= :project")
     List<ProjectMessage> findByProject(ProjectStudent project);
+
+    ProjectMessage findByTitle(String title);
 }
