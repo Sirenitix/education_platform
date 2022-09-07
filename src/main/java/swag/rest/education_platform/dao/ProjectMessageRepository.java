@@ -13,4 +13,6 @@ public interface ProjectMessageRepository extends JpaRepository<ProjectMessage, 
     List<ProjectMessage> findByProject(ProjectStudent project);
 
     ProjectMessage findByTitle(String title);
+
+    List<ProjectMessage> findByProject_Id(Long id);
 }

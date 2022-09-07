@@ -3,6 +3,7 @@ package swag.rest.education_platform.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import swag.rest.education_platform.dao.ProjectMessageRepository;
 import swag.rest.education_platform.dto.ProjectPostDto;
 import swag.rest.education_platform.entity.ProjectMessage;
@@ -23,11 +24,12 @@ public class ProjectMessageService {
     private final ProjectMessageRepository repository;
     private final ProjectStudentService projectStudentService;
     private final UserService userService;
-    String baseUrl = "http://159.89.104.8:8022/projects";
+    String baseUrl = "http://159.89.104.8:8022";
 
+    @Transactional
     public List<?> getMessages(Long project_id) {
-        ProjectStudent project = projectStudentService.getProjectById(project_id);
-        List<ProjectMessage> messages = project.getMessages();
+        return repository.findByProject_Id(project_id);
+
 //        List<ProjectMessagesDto> dto = new ArrayList<>();
 //
 //        for (ProjectMessage message : messages) {
@@ -39,14 +41,15 @@ public class ProjectMessageService {
 //                    .username(username)
 //                    .build());
 //        }
-        return messages;
+
     }
 
-    public ProjectMessage getMessage(Long project_id , Long message_id) {
-        ProjectStudent project = projectStudentService.getProjectById(project_id);
-        return project.getMessages().stream().filter((s) -> s.getId().equals(message_id)).findFirst().orElseThrow(PostNotFoundException::new);
+    @Transactional
+    public ProjectMessage getMessage(Long message_id) {
+        return repository.getById(message_id);
     }
 
+    @Transactional
     public void addMessage(ProjectPostDto projectPostDto, String username) throws IOException {
         ProjectStudent project = projectStudentService.getProjectById(projectPostDto.getProject_id());
         Users user = userService.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
@@ -67,8 +70,12 @@ public class ProjectMessageService {
         repository.save(message);
 
         ProjectMessage projectMessage = repository.findByTitle(message.getTitle());
-        projectMessage.setFileLink(baseUrl + "/projectPostFile/" + message.getProject().getId() + "/" + message.getId());
-        projectMessage.setImageLink(baseUrl + "/projectPostImage/"  + message.getProject().getId() + "/" + message.getId());
+        if(projectPostDto.getFile() != null){
+            projectMessage.setFileLink(baseUrl + "/project/projectPostFile/" + message.getId());
+        }
+        if(projectPostDto.getImage() != null){
+            projectMessage.setImageLink(baseUrl + "/project/projectPostImage/" + message.getId());
+        }
         repository.save(projectMessage);
     }
 }

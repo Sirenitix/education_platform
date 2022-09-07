@@ -3,6 +3,7 @@ package swag.rest.education_platform.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import swag.rest.education_platform.dto.ProjectPostDto;
 import swag.rest.education_platform.entity.Post;
@@ -67,19 +68,20 @@ public class ProjectController {
         return  projectStudentService.search(title, description);
     }
 
-    @GetMapping("/project/projectPostFile/{project_id}/{message_id}")
-    public ResponseEntity<?> getPostFileById(@PathVariable Long project_id, @PathVariable Long message_id) {
-        ProjectMessage projectMessage = projectMessageService.getMessage(project_id, message_id);
+    @Transactional
+    @GetMapping("/project/projectPostFile/{message_id}")
+    public ResponseEntity<?> getPostFileById(@PathVariable Long message_id) {
+        ProjectMessage projectMessage = projectMessageService.getMessage(message_id);
         log.info(Arrays.toString(projectMessage.getFile()) + " - file");
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.setContentType(MediaType.APPLICATION_PDF);
         responseHeaders.setContentDisposition(ContentDisposition.inline().build());
         return new ResponseEntity<>(projectMessage.getFile(), responseHeaders, HttpStatus.OK);
     }
-
-    @GetMapping("/project/projectPostImage/{project_id}/{message_id}")
-    public ResponseEntity<?> getPostImageById(@PathVariable Long project_id, @PathVariable Long message_id) {
-        ProjectMessage projectMessage = projectMessageService.getMessage(project_id, message_id);
+    @Transactional
+    @GetMapping("/project/projectPostImage/{message_id}")
+    public ResponseEntity<?> getPostImageById(@PathVariable Long message_id) {
+        ProjectMessage projectMessage = projectMessageService.getMessage(message_id);
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.setContentType(MediaType.IMAGE_JPEG);
         responseHeaders.setContentDisposition(ContentDisposition.inline().build());
