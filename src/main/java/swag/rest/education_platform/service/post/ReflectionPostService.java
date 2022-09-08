@@ -24,10 +24,7 @@ import swag.rest.education_platform.service.UserService;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -95,13 +92,13 @@ public class ReflectionPostService {
         List<ReflectionPost> pagePost = repository.findAll(paging).getContent();
         pagePost.forEach((post) -> {
             if (post.getFile() != null) {
-                post.setFileLink(baseUrl + "/postFile/" + post.getId());
+                post.setFileLink(baseUrl + "/refPostFile/" + post.getId());
             }
         });
         pagePost.forEach((post) ->
         {
             if (post.getFile() != null) {
-                post.setImageLink(baseUrl + "/postImage/" + post.getId());
+                post.setImageLink(baseUrl + "/refPostImage/" + post.getId());
             }
         });
         List<PostResponseDto> dto = new ArrayList<>();
@@ -126,6 +123,7 @@ public class ReflectionPostService {
 
 
         }
+        Collections.sort(dto);
         return dto;
     }
 
@@ -137,13 +135,13 @@ public class ReflectionPostService {
         List<ReflectionPost> pagePost = repository.findAll(paging).getContent();
         pagePost.forEach((post) -> {
             if (post.getFile() != null) {
-                post.setFileLink(baseUrl + "/postFile/" + post.getId());
+                post.setFileLink(baseUrl + "/refPostFile/" + post.getId());
             }
         });
         pagePost.forEach((post) ->
         {
             if (post.getFile() != null) {
-                post.setImageLink(baseUrl + "/postImage/" + post.getId());
+                post.setImageLink(baseUrl + "/refPostImage/" + post.getId());
             }
         });
         List<PostResponseDto> dto = new ArrayList<>();
@@ -165,6 +163,7 @@ public class ReflectionPostService {
             }
 
         }
+        Collections.sort(dto);
         return dto;
     }
 
@@ -179,13 +178,13 @@ public class ReflectionPostService {
         pagePost = pagePost.stream().filter(s -> s.getUser().getUsername().equals(username)).collect(Collectors.toList());
         pagePost.forEach((post) -> {
             if (post.getFile() != null) {
-                post.setFileLink(baseUrl + "/postFile/" + post.getId());
+                post.setFileLink(baseUrl + "/refPostFile/" + post.getId());
             }
         });
         pagePost.forEach((post) ->
         {
             if (post.getFile() != null) {
-                post.setImageLink(baseUrl + "/postImage/" + post.getId());
+                post.setImageLink(baseUrl + "/refPostImage/" + post.getId());
             }
         });
         List<PostResponseDto> dto = new ArrayList<>();
@@ -207,6 +206,7 @@ public class ReflectionPostService {
 
 
         }
+        Collections.sort(dto);
         return dto;
     }
 

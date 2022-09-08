@@ -15,6 +15,7 @@ import swag.rest.education_platform.exception.PostNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,7 +29,9 @@ public class ProjectMessageService {
 
     @Transactional
     public List<?> getMessages(Long project_id) {
-        return repository.findByProject_Id(project_id);
+        List<ProjectMessage> messages = repository.findByProject_Id(project_id);
+        Collections.sort(messages);
+        return messages;
 
 //        List<ProjectMessagesDto> dto = new ArrayList<>();
 //

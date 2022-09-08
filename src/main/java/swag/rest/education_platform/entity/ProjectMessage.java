@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ProjectMessage {
+public class ProjectMessage implements Comparable<ProjectMessage> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,5 +53,10 @@ public class ProjectMessage {
         this.text = text;
         this.userfirstname = userfirstname;
         this.userlastname = userlastname;
+    }
+
+    @Override
+    public int compareTo(ProjectMessage projectMessage) {
+        return projectMessage.getId().compareTo(this.getId());
     }
 }

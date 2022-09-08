@@ -14,7 +14,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @Table(name = "project")
-public class ProjectStudent {
+public class ProjectStudent implements Comparable<ProjectStudent>{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -38,5 +38,10 @@ public class ProjectStudent {
         this.id = id;
         this.title = title;
         this.description = description;
+    }
+
+    @Override
+    public int compareTo(ProjectStudent projectStudent) {
+        return projectStudent.getId().compareTo(this.getId());
     }
 }

@@ -10,7 +10,7 @@ import java.util.Set;
 
 @Setter
 @Getter
-public class PostResponseDto {
+public class PostResponseDto implements Comparable<PostResponseDto> {
     private Long id;
     private String title;
     private String username;
@@ -20,4 +20,9 @@ public class PostResponseDto {
     private Long likes;
     String fileLink;
     String imageLink;
+
+    @Override
+    public int compareTo(PostResponseDto postResponseDto) {
+        return postResponseDto.getId().compareTo(this.getId());
+    }
 }

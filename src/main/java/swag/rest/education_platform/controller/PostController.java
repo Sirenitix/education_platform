@@ -17,7 +17,7 @@ import java.util.Set;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 @RequestMapping("/general")
 public class PostController {
         private final PostService service;
@@ -36,22 +36,22 @@ public class PostController {
     }
 //Hey
     @GetMapping("/postFile/{id}")
-    public ResponseEntity getPostFileById(@PathVariable Long id) {
+    public ResponseEntity<?> getPostFileById(@PathVariable Long id) {
         Post post = service.getPostById(id);
         log.info(Arrays.toString(post.getFile()) + " - file");
         HttpHeaders responseheaders = new HttpHeaders();
         responseheaders.setContentType(MediaType.APPLICATION_PDF);
         responseheaders.setContentDisposition(ContentDisposition.inline().build());
-        return new ResponseEntity(post.getFile(),responseheaders,HttpStatus.OK);
+        return new ResponseEntity<>(post.getFile(),responseheaders,HttpStatus.OK);
     }
 
     @GetMapping("/postImage/{id}")
-    public ResponseEntity getPostImageById(@PathVariable Long id) {
+    public ResponseEntity<?> getPostImageById(@PathVariable Long id) {
         Post post = service.getPostById(id);
         HttpHeaders responseheaders = new HttpHeaders();
         responseheaders.setContentType(MediaType.IMAGE_JPEG);
         responseheaders.setContentDisposition(ContentDisposition.inline().build());
-        return new ResponseEntity(post.getImage(),responseheaders,HttpStatus.OK);
+        return new ResponseEntity<>(post.getImage(),responseheaders,HttpStatus.OK);
     }
 
     //hey

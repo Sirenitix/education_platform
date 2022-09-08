@@ -13,7 +13,7 @@ import java.util.List;
 @Table(name = "science_post")
 @Getter@Setter
 @NoArgsConstructor
-public class Post {
+public class Post  implements Comparable<Post>{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -51,5 +51,10 @@ public class Post {
         this.title = title;
         this.postDate = postDate;
         this.likes = likes;
+    }
+
+    @Override
+    public int compareTo(Post post) {
+        return post.getId().compareTo(this.getId());
     }
 }

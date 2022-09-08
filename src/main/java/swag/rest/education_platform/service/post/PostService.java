@@ -22,10 +22,7 @@ import swag.rest.education_platform.service.UserService;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -88,6 +85,7 @@ public class PostService {
                 post.setImageLink(baseUrl + "/postImage/" + post.getId());
             }
         });
+        Collections.sort(pagePost);
         return pagePost;
     }
 
@@ -107,6 +105,7 @@ public class PostService {
                 post.setImageLink(baseUrl + "/postImage/" + post.getId());
             }
         });
+        Collections.sort(pagePost);
         return pagePost;
     }
 
@@ -126,6 +125,7 @@ public class PostService {
                 post.setImageLink(baseUrl + "/postImage/" + post.getId());
             }
         });
+        Collections.sort(pagePost);
         return pagePost;
     }
 

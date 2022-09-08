@@ -40,7 +40,9 @@ public class ProjectStudentService {
             p.setMessages(projectMessageRepository.findByProject(p));
 
         }
-        return projectStudentRepository.findProjectStudentByUsers(user);//user.getProjects();
+        List<ProjectStudent> projectStudentByUsers = projectStudentRepository.findProjectStudentByUsers(user);
+        Collections.sort(projectStudentByUsers);
+        return projectStudentByUsers; //user.getProjects();
     }
 
     public Set<ProjectStudent> search(String title, String description) {
