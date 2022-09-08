@@ -3,6 +3,7 @@ package swag.rest.education_platform.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import swag.rest.education_platform.dto.GeneralPostDto;
 import swag.rest.education_platform.dto.PostRequestDto;
@@ -63,9 +64,10 @@ public class PostController {
         return ResponseEntity.status(HttpStatus.OK).body("Updated post");
     }
 
+    @Transactional
     @GetMapping("/allPosts")
     public ResponseEntity<?> getPosts(@RequestParam(defaultValue = "0") int page) {
-        return ResponseEntity.status(HttpStatus.OK).body(service.getAllPosts(page));
+        return ResponseEntity.status(HttpStatus.OK).body(service.getAllPosts());
     }
 
 
@@ -73,10 +75,10 @@ public class PostController {
     public ResponseEntity<?> getUserPosts(@RequestParam(defaultValue = "0") int page, Principal principal) {
         return ResponseEntity.status(HttpStatus.OK).body(service.getUserPosts(page, principal.getName()));
     }
-
+    @Transactional
     @GetMapping("/getUserPosts/{school}")
-    public ResponseEntity<?> getUserPostsBySchool(@RequestParam(defaultValue = "0") int page, Principal principal, @PathVariable String school) {
-        return ResponseEntity.status(HttpStatus.OK).body(service.getUserPostsBySchool(page, principal.getName(), school));
+    public ResponseEntity<?> getUserPostsBySchool(@RequestParam(defaultValue = "0") int page,  @PathVariable String school) {
+        return ResponseEntity.status(HttpStatus.OK).body(service.getUserPostsBySchool(page, school));
     }
 
 

@@ -9,4 +9,5 @@ public interface AdminService {
     void deleteScienceCommentById(Long scienceCommentId);
     void deleteReflectionCommentById(Long reflectionCommentId);
 
+    void deleteProjectPostById(Long postId);
 }

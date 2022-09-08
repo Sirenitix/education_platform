@@ -70,8 +70,7 @@ public class ReflectionPostService {
 
     @Transactional(readOnly = true)
     public ReflectionPost getPostByIdWithComment(Long id) {
-        ReflectionPost post = repository.findById(id).get();
-        return post;
+        return repository.findById(id).orElseThrow(PostNotFoundException::new);
     }
 
     @Transactional
@@ -87,7 +86,6 @@ public class ReflectionPostService {
 
     @Transactional(readOnly = true)
     public List<PostResponseDto> getAllPosts(int page) {
-
         Pageable paging = PageRequest.of(page, 50);
         List<ReflectionPost> pagePost = repository.findAll(paging).getContent();
         pagePost.forEach((post) -> {
@@ -97,7 +95,7 @@ public class ReflectionPostService {
         });
         pagePost.forEach((post) ->
         {
-            if (post.getFile() != null) {
+            if (post.getImage() != null) {
                 post.setImageLink(baseUrl + "/refPostImage/" + post.getId());
             }
         });
@@ -117,8 +115,12 @@ public class ReflectionPostService {
             response.setTag(post.getTag());
             response.setComments(post.getComment());
             response.setLikes(post.getLikes());
-            response.setImageLink(post.getImageLink());
-            response.setFileLink(post.getFileLink());
+            if (post.getImage() != null) {
+                response.setImageLink(post.getImageLink());
+            }
+            if (post.getFile() != null) {
+                response.setFileLink(post.getFileLink());
+            }
             dto.add(response);
 
 
@@ -229,7 +231,23 @@ public class ReflectionPostService {
     public Set<ReflectionPost> searchPost(String title, String content, String tag) {
 
         Set<ReflectionPost> result = new HashSet<>();// = repository.findAllByTitleContaining(title);
-        if(title.isEmpty() && content.isEmpty() && tag.isEmpty()) return result;
+        if(title.isEmpty() && content.isEmpty() && tag.isEmpty())
+        {
+            List<ReflectionPost> reflectionPosts = repository.findAll();
+            Collections.sort(reflectionPosts);
+            reflectionPosts.forEach((post) -> {
+                if (post.getFile() != null) {
+                    post.setFileLink(baseUrl + "/refPostFile/" + post.getId());
+                }
+            });
+            reflectionPosts.forEach((post) ->
+            {
+                if (post.getFile() != null) {
+                    post.setImageLink(baseUrl + "/refPostImage/" + post.getId());
+                }
+            });
+            return new HashSet<>(reflectionPosts);
+        }
 
         result = new HashSet<>(repository.findAll());
         if(!title.equals(""))  {
@@ -242,6 +260,20 @@ public class ReflectionPostService {
             result = result.stream().filter(u->u.getTag() != null)
                     .filter(u-> u.getTag().get(0).getTag().equals(tag)).collect(Collectors.toSet());
         }
+
+        result.forEach((post) -> {
+            if (post.getFile() != null) {
+                post.setFileLink(baseUrl + "/refPostFile/" + post.getId());
+            }
+        });
+        result.forEach((post) ->
+        {
+            if (post.getFile() != null) {
+                post.setImageLink(baseUrl + "/refPostImage/" + post.getId());
+            }
+        });
+
+
         return result;
     }
 }

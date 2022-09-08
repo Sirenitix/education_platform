@@ -4,6 +4,7 @@ package swag.rest.education_platform.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import swag.rest.education_platform.entity.ProjectStudent;
 import swag.rest.education_platform.entity.ReflectionPost;
 import swag.rest.education_platform.entity.Post;
 import swag.rest.education_platform.entity.Users;
@@ -26,6 +27,10 @@ public class AdminServiceIml implements AdminService {
 
     private final CommentService postCommentService;
 
+    private final ProjectStudentService projectStudentService;
+
+    private  final ProjectMessageService projectMessageService;
+
     @Override
     public void deleteUser(Long id) {
         //todo check why find request INT instead of LONG
@@ -47,7 +52,7 @@ public class AdminServiceIml implements AdminService {
     @Override
     public void deleteReflectionPostById(Long postId) {
         ReflectionPost post = reflectionPostService.findById(postId);
-        sciencePostService.deletePost(post.getId());
+        reflectionPostService.deletePost(post.getId());
     }
 
     @Override
@@ -65,5 +70,10 @@ public class AdminServiceIml implements AdminService {
             throw new RuntimeException("Comment not found");
         }
         reflectionPostCommentService.deleteComment(reflectionCommentId);
+    }
+
+    @Override
+    public void deleteProjectPostById(Long postId) {
+        projectMessageService.deleteById(postId);
     }
 }

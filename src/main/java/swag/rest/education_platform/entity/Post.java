@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Iterator;
 import java.util.List;
 
 @Entity
@@ -27,9 +28,9 @@ public class Post  implements Comparable<Post>{
     @JsonIgnore
     private Users user;
 
-    String fileLink;
+    private String fileLink;
 
-    String imageLink;
+    private String imageLink;
 
 
     @Lob
@@ -57,4 +58,7 @@ public class Post  implements Comparable<Post>{
     public int compareTo(Post post) {
         return post.getId().compareTo(this.getId());
     }
+
+
+
 }

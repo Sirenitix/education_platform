@@ -81,4 +81,8 @@ public class ProjectMessageService {
         }
         repository.save(projectMessage);
     }
+
+    public void deleteById(Long postId) {
+        repository.deleteById(postId);
+    }
 }

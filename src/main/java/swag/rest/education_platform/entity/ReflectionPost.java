@@ -15,7 +15,7 @@ import java.util.List;
 @Table(name = "reflexion_post")
 @Getter@Setter
 @NoArgsConstructor
-public class ReflectionPost {
+public class ReflectionPost implements Comparable<ReflectionPost> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonIgnore
@@ -37,7 +37,7 @@ public class ReflectionPost {
 
     String imageLink;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "user_creator_id")
     @JsonIgnore
     private Users user;
@@ -66,5 +66,10 @@ public class ReflectionPost {
         this.postDate = postDate;
         this.likes = likes;
         this.tag = tag;
+    }
+
+    @Override
+    public int compareTo(ReflectionPost reflectionPost) {
+        return reflectionPost.getId().compareTo(this.getId());
     }
 }

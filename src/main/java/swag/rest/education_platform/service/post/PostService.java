@@ -71,20 +71,19 @@ public class PostService {
     }
 
     @Transactional(readOnly = true)
-    public List<Post> getAllPosts(int page) {
-        Pageable paging = PageRequest.of(page, 50);
-        List<Post> pagePost = repository.findAll(paging).getContent();
-        pagePost.forEach((post) -> {
+    public List<Post> getAllPosts() {
+//        Pageable paging = PageRequest.of(page, 50);
+        List<Post> pagePost = repository.findAll();
+        for (Post post : pagePost) {
             if (post.getFile() != null) {
                 post.setFileLink(baseUrl + "/postFile/" + post.getId());
             }
-        });
-        pagePost.forEach((post) ->
-        {
-            if (post.getFile() != null) {
+            if (post.getImage() != null) {
                 post.setImageLink(baseUrl + "/postImage/" + post.getId());
             }
-        });
+        }
+
+
         Collections.sort(pagePost);
         return pagePost;
     }
@@ -110,10 +109,10 @@ public class PostService {
     }
 
     @Transactional(readOnly = true)
-    public List<Post> getUserPostsBySchool(int page, String username, String school) {
+    public List<Post> getUserPostsBySchool(int page, String school) {
         Pageable paging = PageRequest.of(page, 50);
         List<Post> pagePost = repository.findAll(paging).getContent();
-        pagePost = pagePost.stream().filter(s -> s.getUser().getUsername().equals(username) && s.getUser().getFullDetails().getSchool().equals(school)).collect(Collectors.toList());
+        pagePost = pagePost.stream().filter(s -> s.getUser().getFullDetails().getSchool().equals(school)).collect(Collectors.toList());
         pagePost.forEach((post) -> {
             if (post.getFile() != null) {
                 post.setFileLink(baseUrl + "/postFile/" + post.getId());
@@ -150,8 +149,13 @@ public class PostService {
     }
 
     public Set<Post> searchPost(String title, String content) {
-        Set<Post> result = new HashSet<>();// = repository.findAllByTitleContaining(title);
-        if(title.isEmpty() && content.isEmpty()) return result;
+        Set<Post> result;// = repository.findAllByTitleContaining(title);
+        if(title.isEmpty() && content.isEmpty()) {
+            List<Post> posts = repository.findAll();
+            Collections.sort(posts);
+            return new HashSet<>(posts);
+        }
+
 
         result = new HashSet<>(repository.findAll());
         if(!title.equals(""))  {

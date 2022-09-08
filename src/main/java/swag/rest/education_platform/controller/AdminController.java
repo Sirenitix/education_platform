@@ -27,8 +27,13 @@ public class AdminController {
     }
 
     @DeleteMapping("/deleteReflectionPostById")
-    public void deleteReflectionPostById(Long posrId) {
-        adminService.deleteReflectionPostById(posrId);
+    public void deleteReflectionPostById(Long postId) {
+        adminService.deleteReflectionPostById(postId);
+    }
+
+    @DeleteMapping("/deleteProjectMessageByMessageId")
+    public void deleteProjectMessageByMessageId(Long messageId) {
+        adminService.deleteProjectPostById(messageId);
     }
 
     @DeleteMapping("/deleteScienceCommentById")
