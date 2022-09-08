@@ -117,9 +117,6 @@ public class PostService {
             if (post.getFile() != null) {
                 post.setFileLink(baseUrl + "/postFile/" + post.getId());
             }
-        });
-        pagePost.forEach((post) ->
-        {
             if (post.getFile() != null) {
                 post.setImageLink(baseUrl + "/postImage/" + post.getId());
             }

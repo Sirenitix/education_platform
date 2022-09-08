@@ -77,7 +77,7 @@ public class ReflectionPostController {
     public Set<ReflectionPost> searchPost(@RequestParam(required = false, defaultValue = "") String title,
                                           @RequestParam(required = false,defaultValue = "") String content,
                                           @RequestParam(required = false,defaultValue = "") String tag) {
-        Set<ReflectionPost> posts = service.searchPost(title,content,tag);
+        Set<ReflectionPost> posts = service.searchPost(title, content, tag);
         return posts;
     }
 

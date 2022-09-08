@@ -92,9 +92,6 @@ public class ReflectionPostService {
             if (post.getFile() != null) {
                 post.setFileLink(baseUrl + "/refPostFile/" + post.getId());
             }
-        });
-        pagePost.forEach((post) ->
-        {
             if (post.getImage() != null) {
                 post.setImageLink(baseUrl + "/refPostImage/" + post.getId());
             }
@@ -239,9 +236,6 @@ public class ReflectionPostService {
                 if (post.getFile() != null) {
                     post.setFileLink(baseUrl + "/refPostFile/" + post.getId());
                 }
-            });
-            reflectionPosts.forEach((post) ->
-            {
                 if (post.getFile() != null) {
                     post.setImageLink(baseUrl + "/refPostImage/" + post.getId());
                 }
@@ -265,14 +259,10 @@ public class ReflectionPostService {
             if (post.getFile() != null) {
                 post.setFileLink(baseUrl + "/refPostFile/" + post.getId());
             }
-        });
-        result.forEach((post) ->
-        {
             if (post.getFile() != null) {
                 post.setImageLink(baseUrl + "/refPostImage/" + post.getId());
             }
         });
-
 
         return result;
     }
