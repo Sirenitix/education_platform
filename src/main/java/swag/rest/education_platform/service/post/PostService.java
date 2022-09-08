@@ -152,13 +152,11 @@ public class PostService {
             Collections.sort(posts);
             return new HashSet<>(posts);
         }
-
-
         result = new HashSet<>(repository.findAll());
-        if(!title.equals(""))  {
+        if(!title.isEmpty())  {
             result = result.stream().filter(u -> u.getTitle().contains(title)).collect(Collectors.toSet());
         }
-        if(!content.equals("")) {
+        if(!content.isEmpty()) {
             result = result.stream().filter(u -> u.getContent().contains(content)).collect(Collectors.toSet());
         }
         return result;

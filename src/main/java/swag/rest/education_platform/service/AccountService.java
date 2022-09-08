@@ -52,8 +52,13 @@ public class AccountService {
     public String authenticate(UserDto userDto, HttpServletRequest request) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userDto.getEmail(), userDto.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        Users user = userRepository.findByUsername(userDto.getEmail()).get();
-        String jwt = JwtUtil.createAccessToken(userDto.getEmail(), request.getRequestURL().toString(), user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()));
+        Users user = userRepository.findByUsername(userDto.getEmail()).orElseThrow(UserExistException::new);
+        String jwt = JwtUtil.
+                createAccessToken(userDto.getEmail(), request.getRequestURL().toString(),
+                user.getAuthorities()
+                        .stream()
+                        .map(GrantedAuthority::getAuthority)
+                        .collect(Collectors.toList()));
         return jwt;
     }
 

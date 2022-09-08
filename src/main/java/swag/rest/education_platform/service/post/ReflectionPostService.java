@@ -244,15 +244,15 @@ public class ReflectionPostService {
         }
 
         result = new HashSet<>(repository.findAll());
-        if(!title.equals(""))  {
+        if(!title.isEmpty())  {
             result = result.stream().filter(u -> u.getTitle().contains(title)).collect(Collectors.toSet());
         }
-        if(!content.equals("")) {
+        if(!content.isEmpty()) {
             result = result.stream().filter(u -> u.getContent().toUpperCase().contains(content.toUpperCase())).collect(Collectors.toSet());
         }
-        if(!tag.equals("")) {
-            result = result.stream().filter(u->u.getTag() != null)
-                    .filter(u-> u.getTag().get(0).getTag().equals(tag)).collect(Collectors.toSet());
+        if(!tag.isEmpty()) {
+            result = result.stream().filter(u -> u.getTag() != null)
+                    .filter(u -> u.getTag().get(0).getTag().equals(tag)).collect(Collectors.toSet());
         }
 
         result.forEach((post) -> {
