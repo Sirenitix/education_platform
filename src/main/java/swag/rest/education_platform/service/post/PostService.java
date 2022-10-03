@@ -154,10 +154,10 @@ public class PostService {
         }
         result = new HashSet<>(repository.findAll());
         if(!title.isEmpty())  {
-            result = result.stream().filter(u -> u.getTitle().contains(title)).collect(Collectors.toSet());
+            result = result.stream().filter(u -> u.getTitle().toLowerCase().contains(title.toLowerCase())).collect(Collectors.toSet());
         }
         if(!content.isEmpty()) {
-            result = result.stream().filter(u -> u.getContent().contains(content)).collect(Collectors.toSet());
+            result = result.stream().filter(u -> u.getContent().toLowerCase().contains(content.toLowerCase())).collect(Collectors.toSet());
         }
         return result;
     }

@@ -82,7 +82,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests().antMatchers("/reflection/refPostImage/*").permitAll()
                 .and()
-                .authorizeRequests().antMatchers("/reflection/refPostImage/*").permitAll()
+                .authorizeRequests().antMatchers("/reflection/refPostFile/*").permitAll()
                 .and()
                 .authorizeRequests().anyRequest().authenticated()
                 .and()

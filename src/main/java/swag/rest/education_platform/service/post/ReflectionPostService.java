@@ -227,7 +227,7 @@ public class ReflectionPostService {
     @Transactional(readOnly = true)
     public Set<ReflectionPost> searchPost(String title, String content, String tag) {
 
-        Set<ReflectionPost> result = new HashSet<>();// = repository.findAllByTitleContaining(title);
+        Set<ReflectionPost> result;// = repository.findAllByTitleContaining(title);
         if(title.isEmpty() && content.isEmpty() && tag.isEmpty())
         {
             List<ReflectionPost> reflectionPosts = repository.findAll();
@@ -245,14 +245,14 @@ public class ReflectionPostService {
 
         result = new HashSet<>(repository.findAll());
         if(!title.isEmpty())  {
-            result = result.stream().filter(u -> u.getTitle().contains(title)).collect(Collectors.toSet());
+            result = result.stream().filter(u -> u.getTitle().toLowerCase().contains(title.toLowerCase())).collect(Collectors.toSet());
         }
         if(!content.isEmpty()) {
-            result = result.stream().filter(u -> u.getContent().toUpperCase().contains(content.toUpperCase())).collect(Collectors.toSet());
+            result = result.stream().filter(u -> u.getContent().equalsIgnoreCase(content)).collect(Collectors.toSet());
         }
         if(!tag.isEmpty()) {
             result = result.stream().filter(u -> u.getTag() != null)
-                    .filter(u -> u.getTag().get(0).getTag().equals(tag)).collect(Collectors.toSet());
+                    .filter(u -> u.getTag().get(0).getTag().equalsIgnoreCase(tag)).collect(Collectors.toSet());
         }
 
         result.forEach((post) -> {

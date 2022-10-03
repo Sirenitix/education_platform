@@ -4,13 +4,18 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.MimeType;
 import org.springframework.web.bind.annotation.*;
 import swag.rest.education_platform.dto.GeneralPostDto;
 import swag.rest.education_platform.dto.PostRequestDto;
 import swag.rest.education_platform.entity.Post;
 import swag.rest.education_platform.service.post.PostService;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URLConnection;
 import java.security.Principal;
 import java.util.Arrays;
 import java.util.Set;
@@ -37,11 +42,13 @@ public class PostController {
     }
 //Hey
     @GetMapping("/postFile/{id}")
-    public ResponseEntity<?> getPostFileById(@PathVariable Long id) {
+    public ResponseEntity<?> getPostFileById(@PathVariable Long id) throws IOException {
         Post post = service.getPostById(id);
         log.info(Arrays.toString(post.getFile()) + " - file");
         HttpHeaders responseheaders = new HttpHeaders();
-        responseheaders.setContentType(MediaType.APPLICATION_PDF);
+        String contentType = URLConnection.
+                guessContentTypeFromStream(new ByteArrayInputStream(post.getFile()));
+        responseheaders.setContentType(MediaType.valueOf(contentType));
         responseheaders.setContentDisposition(ContentDisposition.inline().build());
         return new ResponseEntity<>(post.getFile(),responseheaders,HttpStatus.OK);
     }
@@ -49,10 +56,10 @@ public class PostController {
     @GetMapping("/postImage/{id}")
     public ResponseEntity<?> getPostImageById(@PathVariable Long id) {
         Post post = service.getPostById(id);
-        HttpHeaders responseheaders = new HttpHeaders();
-        responseheaders.setContentType(MediaType.IMAGE_JPEG);
-        responseheaders.setContentDisposition(ContentDisposition.inline().build());
-        return new ResponseEntity<>(post.getImage(),responseheaders,HttpStatus.OK);
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.setContentType(MediaType.IMAGE_JPEG);
+        responseHeaders.setContentDisposition(ContentDisposition.inline().build());
+        return new ResponseEntity<>(post.getImage(),responseHeaders,HttpStatus.OK);
     }
 
     //hey

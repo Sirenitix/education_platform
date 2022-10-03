@@ -20,22 +20,22 @@ public class PdfController {
         private final PdfMaterialService service;
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity getPdf(@PathVariable Long id) {
+    public ResponseEntity<Object> getPdf(@PathVariable Long id) {
         PdfMaterial document = service.getDocumentById(id);
-        HttpHeaders responseheaders = new HttpHeaders();
-        responseheaders.setContentType(MediaType.APPLICATION_PDF);
-        responseheaders.setContentDisposition(ContentDisposition.inline().build());
-        return new ResponseEntity(document.getContent(),responseheaders,HttpStatus.OK);
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.setContentType(MediaType.APPLICATION_PDF);
+        responseHeaders.setContentDisposition(ContentDisposition.inline().build());
+        return new ResponseEntity<>(document.getContent(),responseHeaders,HttpStatus.OK);
     }
 
     @PostMapping("/library")
-    public ResponseEntity addToList(@RequestParam Long id, Principal principal){
+    public ResponseEntity<Object> addToList(@RequestParam Long id, Principal principal){
         service.addToList(id,principal.getName());
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/library")
-    public ResponseEntity deleteFromList(@RequestParam Long id, Principal principal){
+    public ResponseEntity<Object> deleteFromList(@RequestParam Long id, Principal principal){
         service.removeFromList(id,principal.getName());
         return ResponseEntity.ok().build();
     }
@@ -66,8 +66,7 @@ public class PdfController {
 
     @GetMapping
     public List<PdfMaterial> getTitles() {
-        List<PdfMaterial> pdfs = service.getPdfs();
-        return pdfs;
+        return service.getPdfs();
     }
 
 
